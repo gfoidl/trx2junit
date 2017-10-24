@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Xml.Linq;
 
@@ -148,8 +149,9 @@ namespace trx2junit
                 var xTestSuite = new XElement("testsuite");
                 xTestSuite.Add(new XAttribute("name", testClass));
                 xTestSuite.Add(new XAttribute("hostname", Environment.MachineName));
-                xTestSuite.Add(new XAttribute("package", string.Empty));
+                xTestSuite.Add(new XAttribute("package", ".net Core"));
                 xTestSuite.Add(new XAttribute("id", testId++));
+                xTestSuite.Add(new XElement("properties"));
 
                 int errors          = default;
                 int tests           = default;
@@ -182,7 +184,8 @@ namespace trx2junit
                         failures++;
                         xTestCase.Add(new XElement("failure",
                             unitTestResult.StackTrace,
-                            new XAttribute("message", unitTestResult.Message)
+                            new XAttribute("message", unitTestResult.Message),
+                            new XAttribute("type", "error")
                             )
                         );
                     }
@@ -193,11 +196,15 @@ namespace trx2junit
                 xTestSuite.Add(new XAttribute("failures", failures));
                 xTestSuite.Add(new XAttribute("time", (decimal)time.TotalSeconds));
                 xTestSuite.Add(new XAttribute("timestamp", timestamp.Value.ToJUnitDateTime()));
+                xTestSuite.Add(new XElement("system-out"));
+                xTestSuite.Add(new XElement("system-err"));
 
                 xJUnit.Add(xTestSuite);
             }
 
-            xJUnit.Save(jUnitFile);
+            var utf8 = new UTF8Encoding(false);
+            using (var sw = new StreamWriter(jUnitFile, false, utf8))
+                xJUnit.Save(sw);
         }
     }
 }
