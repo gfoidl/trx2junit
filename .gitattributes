@@ -1,0 +1,72 @@
+#------------------------------------------------------------------------------
+# L I N E   E N D I N G S
+
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Must keep LF line ending
+Dockerfile          text eol=lf
+.dockerignore       text eol=lf
+
+/**/*.sh            text eol=lf
+/**/*.conf          text eol=lf
+/**/*.crontab       text eol=lf
+/**/*.yml           text eol=lf
+#------------------------------------------------------------------------------
+# T A B S   S P A C E S
+
+# Code files
+*.cs                filter=tabs2spaces
+*.c                 filter=tabs2spaces
+*.h                 filter=tabs2spaces
+*.cpp               filter=tabs2spaces
+*.f95               filter=tabs2spaces
+*.f03               filter=tabs2spaces
+*.sql               filter=tabs2spaces
+*.ino               filter=tabs2spaces
+
+# Project files
+*.sln               filter=tabs2spaces
+*.csproj            filter=tabs2spaces
+*.sqlproj           filter=tabs2spaces
+*.vcxproj           filter=tabs2spaces
+*.proj              filter=tabs2spaces
+*.targets           filter=tabs2spaces
+*.props             filter=tabs2spaces
+*.pubxml            filter=tabs2spaces
+*.config            filter=tabs2spaces
+*.settings          filter=tabs2spaces
+*.nuspec            filter=tabs2spaces
+*.nunit             filter=tabs2spaces
+
+# Web files
+*.cshtml            filter=tabs2spaces
+*.html              filter=tabs2spaces
+*.htm               filter=tabs2spaces
+*.ts                filter=tabs2spaces
+*.js                filter=tabs2spaces
+*.less              filter=tabs2spaces
+*.css               filter=tabs2spaces
+*.json              filter=tabs2spaces
+*.ashx              filter=tabs2spaces
+*.asax              filter=tabs2spaces
+*.svc               filter=tabs2spaces
+
+# Shell files
+*.sh                filter=tabs2spaces
+*.bat               filter=tabs2spaces
+*.ps1               filter=tabs2spaces
+
+# Misc files
+*.xml               filter=tabs2spaces
+*.xsd               filter=tabs2spaces
+*.txt               filter=tabs2spaces
+*.md                filter=tabs2spaces
+*.resx              filter=tabs2spaces
+*.tt                filter=tabs2spaces
+*.edmx              filter=tabs2spaces
+*.svg               filter=tabs2spaces
+*.xaml              filter=tabs2spaces
+*.dbml              filter=tabs2spaces
+*.tex               filter=tabs2spaces
+*.conf              filter=tabs2spaces
