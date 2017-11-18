@@ -174,8 +174,11 @@ namespace trx2junit
 
                     if (!timestamp.HasValue) timestamp = unitTestResult.StartTime;
 
-                    time += unitTestResult.Duration;
-                    xTestCase.Add(new XAttribute("time", (decimal)unitTestResult.Duration.TotalSeconds));
+                    if (unitTestResult.Duration.HasValue)
+                    {
+                        time += unitTestResult.Duration.Value;
+                        xTestCase.Add(new XAttribute("time", (decimal)unitTestResult.Duration.Value.TotalSeconds));
+                    }
 
                     if (unitTestResult.Outcome == Outcome.NotExecuted)
                         xTestCase.Add(new XElement("skipped"));
@@ -195,9 +198,11 @@ namespace trx2junit
                 xTestSuite.Add(new XAttribute("tests", tests));
                 xTestSuite.Add(new XAttribute("failures", failures));
                 xTestSuite.Add(new XAttribute("time", (decimal)time.TotalSeconds));
-                xTestSuite.Add(new XAttribute("timestamp", timestamp.Value.ToJUnitDateTime()));
                 xTestSuite.Add(new XElement("system-out"));
                 xTestSuite.Add(new XElement("system-err"));
+
+                if (timestamp.HasValue)
+                    xTestSuite.Add(new XAttribute("timestamp", timestamp.Value.ToJUnitDateTime()));
 
                 xJUnit.Add(xTestSuite);
             }

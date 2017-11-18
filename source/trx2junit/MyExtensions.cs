@@ -5,16 +5,24 @@ namespace trx2junit
 {
     public static class MyExtensions
     {
-        public static DateTime ReadDateTime(this XElement element, string attributeName)
+        public static DateTime? ReadDateTime(this XElement element, string attributeName)
         {
-            string value = element.Attribute(attributeName).Value;
-            return DateTime.Parse(value);
+            string value = (string)element.Attribute(attributeName);
+
+            if (!DateTime.TryParse(value, out DateTime dt))
+                return null;
+
+            return dt;
         }
         //---------------------------------------------------------------------
-        public static TimeSpan ReadTimeSpan(this XElement element, string attributeName)
+        public static TimeSpan? ReadTimeSpan(this XElement element, string attributeName)
         {
-            string value = element.Attribute(attributeName).Value;
-            return TimeSpan.Parse(value);
+            string value = (string)element.Attribute(attributeName);
+
+            if (!TimeSpan.TryParse(value, out TimeSpan ts))
+                return null;
+
+            return ts;
         }
         //---------------------------------------------------------------------
         public static int ReadInt(this XElement element, string attributeName)
