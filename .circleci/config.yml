@@ -21,24 +21,26 @@ jobs:
             - run:
                 # build has to be from the build.sh in order to pick the correct version numbers, etc.
                 name: build
-                command: |
-                    ./build.sh build
-
-                    if [[ -n "$VersionMajor" ]]; then
-                        toolVersion="$VersionMajor.$VersionMinor.$VersionPatch"
-                        
-                        if [[ -n "$VersionSuffix" ]]; then
-                            toolVersion="$toolVersion-$VersionSuffix"
-                        fi
-                    fi
-
-                    echo export ToolVersion="$toolVersion" >> "$BASH_ENV"
+                command: ./build.sh build
             - run:
                 name: pack
                 command: ./build.sh deploy local
             - run:
                 name: global tool install
                 command: |
+                    # copied from build.sh (but modified)
+                    if [[ -n "$CIRCLE_TAG" ]]; then
+                        if [[ "$CIRCLE_TAG" =~ ^v([0-9])\.([0-9])\.([0-9])(-(preview-[0-9]+))$ ]]; then
+                            VersionMajor="${BASH_REMATCH[1]}"
+                            VersionMinor="${BASH_REMATCH[2]}"
+                            VersionPatch="${BASH_REMATCH[3]}"
+                            VersionSuffix="${BASH_REMATCH[5]}"
+
+                            ToolVersion="$VersionMajor.$VersionMinor.$VersionPatch-$VersionSuffix"
+                        fi
+                    fi
+
+                    # special handling for pre-releases (is a constraint by .net Core global tools)
                     if [[ -z "$ToolVersion" ]]; then
                         dotnet tool install -g trx2junit --source-feed $(pwd)/NuGet-Packed
                     else
