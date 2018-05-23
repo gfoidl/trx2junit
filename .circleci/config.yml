@@ -18,7 +18,7 @@ jobs:
                 command: ./build.sh build
             - run:
                 name: pack
-                command: dotnet pack --no-build -c Release source/trx2junit
+                command: ./build.sh deploy local
             - run:
                 name: global tool install
                 command: |

@@ -172,6 +172,8 @@ deploy() {
         _deployCore "$NUGET_FEED" "$NUGET_KEY"
     elif [[ "$1" == "myget" ]]; then
         _deployCore "$MYGET_FEED" "$MYGET_KEY"
+    elif [[ "$1" == "local" ]]; then
+        echo "Skipping deploy because 'local'"
     else
         echo "Unknown deploy target '$1', aborting"
         exit 1001
