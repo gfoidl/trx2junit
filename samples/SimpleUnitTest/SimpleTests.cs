@@ -15,6 +15,9 @@ namespace SimpleUnitTest
         [Test]
         public void Failing_test()
         {
+            // This will cause the CI-test-scripts to fail the build.
+            // So use 'set +e' in the test-scripts to avoid the fail -- here
+            // it is just for demonstration.
             Assert.Fail("Failing for demo purposes");
         }
         //---------------------------------------------------------------------

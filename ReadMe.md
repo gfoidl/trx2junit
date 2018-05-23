@@ -4,7 +4,8 @@
 
 # trx2junit (.NET Core global tool)
 
-Helper for converting trx-Testresults (`dotnet test --logger "trx"`) to a JUnit-based XML file.
+Helper for converting trx-Testresults (`dotnet test --logger "trx"`) to a JUnit-based XML file.  
+The JUnit-output will be in the same directory than the trx-file.
 
 Can be used for CI-scenarios, like [CircleCi](https://circleci.com/), where as test results JUnit is expected.
 
