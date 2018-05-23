@@ -30,6 +30,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{15D1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleUnitTest", "samples\SimpleUnitTest\SimpleUnitTest.csproj", "{D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{7F5905D2-5BCD-4D98-AE53-98F2FFC9DE9D}"
+    ProjectSection(SolutionItems) = preProject
+        schemas\junit.xsd = schemas\junit.xsd
+    EndProjectSection
+EndProject
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution
         Debug|Any CPU = Debug|Any CPU
