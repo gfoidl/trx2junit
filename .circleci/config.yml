@@ -64,6 +64,17 @@ jobs:
                 command: |
                     chmod ugo+x ./build.sh
                     ./build.sh deploy nuget
+    deploy_myget:
+        <<: *defaults
+        steps:
+            - checkout
+            - attach_workspace:
+                at: .
+            - run:
+                name: deploy to MyGet
+                command: |
+                    chmod ugo+x ./build.sh
+                    ./build.sh deploy myget
 
 workflows:
     version: 2
@@ -81,4 +92,14 @@ workflows:
                         ignore: /.*/
                     tags:
                         only: /^v[0-9]\.[0-9]\.[0-9]$/
+                context: org-global
+            - deploy_myget:
+                requires:
+                    - build_and_test
+                filters:
+                    branches:
+                        #only: master
+                        ignore: /.*/
+                    tags:
+                        only: /^v[0-9]\.[0-9]\.[0-9](-preview-[0-9]+)?$/
                 context: org-global
