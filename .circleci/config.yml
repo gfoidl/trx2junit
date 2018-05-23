@@ -11,7 +11,13 @@ jobs:
         <<: *defaults
         steps:
             - checkout
-            - run: chmod ugo+x ./build.sh
+            - run:
+                name: init
+                command: |
+                    chmod ugo+x ./build.sh
+
+                    # for .net Core global tools
+                    echo export PATH="$PATH:/root/.dotnet/tools" >> "$BASH_ENV"
             - run:
                 # build has to be from the build.sh in order to pick the correct version numbers, etc.
                 name: build
@@ -38,8 +44,6 @@ jobs:
                     else
                         dotnet tool install -g --version "$ToolVersion" trx2junit --source-feed $(pwd)/NuGet-Packed
                     fi
-                    
-                    echo export PATH="$PATH:/root/.dotnet/tools" >> "$BASH_ENV"
             - run:
                 name: run-sample
                 command: |
