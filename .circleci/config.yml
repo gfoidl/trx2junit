@@ -23,7 +23,7 @@ jobs:
                 name: global tool install
                 command: |
                     dotnet tool install -g trx2junit --source-feed $(pwd)/NuGet-Packed
-                    export PATH="$PATH:/root/.dotnet/tools"
+                    echo export PATH="$PATH:/root/.dotnet/tools" >> "$BASH_ENV"
             - run:
                 name: run-sample
                 command: |
