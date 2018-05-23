@@ -71,6 +71,7 @@ jobs:
             - persist_to_workspace:
                 root: .
                 paths:
+                    - build.sh
                     - NuGet-Packed
             - store_test_results:
                 path: TestResults
@@ -80,7 +81,6 @@ jobs:
     deploy_nuget:
         <<: *defaults
         steps:
-            - checkout
             - attach_workspace:
                 at: .
             - run:
@@ -91,7 +91,6 @@ jobs:
     deploy_myget:
         <<: *defaults
         steps:
-            - checkout
             - attach_workspace:
                 at: .
             - run:
