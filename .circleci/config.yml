@@ -1,0 +1,128 @@
+version: 2
+defaults: &defaults
+    working_directory: ~/repo
+    docker:
+        - image: gfoidl/dotnet-xmllint:2.1-rc1
+          environment:
+            DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+            DOTNET_CLI_TELEMETRY_OPTOUT: 1
+jobs:
+    build_and_test:
+        <<: *defaults
+        steps:
+            - checkout
+            - run:
+                name: init
+                command: |
+                    chmod ugo+x ./build.sh
+
+                    # for .net Core global tools
+                    echo export PATH="$PATH:/root/.dotnet/tools" >> "$BASH_ENV"
+            - run:
+                # build has to be from the build.sh in order to pick the correct version numbers, etc.
+                name: build
+                command: ./build.sh build
+            - run:
+                name: pack
+                command: ./build.sh pack
+            - run:
+                name: global tool install
+                command: |
+                    # copied from build.sh (but modified)
+                    if [[ -n "$CIRCLE_TAG" ]]; then
+                        if [[ "$CIRCLE_TAG" =~ ^v([0-9])\.([0-9])\.([0-9])(-(preview-[0-9]+))$ ]]; then
+                            VersionMajor="${BASH_REMATCH[1]}"
+                            VersionMinor="${BASH_REMATCH[2]}"
+                            VersionPatch="${BASH_REMATCH[3]}"
+                            VersionSuffix="${BASH_REMATCH[5]}"
+
+                            ToolVersion="$VersionMajor.$VersionMinor.$VersionPatch-$VersionSuffix"
+                        fi
+                    fi
+
+                    # special handling for pre-releases (is a constraint by .net Core global tools)
+                    if [[ -z "$ToolVersion" ]]; then
+                        dotnet tool install -g trx2junit --source-feed $(pwd)/NuGet-Packed
+                    else
+                        dotnet tool install -g --version "$ToolVersion" trx2junit --source-feed $(pwd)/NuGet-Packed
+                    fi
+            - run:
+                name: run-sample
+                command: |
+                    # default is `set -e`, so override it on behalve that the test-failure is not reported
+                    set +e
+
+                    dotnet test --no-build -c Release --logger "trx;LogFileName=test.trx" samples/SimpleUnitTest
+
+                    echo ""
+                    mkdir ./TestResults
+                    mv samples/SimpleUnitTest/TestResults/test.trx ./TestResults/test.trx
+
+                    trx2junit ./TestResults/test.trx
+            - run:
+                name: verify
+                command: |
+                    if [[ ! -f "TestResults/test.xml" ]]; then
+                        echo "sample test-results does not exist"
+                        exit 1
+                    fi
+
+                    xmllint --noout --schema schemas/junit.xsd TestResults/test.xml
+            - persist_to_workspace:
+                root: .
+                paths:
+                    - build.sh
+                    - NuGet-Packed
+            - store_test_results:
+                path: TestResults
+            - store_artifacts:
+                path: TestResults
+                destination: TestResults
+    deploy_nuget:
+        <<: *defaults
+        steps:
+            - attach_workspace:
+                at: .
+            - run:
+                name: deploy to NuGet
+                command: |
+                    chmod ugo+x ./build.sh
+                    ./build.sh deploy nuget
+    deploy_myget:
+        <<: *defaults
+        steps:
+            - attach_workspace:
+                at: .
+            - run:
+                name: deploy to MyGet
+                command: |
+                    chmod ugo+x ./build.sh
+                    ./build.sh deploy myget
+
+workflows:
+    version: 2
+    build_test_deploy:
+        jobs:
+            - build_and_test:
+                filters:
+                    tags:
+                        only: /^v[0-9]\.[0-9]\.[0-9](-preview-[0-9]+)?$/
+            - deploy_nuget:
+                requires:
+                    - build_and_test
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^v[0-9]\.[0-9]\.[0-9]$/
+                context: org-global
+            - deploy_myget:
+                requires:
+                    - build_and_test
+                filters:
+                    branches:
+                        #only: master
+                        ignore: /.*/
+                    tags:
+                        only: /^v[0-9]\.[0-9]\.[0-9](-preview-[0-9]+)?$/
+                context: org-global

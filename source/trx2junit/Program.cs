@@ -31,10 +31,14 @@ namespace trx2junit
 
             string trxFile   = args[0];
             string jUnitFile = Path.ChangeExtension(trxFile, "xml");
+
+            Console.WriteLine($"Converting trx-file '{trxFile}' to JUnit-xml...");
+            DateTime start = DateTime.Now;
+
             ReadTrx(trxFile);
             WriteJUnit(jUnitFile);
 
-            Console.WriteLine("\nbye.");
+            Console.WriteLine($"done in {(DateTime.Now-start).TotalSeconds} seconds. bye.");
             if (Debugger.IsAttached)
                 Console.ReadKey();
         }

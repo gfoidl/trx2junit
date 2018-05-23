@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace trx2junit
 {
-    public static class MyExtensions
+    internal static class MyExtensions
     {
         public static DateTime? ReadDateTime(this XElement element, string attributeName)
         {
