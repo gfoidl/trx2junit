@@ -15,14 +15,30 @@ jobs:
             - run:
                 # build has to be from the build.sh in order to pick the correct version numbers, etc.
                 name: build
-                command: ./build.sh build
+                command: |
+                    ./build.sh build
+
+                    if [[ -n "$VersionMajor" ]]; then
+                        toolVersion="$VersionMajor.$VersionMinor.$VersionPatch"
+                        
+                        if [[ -n "$VersionSuffix" ]]; then
+                            toolVersion="$toolVersion-$VersionSuffix"
+                        fi
+                    fi
+
+                    echo export ToolVersion="$toolVersion" >> "$BASH_ENV"
             - run:
                 name: pack
                 command: ./build.sh deploy local
             - run:
                 name: global tool install
                 command: |
-                    dotnet tool install -g trx2junit --source-feed $(pwd)/NuGet-Packed
+                    if [[ -z "$ToolVersion" ]]; then
+                        dotnet tool install -g trx2junit --source-feed $(pwd)/NuGet-Packed
+                    else
+                        dotnet tool install -g --version "$ToolVersion" trx2junit --source-feed $(pwd)/NuGet-Packed
+                    fi
+                    
                     echo export PATH="$PATH:/root/.dotnet/tools" >> "$BASH_ENV"
             - run:
                 name: run-sample
