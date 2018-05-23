@@ -1,0 +1,83 @@
+version: 2
+defaults: &defaults
+    working_directory: ~/repo
+    docker:
+        - image: gfoidl/dotnet-xmllint:2.1-rc1
+          environment:
+            DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+            DOTNET_CLI_TELEMETRY_OPTOUT: 1
+jobs:
+    build_and_test:
+        <<: *defaults
+        steps:
+            - checkout
+            - run: chmod ugo+x ./build.sh
+            - run:
+                # build has to be from the build.sh in order to pick the correct version numbers, etc.
+                name: build
+                command: ./build.sh build
+            - run:
+                name: pack
+                command: dotnet pack --no-build -c Release source/trx2junit
+            - run:
+                name: global tool install
+                command: |
+                    dotnet tool install -g trx2junit --source-feed $(pwd)/NuGet-Packed
+                    export PATH="$PATH:/root/.dotnet/tools"
+            - run:
+                name: run-sample
+                command: |
+                    # default is `set -e`, so override it on behalve that the test-failure is not reported
+                    set +e
+                    dotnet test --no-build -c Release --logger "trx;LogFileName=test.trx" samples/SimpleUnitTest
+                    mkdir ./TestResults
+                    mv samples/SimpleUnitTest/TestResults/test.trx ./TestResults/test.trx
+                    trx2junit ./TestResults/test.trx
+            - run:
+                name: verify
+                command: |
+                    if [[ ! -f "TestResults/test.xml" ]]; then
+                        echo "sample test-results does not exist"
+                        exit 1
+                    fi
+
+                    xmllint --noout --schema schemas/junit.xsd TestResults/test.xml
+            - persist_to_workspace:
+                root: .
+                paths:
+                    - source/**/bin
+                    - NuGet-Packed
+            - store_test_results:
+                path: TestResults
+            - store_artifacts:
+                path: TestResults
+                destination: TestResults
+    deploy_nuget:
+        <<: *defaults
+        steps:
+            - checkout
+            - attach_workspace:
+                at: .
+            - run:
+                name: deploy to NuGet
+                command: |
+                    chmod ugo+x ./build.sh
+                    ./build.sh deploy nuget
+
+workflows:
+    version: 2
+    build_test_deploy:
+        jobs:
+            - build_and_test:
+                filters:
+                    tags:
+                        only: /^v[0-9]\.[0-9]\.[0-9](-preview-[0-9]+)?$/
+            - deploy_nuget:
+                requires:
+                    - build_and_test
+                filters:
+                    branches:
+                        ignore: /.*/
+                    tags:
+                        only: /^v[0-9]\.[0-9]\.[0-9]$/
+                context: org-global

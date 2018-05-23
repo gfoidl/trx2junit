@@ -1,0 +1,26 @@
+﻿<Project>
+    
+    <PropertyGroup>
+        <VersionMajor Condition="'$(VersionMajor)' == ''">0</VersionMajor>
+        <VersionMinor Condition="'$(VersionMinor)' == ''">2</VersionMinor>
+        <VersionPatch Condition="'$(VersionPatch)' == ''">0</VersionPatch>
+        <BuildNumber Condition="'$(BuildNumber)' == ''">8</BuildNumber>
+        <VersionSuffix Condition="'$(Configuration)' == 'Debug' and '$(VersionSuffix)' == ''">dev</VersionSuffix>
+        <Authors>gfoidl</Authors>
+        <Company>Foidl Günther</Company>
+        <Product>trx2junit</Product>
+        <Copyright>Copyright © Foidl Günther 2017-2018</Copyright>
+        <VersionPrefix>$(VersionMajor).$(VersionMinor).$(VersionPatch)</VersionPrefix>
+        <AssemblyVersion>$(VersionMajor).$(VersionMinor).$(BuildNumber).$(VersionPatch)</AssemblyVersion>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <PackageOutputPath>$(MSBuildThisFileDirectory)NuGet-Packed</PackageOutputPath>
+    </PropertyGroup>
+
+    <Target Name="VersionInfo" BeforeTargets="BeforeBuild">
+        <Message Importance="high" Text="$(MSBuildProjectName) BuildNumber: $(BuildNumber) --> Version: $(Version), AssemblyVersion: $(AssemblyVersion)" />
+        <Message Importance="high" Text=" " Condition="'$(Configuration)' == 'Debug'" />
+    </Target>
+
+</Project>
