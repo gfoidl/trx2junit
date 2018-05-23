@@ -24,7 +24,7 @@ jobs:
                 command: ./build.sh build
             - run:
                 name: pack
-                command: ./build.sh deploy local
+                command: ./build.sh pack
             - run:
                 name: global tool install
                 command: |
@@ -51,10 +51,13 @@ jobs:
                 command: |
                     # default is `set -e`, so override it on behalve that the test-failure is not reported
                     set +e
+
                     dotnet test --no-build -c Release --logger "trx;LogFileName=test.trx" samples/SimpleUnitTest
+
                     echo ""
                     mkdir ./TestResults
                     mv samples/SimpleUnitTest/TestResults/test.trx ./TestResults/test.trx
+
                     trx2junit ./TestResults/test.trx
             - run:
                 name: verify
@@ -68,7 +71,6 @@ jobs:
             - persist_to_workspace:
                 root: .
                 paths:
-                    - source/**/bin
                     - NuGet-Packed
             - store_test_results:
                 path: TestResults

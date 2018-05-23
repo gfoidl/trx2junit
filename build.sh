@@ -5,6 +5,7 @@
 # Arguments:
 #   build               builds the solution
 #   test                runs all tests under ./tests
+#   pack                creates the NuGet-package
 #   deploy              deploys to $2, which must be either nuget or myget
 #                       * when CI_SKIP_DEPLOY is set, no deploy is done
 #                       * when DEBUG is set, the action is echoed and not done
@@ -22,10 +23,10 @@
 #   build               builds the solution
 #   deploy              deploys the solution either to nuget or myget
 #   main                entry-point
+#   pack                creates the NuGet-package
 #   setBuildEnv         sets the environment variables regarding the build-environment
 #   test                runs tests for projects in ./tests
 #   _deployCore         helper -- used by deploy
-#   _pack               helper -- used by deploy
 #   _testCore           helper -- used by test
 #
 # Exit-codes:
@@ -42,6 +43,7 @@ help() {
     echo "Arguments:"
     echo "  build                  builds the solution"
     echo "  test                   runs all tests under ./tests"
+    echo "  pack                   creates the NuGet-package"
     echo "  deploy [nuget|myget]   deploys to the destination"
 }
 #------------------------------------------------------------------------------
@@ -143,7 +145,7 @@ test() {
     find "$testDir" -name "*.csproj" -print0 | xargs -0 -n1 bash -c '_testCore "$@"' _
 }
 #------------------------------------------------------------------------------
-_pack() {
+pack() {
     dotnet restore
 
     find source -name "*.csproj" -print0 | xargs -0 -n1 dotnet pack -o "$(pwd)/NuGet-Packed" --no-build -c Release
@@ -166,8 +168,6 @@ deploy() {
         return
     fi
 
-    _pack
-
     if [[ "$1" == "nuget" ]]; then
         _deployCore "$NUGET_FEED" "$NUGET_KEY"
     elif [[ "$1" == "myget" ]]; then
@@ -187,6 +187,8 @@ main() {
         build)  build
                 ;;
         test)   test
+                ;;
+        pack)   pack
                 ;;
         deploy)
                 shift
