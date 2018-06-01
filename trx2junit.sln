@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{292C2B9E-E093-4476-AE17-A08F144AC27A}"
     ProjectSection(SolutionItems) = preProject
         build.sh = build.sh
+        ci-nuget.config = ci-nuget.config
         Directory.Build.props = Directory.Build.props
     EndProjectSection
 EndProject
@@ -28,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".circleci", ".circleci", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{15D1FCD7-8027-4DD0-BF1A-BFC295C99332}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleUnitTest", "samples\SimpleUnitTest\SimpleUnitTest.csproj", "{D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUnitTest", "samples\SimpleUnitTest\SimpleUnitTest.csproj", "{D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{7F5905D2-5BCD-4D98-AE53-98F2FFC9DE9D}"
     ProjectSection(SolutionItems) = preProject
