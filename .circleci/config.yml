@@ -41,10 +41,12 @@ jobs:
                     fi
 
                     # special handling for pre-releases (is a constraint by .net Core global tools)
+                    # and also to prevent installation from NuGet-feed (which may have higher version than the 
+                    # built tool)
                     if [[ -z "$ToolVersion" ]]; then
-                        dotnet tool install -g trx2junit --add-source $(pwd)/NuGet-Packed
+                        dotnet tool install -g --configfile=ci-nuget.config trx2junit
                     else
-                        dotnet tool install -g --version "$ToolVersion" trx2junit --source-feed $(pwd)/NuGet-Packed
+                        dotnet tool install -g --version="$ToolVersion" --configfile=ci-nuget.config trx2junit
                     fi
             - run:
                 name: run-sample
