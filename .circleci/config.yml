@@ -2,7 +2,7 @@ version: 2
 defaults: &defaults
     working_directory: ~/repo
     docker:
-        - image: gfoidl/dotnet-xmllint:2.1-rc1
+        - image: gfoidl/dotnet-xmllint:2.1
           environment:
             DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
             DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -42,7 +42,7 @@ jobs:
 
                     # special handling for pre-releases (is a constraint by .net Core global tools)
                     if [[ -z "$ToolVersion" ]]; then
-                        dotnet tool install -g trx2junit --source-feed $(pwd)/NuGet-Packed
+                        dotnet tool install -g trx2junit --add-source $(pwd)/NuGet-Packed
                     else
                         dotnet tool install -g --version "$ToolVersion" trx2junit --source-feed $(pwd)/NuGet-Packed
                     fi
