@@ -54,11 +54,11 @@ jobs:
                     # default is `set -e`, so override it on behalve that the test-failure is not reported
                     set +e
 
-                    dotnet test --no-build -c Release --logger "trx;LogFileName=test.trx" samples/SimpleUnitTest
+                    dotnet test --no-build -c Release --logger "trx;LogFileName=test.trx" samples/NUnitSample
 
                     echo ""
                     mkdir ./TestResults
-                    mv samples/SimpleUnitTest/TestResults/test.trx ./TestResults/test.trx
+                    mv samples/NUnitSample/TestResults/test.trx ./TestResults/test.trx
 
                     trx2junit ./TestResults/test.trx
             - run:
