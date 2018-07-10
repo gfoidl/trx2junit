@@ -4,62 +4,62 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B5D05395-4D8B-40A2-A03E-BFF4E76D7F7B}"
-    ProjectSection(SolutionItems) = preProject
-        .gitattributes = .gitattributes
-        .gitignore = .gitignore
-        LICENSE = LICENSE
-        ReadMe.md = ReadMe.md
-    EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		ReadMe.md = ReadMe.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{49823B21-7C47-43DF-B3C1-4F48E2237EAD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trx2junit", "source\trx2junit\trx2junit.csproj", "{FD8336E3-655B-430A-A72F-377E83D54C63}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{292C2B9E-E093-4476-AE17-A08F144AC27A}"
-    ProjectSection(SolutionItems) = preProject
-        build.sh = build.sh
-        ci-nuget.config = ci-nuget.config
-        Directory.Build.props = Directory.Build.props
-    EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		build.sh = build.sh
+		ci-nuget.config = ci-nuget.config
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".circleci", ".circleci", "{148DD984-1D1C-4A97-A5F5-907812DCA662}"
-    ProjectSection(SolutionItems) = preProject
-        .circleci\config.yml = .circleci\config.yml
-    EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		.circleci\config.yml = .circleci\config.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{15D1FCD7-8027-4DD0-BF1A-BFC295C99332}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUnitTest", "samples\SimpleUnitTest\SimpleUnitTest.csproj", "{D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{7F5905D2-5BCD-4D98-AE53-98F2FFC9DE9D}"
-    ProjectSection(SolutionItems) = preProject
-        schemas\junit.xsd = schemas\junit.xsd
-    EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		schemas\junit.xsd = schemas\junit.xsd
+	EndProjectSection
 EndProject
 Global
-    GlobalSection(SolutionConfigurationPlatforms) = preSolution
-        Debug|Any CPU = Debug|Any CPU
-        Release|Any CPU = Release|Any CPU
-    EndGlobalSection
-    GlobalSection(ProjectConfigurationPlatforms) = postSolution
-        {FD8336E3-655B-430A-A72F-377E83D54C63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {FD8336E3-655B-430A-A72F-377E83D54C63}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {FD8336E3-655B-430A-A72F-377E83D54C63}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {FD8336E3-655B-430A-A72F-377E83D54C63}.Release|Any CPU.Build.0 = Release|Any CPU
-        {D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-        {D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-        {D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}.Release|Any CPU.Build.0 = Release|Any CPU
-    EndGlobalSection
-    GlobalSection(SolutionProperties) = preSolution
-        HideSolutionNode = FALSE
-    EndGlobalSection
-    GlobalSection(NestedProjects) = preSolution
-        {FD8336E3-655B-430A-A72F-377E83D54C63} = {49823B21-7C47-43DF-B3C1-4F48E2237EAD}
-        {148DD984-1D1C-4A97-A5F5-907812DCA662} = {292C2B9E-E093-4476-AE17-A08F144AC27A}
-        {D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03} = {15D1FCD7-8027-4DD0-BF1A-BFC295C99332}
-    EndGlobalSection
-    GlobalSection(ExtensibilityGlobals) = postSolution
-        SolutionGuid = {4A779269-CD77-4716-9E1A-DF4AE5817A41}
-    EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD8336E3-655B-430A-A72F-377E83D54C63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD8336E3-655B-430A-A72F-377E83D54C63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD8336E3-655B-430A-A72F-377E83D54C63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD8336E3-655B-430A-A72F-377E83D54C63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FD8336E3-655B-430A-A72F-377E83D54C63} = {49823B21-7C47-43DF-B3C1-4F48E2237EAD}
+		{148DD984-1D1C-4A97-A5F5-907812DCA662} = {292C2B9E-E093-4476-AE17-A08F144AC27A}
+		{D4B6DA3F-DD24-4CCC-A5CF-8E9246497D03} = {15D1FCD7-8027-4DD0-BF1A-BFC295C99332}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A779269-CD77-4716-9E1A-DF4AE5817A41}
+	EndGlobalSection
 EndGlobal
