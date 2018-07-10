@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace SimpleUnitTest
+namespace NUnitSample
 {
     [TestFixture]
     public class SimpleTests

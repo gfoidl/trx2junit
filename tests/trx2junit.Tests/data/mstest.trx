@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="7ef6025b-b0ce-4655-8da0-380a543c792b" name="@b1c9b4be3f08 2018-07-10 10:16:59" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+	<Times creation="2018-07-10T10:16:59.8649827+00:00" queuing="2018-07-10T10:16:59.8649952+00:00" start="2018-07-10T10:16:57.7617954+00:00" finish="2018-07-10T10:16:59.8852521+00:00" />
+	<TestSettings name="default" id="7c93de57-c567-400f-870f-2f0ce346c6c5">
+		<Deployment runDeploymentRoot="_b1c9b4be3f08_2018-07-10_10_16_59" />
+	</TestSettings>
+	<Results>
+		<UnitTestResult executionId="9003ae8d-2ba0-466c-90cc-3e3bace5f6c1" testId="adbb17fe-768b-1c0c-abd4-0d9d1cb35a20" testName="Failing_test" computerName="b1c9b4be3f08" duration="00:00:00.0283517" startTime="2018-07-10T10:16:58.6240086+00:00" endTime="2018-07-10T10:16:58.6528860+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9003ae8d-2ba0-466c-90cc-3e3bace5f6c1">
+			<Output>
+				<ErrorInfo>
+					<Message>Assert.Fail failed. Failing for demo purposes</Message>
+				</ErrorInfo>
+			</Output>
+		</UnitTestResult>
+		<UnitTestResult executionId="c4a0f980-428e-4872-ab52-85657240d233" testId="0c5d47ab-65f0-de3a-ff6c-39359ff70568" testName="Passing_test" computerName="b1c9b4be3f08" duration="00:00:00.0069936" startTime="2018-07-10T10:16:58.5676276+00:00" endTime="2018-07-10T10:16:58.6135700+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c4a0f980-428e-4872-ab52-85657240d233" />
+		<UnitTestResult executionId="e3a18d60-fa03-427a-8948-f1b955898163" testId="93831b92-1299-5332-b0e8-909ef99b0104" testName="Slow_test" computerName="b1c9b4be3f08" duration="00:00:01.0008795" startTime="2018-07-10T10:16:58.6529254+00:00" endTime="2018-07-10T10:16:59.6539707+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e3a18d60-fa03-427a-8948-f1b955898163" />
+	</Results>
+	<TestDefinitions>
+		<UnitTest name="Slow_test" storage="/root/repo/samples/mstestsample/bin/release/netcoreapp2.1/mstestsample.dll" id="93831b92-1299-5332-b0e8-909ef99b0104">
+			<Execution id="e3a18d60-fa03-427a-8948-f1b955898163" />
+			<TestMethod codeBase="/root/repo/samples/MsTestSample/bin/Release/netcoreapp2.1/MsTestSample.dll" adapterTypeName="executor://mstestadapter/v2" className="MsTestSample.SimpleTests" name="Slow_test" />
+		</UnitTest>
+		<UnitTest name="Failing_test" storage="/root/repo/samples/mstestsample/bin/release/netcoreapp2.1/mstestsample.dll" id="adbb17fe-768b-1c0c-abd4-0d9d1cb35a20">
+			<Execution id="9003ae8d-2ba0-466c-90cc-3e3bace5f6c1" />
+			<TestMethod codeBase="/root/repo/samples/MsTestSample/bin/Release/netcoreapp2.1/MsTestSample.dll" adapterTypeName="executor://mstestadapter/v2" className="MsTestSample.SimpleTests" name="Failing_test" />
+		</UnitTest>
+		<UnitTest name="Passing_test" storage="/root/repo/samples/mstestsample/bin/release/netcoreapp2.1/mstestsample.dll" id="0c5d47ab-65f0-de3a-ff6c-39359ff70568">
+			<Execution id="c4a0f980-428e-4872-ab52-85657240d233" />
+			<TestMethod codeBase="/root/repo/samples/MsTestSample/bin/Release/netcoreapp2.1/MsTestSample.dll" adapterTypeName="executor://mstestadapter/v2" className="MsTestSample.SimpleTests" name="Passing_test" />
+		</UnitTest>
+	</TestDefinitions>
+	<TestEntries>
+		<TestEntry testId="adbb17fe-768b-1c0c-abd4-0d9d1cb35a20" executionId="9003ae8d-2ba0-466c-90cc-3e3bace5f6c1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+		<TestEntry testId="0c5d47ab-65f0-de3a-ff6c-39359ff70568" executionId="c4a0f980-428e-4872-ab52-85657240d233" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+		<TestEntry testId="93831b92-1299-5332-b0e8-909ef99b0104" executionId="e3a18d60-fa03-427a-8948-f1b955898163" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+	</TestEntries>
+	<TestLists>
+		<TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+		<TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+	</TestLists>
+	<ResultSummary outcome="Failed">
+		<Counters total="3" executed="3" passed="2" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+	</ResultSummary>
+</TestRun>
