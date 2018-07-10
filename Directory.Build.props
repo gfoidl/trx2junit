@@ -1,10 +1,10 @@
 ﻿<Project>
     
     <PropertyGroup>
-        <VersionMajor Condition="'$(VersionMajor)' == ''">0</VersionMajor>
-        <VersionMinor Condition="'$(VersionMinor)' == ''">2</VersionMinor>
-        <VersionPatch Condition="'$(VersionPatch)' == ''">0</VersionPatch>
-        <BuildNumber Condition="'$(BuildNumber)' == ''">8</BuildNumber>
+        <VersionMajor Condition="'$(VersionMajor)' == ''">1</VersionMajor>
+        <VersionMinor Condition="'$(VersionMinor)' == ''">0</VersionMinor>
+        <VersionPatch Condition="'$(VersionPatch)' == ''">1</VersionPatch>
+        <BuildNumber Condition="'$(BuildNumber)' == ''">24</BuildNumber>
         <VersionSuffix Condition="'$(Configuration)' == 'Debug' and '$(VersionSuffix)' == ''">dev</VersionSuffix>
         <Authors>gfoidl</Authors>
         <Company>Foidl Günther</Company>
