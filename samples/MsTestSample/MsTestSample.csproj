@@ -3,10 +3,10 @@
     <PropertyGroup>
         <TargetFramework>$(SampleTfm)</TargetFramework>
     </PropertyGroup>
-
+    
     <ItemGroup>
-        <PackageReference Include="NUnit" Version="3.10.1" />
-        <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
+        <PackageReference Include="MSTest.TestAdapter" Version="1.2.1" />
+        <PackageReference Include="MSTest.TestFramework" Version="1.2.1" />
     </ItemGroup>
 
 </Project>
