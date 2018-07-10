@@ -39,7 +39,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{7F59
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitSample", "samples\NUnitSample\NUnitSample.csproj", "{AB4EB02B-E16A-40B7-8524-A4F752FDFBBA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsTestSample", "samples\MsTestSample\MsTestSample.csproj", "{BA191F72-A499-4D5B-972C-66EF3BD24B99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsTestSample", "samples\MsTestSample\MsTestSample.csproj", "{BA191F72-A499-4D5B-972C-66EF3BD24B99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B42081F2-652A-46C6-8E10-D727A3C360A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
