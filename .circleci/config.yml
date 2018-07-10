@@ -23,6 +23,9 @@ jobs:
                 name: build
                 command: ./build.sh build
             - run:
+                name: test
+                command: ./build.sh test
+            - run:
                 name: pack
                 command: ./build.sh pack
             - run:
