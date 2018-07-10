@@ -41,7 +41,7 @@ jobs:
                     fi
 
                     # special handling for pre-releases (is a constraint by .net Core global tools)
-                    # and also to prevent installation from NuGet-feed (which may have higher version than the 
+                    # and also to prevent installation from NuGet-feed (which may have higher version than the
                     # built tool)
                     if [[ -z "$ToolVersion" ]]; then
                         dotnet tool install -g --configfile=ci-nuget.config trx2junit
@@ -49,27 +49,37 @@ jobs:
                         dotnet tool install -g --version="$ToolVersion" --configfile=ci-nuget.config trx2junit
                     fi
             - run:
-                name: run-sample
+                name: run-samples
                 command: |
                     # default is `set -e`, so override it on behalve that the test-failure is not reported
                     set +e
 
-                    dotnet test --no-build -c Release --logger "trx;LogFileName=test.trx" samples/NUnitSample
+                    dotnet test --no-build -c Release --logger "trx;LogFileName=nunit.trx"  samples/NUnitSample
+                    dotnet test --no-build -c Release --logger "trx;LogFileName=mstest.trx" samples/MsTestSample
 
                     echo ""
                     mkdir ./TestResults
-                    mv samples/NUnitSample/TestResults/test.trx ./TestResults/test.trx
+                    mv samples/NUnitSample/TestResults/nunit.trx   ./TestResults/nunit.trx
+                    mv samples/MsTestSample/TestResults/mstest.trx ./TestResults/mstest.trx
 
-                    trx2junit ./TestResults/test.trx
+                    trx2junit ./TestResults/nunit.trx
+                    trx2junit ./TestResults/mstest.trx
             - run:
-                name: verify
+                name: verify-xml
                 command: |
-                    if [[ ! -f "TestResults/test.xml" ]]; then
-                        echo "sample test-results does not exist"
+                    if [[ ! -f "TestResults/nunit.xml" ]]; then
+                        echo "nunit.xml test-results do not exist"
                         exit 1
+                    else
+                        xmllint --noout --schema schemas/junit.xsd TestResults/nunit.xml
                     fi
 
-                    xmllint --noout --schema schemas/junit.xsd TestResults/test.xml
+                    if [[ ! -f "TestResults/mstest.xml" ]]; then
+                        echo "mstest.xml test-results do not exist"
+                        exit 1
+                    else
+                        xmllint --noout --schema schemas/junit.xsd TestResults/mstest.xml
+                    fi
             - persist_to_workspace:
                 root: .
                 paths:
