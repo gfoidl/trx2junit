@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Xml.Linq;
 using trx2junit.Models;
 
@@ -43,7 +44,6 @@ namespace trx2junit
 
             _test.ResultSummary = new ResultSummary
             {
-                StdOut   = xResults.Element(s_XN + "Output").Element(s_XN + "StdOut").Value,
                 Outcome  = Enum.Parse<Outcome>(xResults.Attribute("outcome").Value),
                 Error    = xCounters.ReadInt("error"),
                 Executed = xCounters.ReadInt("executed"),
@@ -51,6 +51,14 @@ namespace trx2junit
                 Passed   = xCounters.ReadInt("passed"),
                 Total    = xCounters.ReadInt("total")
             };
+
+            // MsTest doesn't have this element, so be defensive
+            _test.ResultSummary.StdOut = xResults
+                .Elements(s_XN + "Output")
+                .FirstOrDefault()
+                ?.Elements(s_XN + "StdOut")
+                ?.FirstOrDefault()
+                ?.Value;
         }
         //---------------------------------------------------------------------
         private void ReadTestDefinitions()
