@@ -5,6 +5,7 @@
         Passed,
         Failed,
         NotExecuted,
-        Completed
+        Completed,
+        Warning
     }
 }

@@ -21,6 +21,14 @@ namespace trx2junit.Tests.Internal.TrxParserTests
 
             Assert.IsNotNull(actual);
         }
+
+        [Test]
+        public void Parse_MsTest_with_warnings___OK()
+        {
+            Models.Test actual = this.ParseCore("./data/mstest-warning.trx");
+
+            Assert.IsNotNull(actual);
+        }
         //---------------------------------------------------------------------
         private Models.Test ParseCore(string fileName)
         {
