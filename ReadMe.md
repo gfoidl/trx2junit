@@ -24,7 +24,7 @@ Converting 'a.trx' to 'a.xml'
 Converting 'b.trx' to 'b.xml'
 done in 0.1234567 seconds. bye.
 
-# handle all trx files in a folder
+# for shells that handle wildcard expansion:
 $ trx2junit results/*.trx
 Converting 1 trx file(s) to JUnit-xml...
 Converting 'example.trx' to 'example.xml'
