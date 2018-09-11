@@ -23,7 +23,7 @@ namespace trx2junit.Tests.Internal.TrxParserTests
         }
 
         [Test]
-        public void Parse_MsTestWithWarnings___OK()
+        public void Parse_MsTest_with_warnings___OK()
         {
             Models.Test actual = this.ParseCore("./data/mstest-warning.trx");
 
