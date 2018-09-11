@@ -11,6 +11,8 @@ namespace trx2junit
 {
     static class Program
     {
+        private static readonly Encoding Utf8 = new UTF8Encoding(false);
+
         static async Task Main(string[] args)
         {
             if (args.Length < 1)
@@ -51,9 +53,8 @@ namespace trx2junit
         private static async Task Convert(string trxFile){
             string jUnitFile = Path.ChangeExtension(trxFile, "xml");
             Console.WriteLine($"Converting '{trxFile}' to '{jUnitFile}'");
-            var utf8 = new UTF8Encoding(false);
             using (Stream input      = File.OpenRead(trxFile))
-            using (TextWriter output = new StreamWriter(jUnitFile, false, utf8))
+            using (TextWriter output = new StreamWriter(jUnitFile, false, Utf8))
             {
                 var converter = new Trx2JunitConverter();
                 await converter.Convert(input, output);
