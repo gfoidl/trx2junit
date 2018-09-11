@@ -14,6 +14,23 @@ Can be used for CI-scenarios, like [CircleCi](https://circleci.com/), where as t
 When installed as [.NET Core 2.1 Global Tools](https://natemcmaster.com/blog/2018/05/12/dotnet-global-tools/):  
 `trx2junit {trxFile}` where _trxFile_ is the path to the trx-file.
 
+You can pass more than one trx file, each will create it's own junit xml file.
+
+```console
+# handle two files
+$ trx2junit a.trx b.trx
+Converting 2 trx file(s) to JUnit-xml...
+Converting 'a.trx' to 'a.xml'
+Converting 'b.trx' to 'b.xml'
+done in 0.1234567 seconds. bye.
+
+# handle all trx files in a folder
+$ trx2junit results/*.trx
+Converting 1 trx file(s) to JUnit-xml...
+Converting 'example.trx' to 'example.xml'
+done in 0.1234567 seconds. bye.
+```
+
 ## Installation
 
 ```sh

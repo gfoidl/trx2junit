@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,22 +40,24 @@ namespace trx2junit
             Thread.CurrentThread.CurrentCulture   = CultureInfo.InvariantCulture;
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
-            string trxFile   = args[0];
-            string jUnitFile = Path.ChangeExtension(trxFile, "xml");
-
-            Console.WriteLine($"Converting trx-file '{trxFile}' to JUnit-xml...");
+            Console.WriteLine($"Converting {args.Length } trx file(s) to JUnit-xml...");
             DateTime start = DateTime.Now;
 
-            var utf8 = new UTF8Encoding(false);
+            await Task.WhenAll(args.Select(Convert));
 
+            Console.WriteLine($"done in {(DateTime.Now - start).TotalSeconds} seconds. bye.");
+        }
+
+        private static async Task Convert(string trxFile){
+            string jUnitFile = Path.ChangeExtension(trxFile, "xml");
+            Console.WriteLine($"Converting '{trxFile}' to '{jUnitFile}'");
+            var utf8 = new UTF8Encoding(false);
             using (Stream input      = File.OpenRead(trxFile))
             using (TextWriter output = new StreamWriter(jUnitFile, false, utf8))
             {
                 var converter = new Trx2JunitConverter();
                 await converter.Convert(input, output);
             }
-
-            Console.WriteLine($"done in {(DateTime.Now - start).TotalSeconds} seconds. bye.");
         }
     }
 }
