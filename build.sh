@@ -30,7 +30,6 @@
 #   _testCore           helper -- used by test
 #
 # Exit-codes:
-#   1000                NAME environment variable is not set to project-name (for packaging)
 #   1001                deploy target is neither 'nuget' nor 'myget', so it is unknown
 #   1002                no args given for script, help is displayed and exited
 #   $?                  exit-code for build-step is returned unmodified
@@ -48,11 +47,6 @@ help() {
 }
 #------------------------------------------------------------------------------
 setBuildEnv() {
-    if [[ -z "$NAME" ]]; then
-        echo "NAME environment variable must be set to project-name (for packaging)"
-        exit 1000
-    fi
-
     if [[ -z "$CI_BUILD_NUMBER" ]]; then
         if [[ -n "$CIRCLECI" ]]; then
             export CI_BUILD_NUMBER=$CIRCLE_BUILD_NUM
