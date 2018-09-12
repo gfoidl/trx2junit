@@ -14,7 +14,7 @@ jobs:
             - run:
                 name: init
                 command: |
-                    chmod ugo+x ./build.sh
+                    chmod ugo+x ./*.sh
 
                     # for .net Core global tools
                     echo export PATH="$PATH:/root/.dotnet/tools" >> "$BASH_ENV"
@@ -67,22 +67,36 @@ jobs:
 
                     trx2junit ./TestResults/nunit.trx
                     trx2junit ./TestResults/mstest.trx
-            - run:
-                name: verify-xml
-                command: |
-                    if [[ ! -f "TestResults/nunit.xml" ]]; then
-                        echo "nunit.xml test-results do not exist"
-                        exit 1
-                    else
-                        xmllint --noout --schema schemas/junit.xsd TestResults/nunit.xml
-                    fi
 
-                    if [[ ! -f "TestResults/mstest.xml" ]]; then
-                        echo "mstest.xml test-results do not exist"
-                        exit 1
-                    else
-                        xmllint --noout --schema schemas/junit.xsd TestResults/mstest.xml
-                    fi
+                    echo ""
+                    ./verify-xml.sh "TestResults/nunit.xml"
+                    ./verify-xml.sh "TestResults/mstest.xml"
+            - run:
+                name: run-multiple-args
+                command: |
+                    mkdir ./multiple-args
+                    cp tests/trx2junit.Tests/data/* ./multiple-args
+
+                    echo ""
+                    trx2junit ./multiple-args/mstest.trx ./multiple-args/mstest-warning.trx ./multiple-args/nunit.trx
+
+                    echo ""
+                    ./verify-xml.sh "multiple-args/mstest.xml"
+                    ./verify-xml.sh "multiple-args/mstest-warning.xml"
+                    ./verify-xml.sh "multiple-args/nunit.xml"
+            - run:
+                name: run-globbing
+                command: |
+                    mkdir ./globbing
+                    cp tests/trx2junit.Tests/data/* ./globbing
+
+                    echo ""
+                    trx2junit ./globbing/*.trx
+
+                    echo ""
+                    ./verify-xml.sh "multiple-args/mstest.xml"
+                    ./verify-xml.sh "multiple-args/mstest-warning.xml"
+                    ./verify-xml.sh "multiple-args/nunit.xml"
             - persist_to_workspace:
                 root: .
                 paths:
