@@ -1,13 +1,13 @@
-| CircleCI | NuGet |  
-| -- | -- |  
-| [![CircleCI](https://circleci.com/gh/gfoidl/trx2junit/tree/master.svg?style=svg)](https://circleci.com/gh/gfoidl/trx2junit/tree/master) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) |  
+| CircleCI | NuGet | MyGet |  
+| -- | -- | -- |     
+| [![CircleCI](https://circleci.com/gh/gfoidl/trx2junit/tree/master.svg?style=svg)](https://circleci.com/gh/gfoidl/trx2junit/tree/master) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) | [![MyGet Pre Release](https://img.shields.io/myget/gfoidl/vpre/trx2junit.svg?style=flat-square)](https://www.myget.org/feed/gfoidl/package/nuget/trx2junit) |  
 
 # trx2junit (.NET Core global tool)
 
 Helper for converting trx-Testresults (`dotnet test --logger "trx"`) to a JUnit-based XML file.  
 The JUnit-output will be in the same directory than the trx-file.
 
-Can be used for CI-scenarios, like [CircleCi](https://circleci.com/), where as test results JUnit is expected.
+Can be used for CI-scenarios, like [CircleCi](https://circleci.com/) or [GitLab](https://docs.gitlab.com/ee/ci/junit_test_reports.html), where as test results JUnit is expected.
 
 ## Usage
 
