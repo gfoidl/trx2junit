@@ -27,7 +27,8 @@ namespace trx2junit
             Console.WriteLine($"done in {(DateTime.Now - start).TotalSeconds} seconds. bye.");
         }
         //---------------------------------------------------------------------
-        private async Task Convert(string trxFile)
+        // internal for testing
+        internal async Task Convert(string trxFile)
         {
             string jUnitFile = Path.ChangeExtension(trxFile, "xml");
 
