@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{292C2B9E
 		build.sh = build.sh
 		ci-nuget.config = ci-nuget.config
 		Directory.Build.props = Directory.Build.props
+		verify-xml.sh = verify-xml.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".circleci", ".circleci", "{148DD984-1D1C-4A97-A5F5-907812DCA662}"
