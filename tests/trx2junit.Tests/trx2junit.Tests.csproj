@@ -15,6 +15,7 @@
 
     <ItemGroup>
         <Content Include="data\*.trx" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="..\..\schemas\junit.xsd" Link="data\junit.xsd" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
 </Project>
