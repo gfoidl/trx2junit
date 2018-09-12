@@ -21,7 +21,7 @@ namespace trx2junit.Tests.Internal.TrxParserTests
 
             Assert.IsNotNull(actual);
         }
-
+        //---------------------------------------------------------------------
         [Test]
         public void Parse_MsTest_with_warnings___OK()
         {
