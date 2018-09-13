@@ -16,8 +16,9 @@ namespace trx2junit
 
             try
             {
-                var worker = new Worker();
-                await worker.RunAsync(args);
+                var worker  = new Worker();
+                var options = WorkerOptions.Parse(args);
+                await worker.RunAsync(options);
             }
             catch (Exception ex) when (!Debugger.IsAttached)
             {
