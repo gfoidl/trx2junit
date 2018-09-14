@@ -2,9 +2,9 @@
     
     <PropertyGroup>
         <VersionMajor Condition="'$(VersionMajor)' == ''">1</VersionMajor>
-        <VersionMinor Condition="'$(VersionMinor)' == ''">1</VersionMinor>
+        <VersionMinor Condition="'$(VersionMinor)' == ''">2</VersionMinor>
         <VersionPatch Condition="'$(VersionPatch)' == ''">0</VersionPatch>
-        <BuildNumber Condition="'$(BuildNumber)' == ''">24</BuildNumber>
+        <BuildNumber Condition="'$(BuildNumber)' == ''">56</BuildNumber>
         <VersionSuffix Condition="'$(Configuration)' == 'Debug' and '$(VersionSuffix)' == ''">dev</VersionSuffix>
         <Authors>gfoidl</Authors>
         <Company>Foidl Günther</Company>
