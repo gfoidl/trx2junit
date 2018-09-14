@@ -31,6 +31,16 @@ Converting 'example.trx' to 'example.xml'
 done in 0.1234567 seconds. bye.
 ```
 
+A different location for the JUnit-output can be specified:
+
+```console
+# specify different output location
+$ trx2junit a.trx --output ../results
+
+# or
+$ trx2junit --output results a.trx ../tests/b.trx
+```
+
 ## Installation
 
 ```sh

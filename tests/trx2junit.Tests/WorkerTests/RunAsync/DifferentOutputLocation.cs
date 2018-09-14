@@ -2,21 +2,24 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace trx2junit.Tests.WorkerTests
+namespace trx2junit.Tests.WorkerTests.RunAsync
 {
     [TestFixture]
-    public class RunAsync
+    public class DifferentOutputLocation
     {
         [Test]
         public async Task Single_file_given___converted()
         {
-            string[] expectedFiles = { "./data/nunit.xml" };
-            DeleteExpectedFiles(expectedFiles);
+            string[] expectedFiles = { "./data/out/nunit.xml" };
+
+            if (Directory.Exists("./data/out"))
+                Directory.Delete("./data/out", true);
 
             var sut = new Worker();
 
-            string[] args = { "./data/nunit.trx" };
-            await sut.RunAsync(args);
+            string[] args = { "./data/nunit.trx", "--output", "./data/out" };
+            var options   = WorkerOptions.Parse(args);
+            await sut.RunAsync(options);
 
             CheckExpectedFilesExist(expectedFiles);
         }
@@ -24,21 +27,18 @@ namespace trx2junit.Tests.WorkerTests
         [Test]
         public async Task Multiple_files_given___converted()
         {
-            string[] expectedFiles = { "./data/nunit.xml", "./data/mstest.xml", "./data/mstest-warning.xml" };
-            DeleteExpectedFiles(expectedFiles);
+            string[] expectedFiles = { "./data/out/nunit.xml", "./data/out/mstest.xml", "./data/out/mstest-warning.xml" };
+
+            if (Directory.Exists("./data/out"))
+                Directory.Delete("./data/out", true);
 
             var sut = new Worker();
 
-            string[] args = { "./data/nunit.trx", "./data/mstest.trx", "./data/mstest-warning.trx" };
-            await sut.RunAsync(args);
+            string[] args = { "./data/nunit.trx", "./data/mstest.trx", "./data/mstest-warning.trx", "--output", "./data/out" };
+            var options   = WorkerOptions.Parse(args);
+            await sut.RunAsync(options);
 
             CheckExpectedFilesExist(expectedFiles);
-        }
-        //---------------------------------------------------------------------
-        private static void DeleteExpectedFiles(string[] files)
-        {
-            foreach (string file in files)
-                File.Delete(file);
         }
         //---------------------------------------------------------------------
         private static void CheckExpectedFilesExist(string[] files)

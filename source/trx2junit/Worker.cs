@@ -12,25 +12,26 @@ namespace trx2junit
     {
         private static readonly Encoding s_utf8 = new UTF8Encoding(false);
         //---------------------------------------------------------------------
-        public async Task RunAsync(string[] args)
+        public async Task RunAsync(WorkerOptions options)
         {
-            if (args == null) throw new ArgumentNullException(nameof(args));
+            if (options == null) throw new ArgumentNullException(nameof(options));
 
             Thread.CurrentThread.CurrentCulture   = CultureInfo.InvariantCulture;
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
-            Console.WriteLine($"Converting {args.Length } trx file(s) to JUnit-xml...");
+            Console.WriteLine($"Converting {options.InputFiles.Count} trx file(s) to JUnit-xml...");
             DateTime start = DateTime.Now;
 
-            await Task.WhenAll(args.Select(this.Convert));
+            await Task.WhenAll(options.InputFiles.Select(trx => this.Convert(trx, options.OutputDirectory)));
 
             Console.WriteLine($"done in {(DateTime.Now - start).TotalSeconds} seconds. bye.");
         }
         //---------------------------------------------------------------------
         // internal for testing
-        internal async Task Convert(string trxFile)
+        internal async Task Convert(string trxFile, string outputPath = null)
         {
-            string jUnitFile = Path.ChangeExtension(trxFile, "xml");
+            string jUnitFile = GetJunitFile(trxFile, outputPath);
+            EnsureOutputDirectoryExists(jUnitFile);
 
             Console.WriteLine($"Converting '{trxFile}' to '{jUnitFile}'");
 
@@ -40,6 +41,24 @@ namespace trx2junit
                 var converter = new Trx2JunitConverter();
                 await converter.Convert(input, output);
             }
+        }
+        //---------------------------------------------------------------------
+        // internal for testing
+        internal static string GetJunitFile(string trxFile, string outputPath = null)
+        {
+            string junitFile = Path.ChangeExtension(trxFile, "xml");
+
+            if (outputPath == null)
+                return junitFile;
+
+            string fileName = Path.GetFileName(junitFile);
+            return Path.Combine(outputPath, fileName);
+        }
+        //---------------------------------------------------------------------
+        private static void EnsureOutputDirectoryExists(string jUnitFile)
+        {
+            string directory = Path.GetDirectoryName(jUnitFile);
+            Directory.CreateDirectory(directory);
         }
     }
 }
