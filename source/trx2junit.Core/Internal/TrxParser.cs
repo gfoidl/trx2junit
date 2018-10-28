@@ -44,7 +44,11 @@ namespace trx2junit
 
             _test.ResultSummary = new ResultSummary
             {
+#if NETCOREAPP2_1
                 Outcome  = Enum.Parse<Outcome>(xResults.Attribute("outcome").Value),
+#else
+                Outcome  = (Outcome)Enum.Parse(typeof(Outcome), xResults.Attribute("outcome").Value),
+#endif
                 Error    = xCounters.ReadInt("error"),
                 Executed = xCounters.ReadInt("executed"),
                 Failed   = xCounters.ReadInt("failed"),
@@ -90,7 +94,11 @@ namespace trx2junit
                     Duration    = xResult.ReadTimeSpan("duration"),
                     EndTime     = xResult.ReadDateTime("endTime"),
                     ExecutionId = xResult.ReadGuid("executionId"),
+#if NETCOREAPP2_1
                     Outcome     = Enum.Parse<Outcome>(xResult.Attribute("outcome").Value),
+#else
+                    Outcome     = (Outcome)Enum.Parse(typeof(Outcome), xResult.Attribute("outcome").Value),
+#endif
                     StartTime   = xResult.ReadDateTime("startTime"),
                     TestId      = xResult.ReadGuid("testId"),
                     TestName    = xResult.Attribute("testName").Value

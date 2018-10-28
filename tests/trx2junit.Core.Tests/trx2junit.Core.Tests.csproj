@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\source\trx2junit.Core\trx2junit.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="data\*.trx" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+</Project>

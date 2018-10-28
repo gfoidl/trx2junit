@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netcoreapp2.1;netstandard2.0</TargetFrameworks>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Description>Transforms XML from trx-Testresults to JUnit-Testresults / trx to JUnit XML</Description>
+        <PackageLicenseUrl>https://github.com/gfoidl/trx2junit/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/gfoidl/trx2junit</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/gfoidl/trx2junit</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>trx;junit;unit-tests;ci</PackageTags>
+    </PropertyGroup>
+
+</Project>
