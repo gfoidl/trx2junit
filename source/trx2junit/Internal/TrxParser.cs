@@ -65,6 +65,8 @@ namespace trx2junit
         {
             XElement xTestDefinitions = _trx.Element(s_XN + "TestDefinitions");
 
+            if (xTestDefinitions == null) return;
+
             foreach (XElement xUnitTest in xTestDefinitions.Elements())
             {
                 var testDefinition = new TestDefinition
@@ -82,6 +84,8 @@ namespace trx2junit
         private void ReadUnitTestResults()
         {
             XElement xResults = _trx.Element(s_XN + "Results");
+
+            if (xResults == null) return;
 
             foreach (XElement xResult in xResults.Elements())
             {

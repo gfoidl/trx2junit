@@ -15,6 +15,14 @@ namespace trx2junit.Tests.Internal.TrxParserTests
         }
         //---------------------------------------------------------------------
         [Test]
+        public void Parse_NUnit_with_no_tests___OK()
+        {
+            Models.Test actual = this.ParseCore("./data/nunit-no-tests.trx");
+
+            Assert.IsNotNull(actual);
+        }
+        //---------------------------------------------------------------------
+        [Test]
         public void Parse_MsTest___OK()
         {
             Models.Test actual = this.ParseCore("./data/mstest.trx");
