@@ -8,6 +8,8 @@ namespace trx2junit
     {
         static async Task Main(string[] args)
         {
+            PrintInfo();
+
             if (args.Length < 1)
             {
                 Console.WriteLine("first arg must be the trx-file");
@@ -30,6 +32,15 @@ namespace trx2junit
 
             if (Debugger.IsAttached)
                 Console.ReadKey();
+        }
+        //---------------------------------------------------------------------
+        private static void PrintInfo()
+        {
+            Version version = typeof(Program).Assembly.GetName().Version;
+
+            Console.WriteLine($"trx2junit (c) gfoidl -- v{version.Major}.{version.Minor}.{version.Revision}");
+            Console.WriteLine("https://github.com/gfoidl/trx2junit");
+            Console.WriteLine();
         }
     }
 }
