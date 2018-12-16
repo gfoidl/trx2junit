@@ -58,7 +58,9 @@ namespace trx2junit
         private static void EnsureOutputDirectoryExists(string jUnitFile)
         {
             string directory = Path.GetDirectoryName(jUnitFile);
-            Directory.CreateDirectory(directory);
+
+            if (!string.IsNullOrWhiteSpace(directory))
+                Directory.CreateDirectory(directory);
         }
     }
 }
