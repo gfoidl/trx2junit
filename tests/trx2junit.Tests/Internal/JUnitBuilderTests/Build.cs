@@ -50,8 +50,8 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
             var testsuiteList = result.Elements("testsuite").ToList();
 
             Assert.AreEqual(3, int.Parse(testsuiteList[0].Attribute("tests").Value));
-            Assert.AreEqual(2, int.Parse(testsuiteList[1].Attribute("tests").Value));
-            Assert.AreEqual(1, int.Parse(testsuiteList[2].Attribute("tests").Value));
+            Assert.AreEqual(1, int.Parse(testsuiteList[1].Attribute("tests").Value));
+            Assert.AreEqual(2, int.Parse(testsuiteList[2].Attribute("tests").Value));
             Assert.AreEqual(2, int.Parse(testsuiteList[3].Attribute("tests").Value));
         }
 
