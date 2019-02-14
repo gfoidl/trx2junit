@@ -1,16 +1,14 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
+using NUnit.Framework;
 
 namespace trx2junit.Tests.Internal.JUnitBuilderTests
 {
     [TestFixture]
     public class Build
     {
-        private Models.Test testData = new Models.Test();
+        private Models.Test _testData = new Models.Test();
 
         public Build()
         {
@@ -22,19 +20,18 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
             AddTestResult("Class3", "Method2", Outcome.Passed, new TimeSpan(0, 0, 12));
             AddTestResult("Class4", "Method1", Outcome.Completed, new TimeSpan(0, 0, 1));
             AddTestResult("Class4", "Method2", Outcome.Warning, new TimeSpan(0, 0, 1));
-
         }
 
         [Test]
         public void Build_Builds___OK()
         {
-            RunJUnitBuilder(testData);
+            RunJUnitBuilder(_testData);
         }
 
         [Test]
         public void Build_Correct_Test_Suites()
         {
-            var result = RunJUnitBuilder(testData);
+            var result = RunJUnitBuilder(_testData);
             var testsuiteList = result.Elements("testsuite").ToList();
 
             Assert.AreEqual("Class1", testsuiteList[0].Attribute("name").Value);
@@ -46,7 +43,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
         [Test]
         public void Build_Correct_Test_Suite_Test_Counts()
         {
-            var result = RunJUnitBuilder(testData);
+            var result = RunJUnitBuilder(_testData);
             var testsuiteList = result.Elements("testsuite").ToList();
 
             Assert.AreEqual(3, int.Parse(testsuiteList[0].Attribute("tests").Value));
@@ -58,7 +55,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
         [Test]
         public void Build_Correct_Test_Suite_Failure_Counts()
         {
-            var result = RunJUnitBuilder(testData);
+            var result = RunJUnitBuilder(_testData);
             var testsuiteList = result.Elements("testsuite").ToList();
 
             Assert.AreEqual(2, int.Parse(testsuiteList[0].Attribute("failures").Value));
@@ -70,7 +67,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
         [Test]
         public void Build_Correct_Test_Suite_Error_Counts()
         {
-            var result = RunJUnitBuilder(testData);
+            var result = RunJUnitBuilder(_testData);
             var testsuiteList = result.Elements("testsuite").ToList();
 
             Assert.AreEqual(0, int.Parse(testsuiteList[0].Attribute("errors").Value));
@@ -82,7 +79,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
         [Test]
         public void Build_Correct_Test_Suite_Times()
         {
-            var result = RunJUnitBuilder(testData);
+            var result = RunJUnitBuilder(_testData);
             var testsuiteList = result.Elements("testsuite").ToList();
 
             Assert.AreEqual(6.0, decimal.Parse(testsuiteList[0].Attribute("time").Value));
@@ -102,7 +99,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
         {
             var testGuid = Guid.NewGuid();
             var testExecGuid = Guid.NewGuid();
-            testData.TestDefinitions.Add(testGuid,
+            _testData.TestDefinitions.Add(testGuid,
                 new TestDefinition
                 {
                     Id = testGuid,
@@ -110,7 +107,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
                     TestMethod = testMethod,
                     ExecutionId = testExecGuid,
                 });
-            testData.UnitTestResults.Add(testExecGuid,
+            _testData.UnitTestResults.Add(testExecGuid,
                 new UnitTestResult
                 {
                     ExecutionId = testExecGuid,
