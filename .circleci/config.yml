@@ -65,7 +65,7 @@ jobs:
                     mkdir ./TestResults
                     mv samples/NUnitSample/TestResults/nunit.trx   ./TestResults/nunit.trx
                     mv samples/MsTestSample/TestResults/mstest.trx ./TestResults/mstest.trx
-                    mv samples/XUnitSample/TestResults/xunit.trx ./TestResults/xunit.trx
+                    mv samples/XUnitSample/TestResults/xunit.trx   ./TestResults/xunit.trx
 
                     trx2junit ./TestResults/nunit.trx
                     trx2junit ./TestResults/mstest.trx
