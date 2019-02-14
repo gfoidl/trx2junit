@@ -38,6 +38,14 @@ namespace trx2junit.Tests.Internal.TrxParserTests
             Assert.IsNotNull(actual);
         }
         //---------------------------------------------------------------------
+        [Test]
+        public void Parse_XUnit___OK()
+        {
+            Models.Test actual = this.ParseCore("./data/xunit.trx");
+
+            Assert.IsNotNull(actual);
+        }
+        //---------------------------------------------------------------------
         private Models.Test ParseCore(string fileName)
         {
             XElement trx = XElement.Load(fileName);
