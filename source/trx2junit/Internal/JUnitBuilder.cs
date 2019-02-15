@@ -31,6 +31,8 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void AddTestSuite(string testSuiteName, IEnumerable<KeyValuePair<Guid, TestDefinition>> tests)
         {
+            ResetCounters();
+
             var xTestSuite = new XElement("testsuite");
 
             xTestSuite.Add(new XAttribute("name"    , testSuiteName));
@@ -88,6 +90,15 @@ namespace trx2junit
                     )
                 );
             }
+        }
+        //---------------------------------------------------------------------
+        private void ResetCounters()
+        {
+            _errors = 0;
+            _testCount = 0;
+            _failures = 0;
+            _time = TimeSpan.Zero;
+            _timeStamp = null;
         }
     }
 }
