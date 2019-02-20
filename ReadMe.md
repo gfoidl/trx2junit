@@ -55,9 +55,3 @@ export PATH="$PATH:/root/.dotnet/tools"
 ### Prequisites
 
 [.NET Core 2.1 SDK](https://aka.ms/DotNetCore21)
-
-
-## Contributors
-
-* [gfoidl](https://github.com/gfoidl)
-* [ryepup](https://github.com/ryepup)
