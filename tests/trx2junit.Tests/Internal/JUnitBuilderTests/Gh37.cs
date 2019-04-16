@@ -29,13 +29,15 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
                     ExecutionId = execGuids[0]
                 });
 
+            _testData.UnitTestResults[testGuid] = new List<UnitTestResult>();
             for (var i = 0; i < execGuids.Count; i++)
             {
-                _testData.UnitTestResults.Add(execGuids[i],
+                _testData.UnitTestResults[testGuid].Add(
                     new UnitTestResult
                     {
                         ExecutionId = execGuids[i],
                         TestId = testGuid,
+                        TestName = "Method1",
                         Outcome = i != 0
                             ? Outcome.Passed
                             : Outcome.Failed,

@@ -36,11 +36,14 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
                         ExecutionId = testExecGuid,
                     });
 
-                _testData.UnitTestResults.Add(testExecGuid,
+                _testData.UnitTestResults[testGuid] = new List<UnitTestResult>();
+
+                _testData.UnitTestResults[testGuid].Add(
                     new UnitTestResult
                     {
                         ExecutionId = testExecGuid,
                         TestId      = testGuid,
+                        TestName    = testMethod,
                         Outcome     = testResult,
                         Duration    = testDuration,
                         StartTime   = DateTime.Now,

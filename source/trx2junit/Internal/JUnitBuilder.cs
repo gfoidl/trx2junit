@@ -59,36 +59,38 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void AddTest(XElement xTestSuite, KeyValuePair<Guid, TestDefinition> test)
         {
-            _testCount++;
+            var unitTestResults = _test.UnitTestResults[test.Key];
 
-            var xTestCase = new XElement("testcase");
-            xTestSuite.Add(xTestCase);
-
-            xTestCase.Add(new XAttribute("classname", test.Value.TestClass));
-            xTestCase.Add(new XAttribute("name"     , test.Value.TestMethod));
-
-            Guid executionId              = test.Value.ExecutionId;
-            UnitTestResult unitTestResult = _test.UnitTestResults[executionId];
-
-            if (!_timeStamp.HasValue) _timeStamp = unitTestResult.StartTime;
-
-            if (unitTestResult.Duration.HasValue)
+            foreach (var unitTestResult in unitTestResults)
             {
-                _time += unitTestResult.Duration.Value;
-                xTestCase.Add(new XAttribute("time", (decimal)unitTestResult.Duration.Value.TotalSeconds));
-            }
+                _testCount++;
 
-            if (unitTestResult.Outcome == Outcome.NotExecuted)
-                xTestCase.Add(new XElement("skipped"));
-            else if (unitTestResult.Outcome == Outcome.Failed)
-            {
-                _failures++;
-                xTestCase.Add(new XElement("failure",
-                    unitTestResult.StackTrace,
-                    new XAttribute("message", unitTestResult.Message),
-                    new XAttribute("type"   , "error")
-                    )
-                );
+                var xTestCase = new XElement("testcase");
+                xTestSuite.Add(xTestCase);
+
+                xTestCase.Add(new XAttribute("classname", test.Value.TestClass));
+                xTestCase.Add(new XAttribute("name"     , unitTestResult.TestName));
+
+                if (!_timeStamp.HasValue) _timeStamp = unitTestResult.StartTime;
+
+                if (unitTestResult.Duration.HasValue)
+                {
+                    _time += unitTestResult.Duration.Value;
+                    xTestCase.Add(new XAttribute("time", (decimal)unitTestResult.Duration.Value.TotalSeconds));
+                }
+
+                if (unitTestResult.Outcome == Outcome.NotExecuted)
+                    xTestCase.Add(new XElement("skipped"));
+                else if (unitTestResult.Outcome == Outcome.Failed)
+                {
+                    _failures++;
+                    xTestCase.Add(new XElement("failure",
+                        unitTestResult.StackTrace,
+                        new XAttribute("message", unitTestResult.Message),
+                        new XAttribute("type"   , "error")
+                        )
+                    );
+                }
             }
         }
         //---------------------------------------------------------------------

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using trx2junit.Models;
@@ -77,7 +78,8 @@ namespace trx2junit
                     TestMethod  = xUnitTest.Element(s_XN + "TestMethod").Attribute("name").Value
                 };
 
-                _test.TestDefinitions.Add(testDefinition.ExecutionId, testDefinition);
+                _test.TestDefinitions.Add(testDefinition.Id, testDefinition);
+                _test.UnitTestResults.Add(testDefinition.Id, new List<UnitTestResult>());
             }
         }
         //---------------------------------------------------------------------
@@ -116,7 +118,7 @@ namespace trx2junit
                     }
                 }
 
-                _test.UnitTestResults.Add(unitTestResult.ExecutionId, unitTestResult);
+                _test.UnitTestResults[unitTestResult.TestId].Add(unitTestResult);
             }
         }
     }
