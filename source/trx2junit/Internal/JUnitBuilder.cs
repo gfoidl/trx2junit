@@ -25,15 +25,15 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public void Build()
         {
-            var testSuites = _test.TestDefinitions.GroupBy(t => t.Value.TestClass);
+            var testSuites = _test.TestDefinitions.GroupBy(t => t.TestClass);
 
-            _lookup = _test.UnitTestResults.Values.ToLookup(x => x.TestId);
+            _lookup = _test.UnitTestResults.ToLookup(x => x.TestId);
 
             foreach (var testSuite in testSuites)
                 this.AddTestSuite(testSuite.Key, testSuite);
         }
         //---------------------------------------------------------------------
-        private void AddTestSuite(string testSuiteName, IEnumerable<KeyValuePair<Guid, TestDefinition>> tests)
+        private void AddTestSuite(string testSuiteName, IEnumerable<TestDefinition> tests)
         {
             this.ResetCounters();
 
@@ -61,9 +61,9 @@ namespace trx2junit
             _xJUnit.Add(xTestSuite);
         }
         //---------------------------------------------------------------------
-        private void AddTest(XElement xTestSuite, KeyValuePair<Guid, TestDefinition> test)
+        private void AddTest(XElement xTestSuite, TestDefinition test)
         {
-            IEnumerable<UnitTestResult> unitTestResults = _lookup[test.Key];
+            IEnumerable<UnitTestResult> unitTestResults = _lookup[test.Id];
 
             foreach (var unitTestResult in unitTestResults)
             {
@@ -72,7 +72,7 @@ namespace trx2junit
                 var xTestCase = new XElement("testcase");
                 xTestSuite.Add(xTestCase);
 
-                xTestCase.Add(new XAttribute("classname", test.Value.TestClass));
+                xTestCase.Add(new XAttribute("classname", test.TestClass));
                 xTestCase.Add(new XAttribute("name"     , unitTestResult.TestName));
 
                 if (!_timeStamp.HasValue) _timeStamp = unitTestResult.StartTime;

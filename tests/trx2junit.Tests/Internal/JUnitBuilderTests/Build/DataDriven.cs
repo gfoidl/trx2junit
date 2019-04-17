@@ -17,7 +17,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests.Build
                 .Select(_ => Guid.NewGuid())
                 .ToList();
 
-            _testData.TestDefinitions.Add(testGuid,
+            _testData.TestDefinitions.Add(
                 new TestDefinition
                 {
                     Id          = testGuid,
@@ -27,7 +27,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests.Build
                 });
             for (var i = 0; i < testExecGuids.Count; ++i)
             {
-                _testData.UnitTestResults.Add(testExecGuids[i],
+                _testData.UnitTestResults.Add(
                     new UnitTestResult
                     {
                         ExecutionId = testExecGuids[i],

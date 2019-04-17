@@ -78,7 +78,7 @@ namespace trx2junit
                     TestMethod  = xUnitTest.Element(s_XN + "TestMethod").Attribute("name").Value
                 };
 
-                _test.TestDefinitions.Add(testDefinition.Id, testDefinition);
+                _test.TestDefinitions.Add(testDefinition);
             }
         }
         //---------------------------------------------------------------------
@@ -117,7 +117,7 @@ namespace trx2junit
                     }
                 }
 
-                _test.UnitTestResults.Add(unitTestResult.ExecutionId, unitTestResult);
+                _test.UnitTestResults.Add(unitTestResult);
             }
         }
     }
