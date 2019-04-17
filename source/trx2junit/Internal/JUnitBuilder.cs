@@ -17,19 +17,23 @@ namespace trx2junit
         private TimeSpan          _time;
         private DateTime?         _timeStamp;
         //---------------------------------------------------------------------
+        private ILookup<Guid, UnitTestResult> _lookup;
+        //---------------------------------------------------------------------
         public XElement Result => _xJUnit;
         //---------------------------------------------------------------------
         public JUnitBuilder(Test test) => _test = test ?? throw new ArgumentNullException(nameof(test));
         //---------------------------------------------------------------------
         public void Build()
         {
-            var testSuites = _test.TestDefinitions.GroupBy(t => t.Value.TestClass);
+            var testSuites = _test.TestDefinitions.GroupBy(t => t.TestClass);
+
+            _lookup = _test.UnitTestResults.ToLookup(x => x.TestId);
 
             foreach (var testSuite in testSuites)
                 this.AddTestSuite(testSuite.Key, testSuite);
         }
         //---------------------------------------------------------------------
-        private void AddTestSuite(string testSuiteName, IEnumerable<KeyValuePair<Guid, TestDefinition>> tests)
+        private void AddTestSuite(string testSuiteName, IEnumerable<TestDefinition> tests)
         {
             this.ResetCounters();
 
@@ -57,38 +61,40 @@ namespace trx2junit
             _xJUnit.Add(xTestSuite);
         }
         //---------------------------------------------------------------------
-        private void AddTest(XElement xTestSuite, KeyValuePair<Guid, TestDefinition> test)
+        private void AddTest(XElement xTestSuite, TestDefinition test)
         {
-            _testCount++;
+            IEnumerable<UnitTestResult> unitTestResults = _lookup[test.Id];
 
-            var xTestCase = new XElement("testcase");
-            xTestSuite.Add(xTestCase);
-
-            xTestCase.Add(new XAttribute("classname", test.Value.TestClass));
-            xTestCase.Add(new XAttribute("name"     , test.Value.TestMethod));
-
-            Guid executionId              = test.Value.ExecutionId;
-            UnitTestResult unitTestResult = _test.UnitTestResults[executionId];
-
-            if (!_timeStamp.HasValue) _timeStamp = unitTestResult.StartTime;
-
-            if (unitTestResult.Duration.HasValue)
+            foreach (var unitTestResult in unitTestResults)
             {
-                _time += unitTestResult.Duration.Value;
-                xTestCase.Add(new XAttribute("time", (decimal)unitTestResult.Duration.Value.TotalSeconds));
-            }
+                _testCount++;
 
-            if (unitTestResult.Outcome == Outcome.NotExecuted)
-                xTestCase.Add(new XElement("skipped"));
-            else if (unitTestResult.Outcome == Outcome.Failed)
-            {
-                _failures++;
-                xTestCase.Add(new XElement("failure",
-                    unitTestResult.StackTrace,
-                    new XAttribute("message", unitTestResult.Message),
-                    new XAttribute("type"   , "error")
-                    )
-                );
+                var xTestCase = new XElement("testcase");
+                xTestSuite.Add(xTestCase);
+
+                xTestCase.Add(new XAttribute("classname", test.TestClass));
+                xTestCase.Add(new XAttribute("name"     , unitTestResult.TestName));
+
+                if (!_timeStamp.HasValue) _timeStamp = unitTestResult.StartTime;
+
+                if (unitTestResult.Duration.HasValue)
+                {
+                    _time += unitTestResult.Duration.Value;
+                    xTestCase.Add(new XAttribute("time", (decimal)unitTestResult.Duration.Value.TotalSeconds));
+                }
+
+                if (unitTestResult.Outcome == Outcome.NotExecuted)
+                    xTestCase.Add(new XElement("skipped"));
+                else if (unitTestResult.Outcome == Outcome.Failed)
+                {
+                    _failures++;
+                    xTestCase.Add(new XElement("failure",
+                        unitTestResult.StackTrace,
+                        new XAttribute("message", unitTestResult.Message),
+                        new XAttribute("type"   , "error")
+                        )
+                    );
+                }
             }
         }
         //---------------------------------------------------------------------

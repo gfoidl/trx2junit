@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using NUnit.Framework;
-using System.Collections.Generic;
 
-namespace trx2junit.Tests.Internal.JUnitBuilderTests
+namespace trx2junit.Tests.Internal.JUnitBuilderTests.Build
 {
     [TestFixture]
-    public class Build
+    public class Default : Base
     {
-        private readonly Models.Test _testData = new Models.Test();
-        //---------------------------------------------------------------------
-        public Build()
+        public Default()
         {
             AddTestResult("Class1", "Method1", Outcome.NotExecuted, new TimeSpan(0, 0,  1));
             AddTestResult("Class1", "Method2", Outcome.Failed     , new TimeSpan(0, 0,  3));
@@ -27,7 +24,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
                 var testGuid     = Guid.NewGuid();
                 var testExecGuid = Guid.NewGuid();
 
-                _testData.TestDefinitions.Add(testGuid,
+                _testData.TestDefinitions.Add(
                     new TestDefinition
                     {
                         Id          = testGuid,
@@ -36,11 +33,12 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
                         ExecutionId = testExecGuid,
                     });
 
-                _testData.UnitTestResults.Add(testExecGuid,
+                _testData.UnitTestResults.Add(
                     new UnitTestResult
                     {
                         ExecutionId = testExecGuid,
                         TestId      = testGuid,
+                        TestName    = testMethod,
                         Outcome     = testResult,
                         Duration    = testDuration,
                         StartTime   = DateTime.Now,
@@ -126,15 +124,6 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
                 Assert.AreEqual(20.0, decimal.Parse(testsuiteList[2].Attribute("time").Value));
                 Assert.AreEqual(2.0 , decimal.Parse(testsuiteList[3].Attribute("time").Value));
             });
-        }
-        //---------------------------------------------------------------------
-        private List<XElement> GetTestSuites()
-        {
-            var builder = new JUnitBuilder(_testData);
-
-            builder.Build();
-
-            return builder.Result.Elements("testsuite").ToList();
         }
     }
 }
