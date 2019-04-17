@@ -63,7 +63,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void AddTest(XElement xTestSuite, KeyValuePair<Guid, TestDefinition> test)
         {
-            var unitTestResults = _lookup[test.Key];
+            IEnumerable<UnitTestResult> unitTestResults = _lookup[test.Key];
 
             foreach (var unitTestResult in unitTestResults)
             {
