@@ -25,7 +25,8 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests.Build
                     TestMethod  = "Method1",
                     ExecutionId = testExecGuids[0]
                 });
-            for (var i = 0; i < testExecGuids.Count; ++i)
+
+            for (int i = 0; i < testExecGuids.Count; ++i)
             {
                 _testData.UnitTestResults.Add(
                     new UnitTestResult
@@ -33,9 +34,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests.Build
                         ExecutionId = testExecGuids[i],
                         TestId      = testGuid,
                         TestName    = "Method1",
-                        Outcome     = i != 0
-                            ? Outcome.Passed
-                            : Outcome.Failed,
+                        Outcome     = i != 0 ? Outcome.Passed : Outcome.Failed,
                         Duration    = new TimeSpan(0, 0, 1),
                         StartTime   = DateTime.Now,
                         StackTrace  = "",

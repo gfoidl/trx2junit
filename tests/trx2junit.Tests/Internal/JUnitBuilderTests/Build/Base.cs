@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using NUnit.Framework;
 
 namespace trx2junit.Tests.Internal.JUnitBuilderTests.Build
 {
