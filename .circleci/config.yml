@@ -135,13 +135,20 @@ jobs:
                     echo ""
                     ./verify-xml.sh "tests/junit-out/mstest.xml"
                     ./verify-xml.sh "tests/junit-out/nunit.xml"
+            - run:
+                name: project test results
+                command: |
+                    if [[ -d "tests/TestResults" ]]; then
+                        find tests/TestResults -name "*.trx" | xargs -n1 trx2junit
+                        #rm tests/TestResults/*.trx
+                    fi
             - persist_to_workspace:
                 root: .
                 paths:
                     - build.sh
                     - NuGet-Packed
             - store_test_results:
-                path: TestResults
+                path: tests/TestResults
             - store_artifacts:
                 path: TestResults
                 destination: TestResults
