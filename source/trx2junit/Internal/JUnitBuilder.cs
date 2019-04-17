@@ -8,15 +8,14 @@ namespace trx2junit
 {
     public class JUnitBuilder : IJUnitBuilder
     {
-        private readonly Test     _test;
-        private readonly XElement _xJUnit = new XElement("testsuites");
-        private int               _testId;
-        private int               _errors;
-        private int               _testCount;
-        private int               _failures;
-        private TimeSpan          _time;
-        private DateTime?         _timeStamp;
-        //---------------------------------------------------------------------
+        private readonly Test                 _test;
+        private readonly XElement             _xJUnit = new XElement("testsuites");
+        private int                           _testId;
+        private int                           _errors;
+        private int                           _testCount;
+        private int                           _failures;
+        private TimeSpan                      _time;
+        private DateTime?                     _timeStamp;
         private ILookup<Guid, UnitTestResult> _lookup;
         //---------------------------------------------------------------------
         public XElement Result => _xJUnit;
@@ -26,8 +25,7 @@ namespace trx2junit
         public void Build()
         {
             var testSuites = _test.TestDefinitions.GroupBy(t => t.TestClass);
-
-            _lookup = _test.UnitTestResults.ToLookup(x => x.TestId);
+            _lookup        = _test.UnitTestResults.ToLookup(x => x.TestId);
 
             foreach (var testSuite in testSuites)
                 this.AddTestSuite(testSuite.Key, testSuite);
@@ -84,7 +82,9 @@ namespace trx2junit
                 }
 
                 if (unitTestResult.Outcome == Outcome.NotExecuted)
+                {
                     xTestCase.Add(new XElement("skipped"));
+                }
                 else if (unitTestResult.Outcome == Outcome.Failed)
                 {
                     _failures++;
@@ -92,8 +92,7 @@ namespace trx2junit
                         unitTestResult.StackTrace,
                         new XAttribute("message", unitTestResult.Message),
                         new XAttribute("type"   , "error")
-                        )
-                    );
+                    ));
                 }
             }
         }
