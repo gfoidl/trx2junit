@@ -90,7 +90,7 @@ namespace trx2junit
                     _failures++;
                     xTestCase.Add(new XElement("failure",
                         unitTestResult.StackTrace,
-                        new XAttribute("message", unitTestResult.Message),
+                        new XAttribute("message", unitTestResult.Message ?? ""),
                         new XAttribute("type"   , "error")
                     ));
                 }
