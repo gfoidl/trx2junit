@@ -17,6 +17,8 @@ namespace trx2junit
         private TimeSpan          _time;
         private DateTime?         _timeStamp;
         //---------------------------------------------------------------------
+        private ILookup<Guid, UnitTestResult> _lookup;
+        //---------------------------------------------------------------------
         public XElement Result => _xJUnit;
         //---------------------------------------------------------------------
         public JUnitBuilder(Test test) => _test = test ?? throw new ArgumentNullException(nameof(test));
@@ -24,6 +26,8 @@ namespace trx2junit
         public void Build()
         {
             var testSuites = _test.TestDefinitions.GroupBy(t => t.Value.TestClass);
+
+            _lookup = _test.UnitTestResults.Values.ToLookup(x => x.TestId);
 
             foreach (var testSuite in testSuites)
                 this.AddTestSuite(testSuite.Key, testSuite);
@@ -59,7 +63,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void AddTest(XElement xTestSuite, KeyValuePair<Guid, TestDefinition> test)
         {
-            var unitTestResults = _test.UnitTestResults[test.Key];
+            var unitTestResults = _lookup[test.Key];
 
             foreach (var unitTestResult in unitTestResults)
             {

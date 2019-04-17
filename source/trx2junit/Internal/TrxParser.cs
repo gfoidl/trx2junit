@@ -79,7 +79,6 @@ namespace trx2junit
                 };
 
                 _test.TestDefinitions.Add(testDefinition.Id, testDefinition);
-                _test.UnitTestResults.Add(testDefinition.Id, new List<UnitTestResult>());
             }
         }
         //---------------------------------------------------------------------
@@ -118,7 +117,7 @@ namespace trx2junit
                     }
                 }
 
-                _test.UnitTestResults[unitTestResult.TestId].Add(unitTestResult);
+                _test.UnitTestResults.Add(unitTestResult.ExecutionId, unitTestResult);
             }
         }
     }

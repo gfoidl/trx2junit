@@ -33,8 +33,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests.Build
                         ExecutionId = testExecGuid,
                     });
 
-                _testData.UnitTestResults[testGuid] = new List<UnitTestResult>
-                {
+                _testData.UnitTestResults.Add(testExecGuid,
                     new UnitTestResult
                     {
                         ExecutionId = testExecGuid,
@@ -45,8 +44,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests.Build
                         StartTime   = DateTime.Now,
                         StackTrace  = "",
                         Message     = "",
-                    }
-                };
+                    });
             }
         }
         //---------------------------------------------------------------------
