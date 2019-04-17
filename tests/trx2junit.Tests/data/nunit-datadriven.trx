@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="fb29755e-9f39-4300-b410-a5856d9bfc5e" name="gfoidl@GFOIDL-PC-2018 2019-04-17 21:36:32:486" runUser="GFOIDL-PC-2018\gfoidl" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2019-04-17T21:36:32.4942788+02:00" queuing="2019-04-17T21:36:32.4942788+02:00" start="2019-04-17T21:36:30.2805852+02:00" finish="2019-04-17T21:36:33.3358510+02:00" />
+  <TestSettings name="default" id="e8ae8ab2-825f-40de-b11e-20d2e15e3afb">
+    <Deployment runDeploymentRoot="gfoidl_GFOIDL-PC-2018_2019-04-17_21_36_32_486" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="fd2a8c50-be7a-4b1e-b0d8-d7b548bbfc30" testId="22e9731c-f94b-1e68-c603-e8257c73f73e" testName="Failing_test" computerName="GFOIDL-PC-2018" duration="00:00:00.0010000" startTime="2019-04-17T21:36:32.0000000+02:00" endTime="2019-04-17T21:36:32.0000000+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fd2a8c50-be7a-4b1e-b0d8-d7b548bbfc30">
+      <Output>
+        <ErrorInfo>
+          <Message>Failing for demo purposes</Message>
+          <StackTrace>   at NUnitSample.SimpleTests.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\SimpleTests.cs:line 21&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b015cb5d-67c3-45d2-b59f-8f67f882a484" testId="c242437e-9509-044f-a4fa-4671fc31fe32" testName="Failing_test" computerName="GFOIDL-PC-2018" duration="00:00:00.0540000" startTime="2019-04-17T21:36:31.0000000+02:00" endTime="2019-04-17T21:36:31.0000000+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b015cb5d-67c3-45d2-b59f-8f67f882a484">
+      <Output>
+        <ErrorInfo>
+          <Message>Failing for demo purposes</Message>
+          <StackTrace>   at NUnitSample.DataDriven.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\DataDriven.cs:line 27&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="36ff7112-8fd2-44b2-8066-9479223c93f9" testId="7b99ef36-e869-4abb-0e2c-e794f5784ce3" testName="Slow_test" computerName="GFOIDL-PC-2018" duration="00:00:01.0010000" startTime="2019-04-17T21:36:32.0000000+02:00" endTime="2019-04-17T21:36:33.0000000+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="36ff7112-8fd2-44b2-8066-9479223c93f9" />
+    <UnitTestResult executionId="a2b2b9ee-5c10-49ed-8ba8-ba6edd0c1a2d" testId="bea9a224-b89c-f42e-1ef9-ae95ca6feb4b" testName="Slow_test" computerName="GFOIDL-PC-2018" duration="00:00:01.0020000" startTime="2019-04-17T21:36:31.0000000+02:00" endTime="2019-04-17T21:36:32.0000000+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a2b2b9ee-5c10-49ed-8ba8-ba6edd0c1a2d" />
+    <UnitTestResult executionId="3283be02-a306-4c80-885f-25a53fb4feb0" testId="6127a87d-9df7-610b-34ed-6c130d5c58a5" testName="Two_pass_one_fails(2)" computerName="GFOIDL-PC-2018" duration="00:00:00.0000001" startTime="2019-04-17T21:36:32.0000000+02:00" endTime="2019-04-17T21:36:32.0000000+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3283be02-a306-4c80-885f-25a53fb4feb0" />
+    <UnitTestResult executionId="44b49e05-4d01-4569-8a26-0747b8e7cac8" testId="4ab809ed-d1dd-4959-feb3-82dd63da5cf7" testName="Two_pass_one_fails(1)" computerName="GFOIDL-PC-2018" duration="00:00:00.0040000" startTime="2019-04-17T21:36:32.0000000+02:00" endTime="2019-04-17T21:36:32.0000000+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="44b49e05-4d01-4569-8a26-0747b8e7cac8">
+      <Output>
+        <ErrorInfo>
+          <Message>Failing for demo purposes</Message>
+          <StackTrace>   at NUnitSample.DataDriven.Two_pass_one_fails(Int32 arg) in D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\DataDriven.cs:line 18&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e547f183-f3ae-463c-bca7-089c5538d04e" testId="d78cb6ab-bd6a-38fe-a1c4-6d2b41046edd" testName="Two_pass_one_fails(0)" computerName="GFOIDL-PC-2018" duration="00:00:00.0010000" startTime="2019-04-17T21:36:32.0000000+02:00" endTime="2019-04-17T21:36:32.0000000+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e547f183-f3ae-463c-bca7-089c5538d04e" />
+    <UnitTestResult executionId="1fee35e9-535e-44e8-9fdd-ac0df74761ef" testId="1ae860fb-c5c3-ece0-a3ea-c06750b2605e" testName="Passing_test" computerName="GFOIDL-PC-2018" duration="00:00:00.0000001" startTime="2019-04-17T21:36:32.0000000+02:00" endTime="2019-04-17T21:36:32.0000000+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1fee35e9-535e-44e8-9fdd-ac0df74761ef" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Two_pass_one_fails(2)" storage="d:\work-git\github\mini\trx2junit\samples\nunitsample\bin\debug\netcoreapp2.1\nunitsample.dll" id="6127a87d-9df7-610b-34ed-6c130d5c58a5">
+      <Execution id="3283be02-a306-4c80-885f-25a53fb4feb0" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\bin\Debug\netcoreapp2.1\NUnitSample.dll" adapterTypeName="executor://nunit3testexecutor/" className="NUnitSample.DataDriven" name="Two_pass_one_fails(2)" />
+    </UnitTest>
+    <UnitTest name="Failing_test" storage="d:\work-git\github\mini\trx2junit\samples\nunitsample\bin\debug\netcoreapp2.1\nunitsample.dll" id="c242437e-9509-044f-a4fa-4671fc31fe32">
+      <Execution id="b015cb5d-67c3-45d2-b59f-8f67f882a484" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\bin\Debug\netcoreapp2.1\NUnitSample.dll" adapterTypeName="executor://nunit3testexecutor/" className="NUnitSample.DataDriven" name="Failing_test" />
+    </UnitTest>
+    <UnitTest name="Passing_test" storage="d:\work-git\github\mini\trx2junit\samples\nunitsample\bin\debug\netcoreapp2.1\nunitsample.dll" id="1ae860fb-c5c3-ece0-a3ea-c06750b2605e">
+      <Execution id="1fee35e9-535e-44e8-9fdd-ac0df74761ef" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\bin\Debug\netcoreapp2.1\NUnitSample.dll" adapterTypeName="executor://nunit3testexecutor/" className="NUnitSample.SimpleTests" name="Passing_test" />
+    </UnitTest>
+    <UnitTest name="Slow_test" storage="d:\work-git\github\mini\trx2junit\samples\nunitsample\bin\debug\netcoreapp2.1\nunitsample.dll" id="bea9a224-b89c-f42e-1ef9-ae95ca6feb4b">
+      <Execution id="a2b2b9ee-5c10-49ed-8ba8-ba6edd0c1a2d" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\bin\Debug\netcoreapp2.1\NUnitSample.dll" adapterTypeName="executor://nunit3testexecutor/" className="NUnitSample.DataDriven" name="Slow_test" />
+    </UnitTest>
+    <UnitTest name="Failing_test" storage="d:\work-git\github\mini\trx2junit\samples\nunitsample\bin\debug\netcoreapp2.1\nunitsample.dll" id="22e9731c-f94b-1e68-c603-e8257c73f73e">
+      <Execution id="fd2a8c50-be7a-4b1e-b0d8-d7b548bbfc30" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\bin\Debug\netcoreapp2.1\NUnitSample.dll" adapterTypeName="executor://nunit3testexecutor/" className="NUnitSample.SimpleTests" name="Failing_test" />
+    </UnitTest>
+    <UnitTest name="Two_pass_one_fails(1)" storage="d:\work-git\github\mini\trx2junit\samples\nunitsample\bin\debug\netcoreapp2.1\nunitsample.dll" id="4ab809ed-d1dd-4959-feb3-82dd63da5cf7">
+      <Execution id="44b49e05-4d01-4569-8a26-0747b8e7cac8" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\bin\Debug\netcoreapp2.1\NUnitSample.dll" adapterTypeName="executor://nunit3testexecutor/" className="NUnitSample.DataDriven" name="Two_pass_one_fails(1)" />
+    </UnitTest>
+    <UnitTest name="Two_pass_one_fails(0)" storage="d:\work-git\github\mini\trx2junit\samples\nunitsample\bin\debug\netcoreapp2.1\nunitsample.dll" id="d78cb6ab-bd6a-38fe-a1c4-6d2b41046edd">
+      <Execution id="e547f183-f3ae-463c-bca7-089c5538d04e" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\bin\Debug\netcoreapp2.1\NUnitSample.dll" adapterTypeName="executor://nunit3testexecutor/" className="NUnitSample.DataDriven" name="Two_pass_one_fails(0)" />
+    </UnitTest>
+    <UnitTest name="Slow_test" storage="d:\work-git\github\mini\trx2junit\samples\nunitsample\bin\debug\netcoreapp2.1\nunitsample.dll" id="7b99ef36-e869-4abb-0e2c-e794f5784ce3">
+      <Execution id="36ff7112-8fd2-44b2-8066-9479223c93f9" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\bin\Debug\netcoreapp2.1\NUnitSample.dll" adapterTypeName="executor://nunit3testexecutor/" className="NUnitSample.SimpleTests" name="Slow_test" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="22e9731c-f94b-1e68-c603-e8257c73f73e" executionId="fd2a8c50-be7a-4b1e-b0d8-d7b548bbfc30" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c242437e-9509-044f-a4fa-4671fc31fe32" executionId="b015cb5d-67c3-45d2-b59f-8f67f882a484" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7b99ef36-e869-4abb-0e2c-e794f5784ce3" executionId="36ff7112-8fd2-44b2-8066-9479223c93f9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bea9a224-b89c-f42e-1ef9-ae95ca6feb4b" executionId="a2b2b9ee-5c10-49ed-8ba8-ba6edd0c1a2d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6127a87d-9df7-610b-34ed-6c130d5c58a5" executionId="3283be02-a306-4c80-885f-25a53fb4feb0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4ab809ed-d1dd-4959-feb3-82dd63da5cf7" executionId="44b49e05-4d01-4569-8a26-0747b8e7cac8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d78cb6ab-bd6a-38fe-a1c4-6d2b41046edd" executionId="e547f183-f3ae-463c-bca7-089c5538d04e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1ae860fb-c5c3-ece0-a3ea-c06750b2605e" executionId="1fee35e9-535e-44e8-9fdd-ac0df74761ef" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="8" executed="8" passed="5" failed="3" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>NUnit Adapter 3.10.0.21: Test execution startedRunning all tests in D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\bin\Debug\netcoreapp2.1\NUnitSample.dllNUnit3TestExecutor converted 8 of 8 NUnit test casesNUnit Adapter 3.10.0.21: Test execution complete</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

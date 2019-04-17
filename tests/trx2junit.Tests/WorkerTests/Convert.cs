@@ -8,11 +8,14 @@ namespace trx2junit.Tests.WorkerTests
     public class Convert
     {
         [Test]
-        [TestCase("./data/nunit.trx")]
         [TestCase("./data/mstest.trx")]
+        [TestCase("./data/mstest-datadriven.trx")]
         [TestCase("./data/mstest-warning.trx")]
+        [TestCase("./data/nunit.trx")]
+        [TestCase("./data/nunit-datadriven.trx")]
         [TestCase("./data/nunit-no-tests.trx")]
         [TestCase("./data/xunit.trx")]
+        [TestCase("./data/xunit-datadriven.trx")]
         public async Task File_given___converted(string trxFile)
         {
             string junitFile = Path.ChangeExtension(trxFile, "xml");
@@ -27,11 +30,14 @@ namespace trx2junit.Tests.WorkerTests
         }
         //---------------------------------------------------------------------
         [Test]
-        [TestCase("./data/nunit.trx")]
         [TestCase("./data/mstest.trx")]
+        [TestCase("./data/mstest-datadriven.trx")]
         [TestCase("./data/mstest-warning.trx")]
+        [TestCase("./data/nunit.trx")]
+        [TestCase("./data/nunit-datadriven.trx")]
         [TestCase("./data/nunit-no-tests.trx")]
         [TestCase("./data/xunit.trx")]
+        [TestCase("./data/xunit-datadriven.trx")]
         public async Task File_given___generated_xml_is_valid_against_schema(string trxFile)
         {
             string junitFile = Path.ChangeExtension(trxFile, "xml");
