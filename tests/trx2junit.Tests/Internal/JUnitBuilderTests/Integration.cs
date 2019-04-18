@@ -8,7 +8,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
     public class Integration
     {
         [Test]
-        [TestCase("./data/mstest-datadriven.trx")]
+        [TestCase("./data/mstest-datadriven.trx", Ignore = "https://github.com/gfoidl/trx2junit/issues/43")]
         [TestCase("./data/nunit-datadriven.trx")]
         [TestCase("./data/xunit-datadriven.trx")]
         public void File_given___correct_test_count(string trxFile)
@@ -27,7 +27,7 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
         }
         //---------------------------------------------------------------------
         [Test]
-        [TestCase("./data/mstest-datadriven.trx")]
+        [TestCase("./data/mstest-datadriven.trx", Ignore = "https://github.com/gfoidl/trx2junit/issues/43")]
         [TestCase("./data/nunit-datadriven.trx")]
         [TestCase("./data/xunit-datadriven.trx")]
         public void File_given___correct_failure_count(string trxFile)
