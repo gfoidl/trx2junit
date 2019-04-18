@@ -71,6 +71,7 @@ jobs:
                     dotnet tool install -g trx2junit
             - run:
                 name: project test results
+                when: always
                 command: |
                     if [[ -d "tests/TestResults" ]]; then
                         find tests/TestResults -name "*.trx" | xargs -n1 trx2junit
