@@ -12,12 +12,23 @@ jobs:
         steps:
             - checkout
             - run:
+                name: "set build environment"
+                command: |
+                    if [[ -z "$CI_BUILD_NUMBER" ]]; then
+                        echo 'export CI_BUILD_NUMBER="$CIRCLE_BUILD_NUM"' >> "$BASH_ENV"
+                        echo 'export BRANCH_NAME="$CIRCLE_BRANCH"' >> "$BASH_ENV"
+                        echo 'export TAG_NAME="$CIRCLE_TAG"' >> "$BASH_ENV"
+                    fi
+
+                    # Exporting / sourcing the path before installing the tool prevents the message about the PATH
+                    echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
+            - run:
                 name: init
                 command: |
                     chmod ugo+x ./*.sh
 
-                    # for .net Core global tools
-                    echo export PATH="$PATH:/root/.dotnet/tools" >> "$BASH_ENV"
+                    # Use v1.4.1 as this supports .NET Core 2.1. Version 1.5.0 is for .NET Core 2.2.
+                    dotnet tool install -g --version=1.4.1 coverlet.console
             - run:
                 # build has to be from the build.sh in order to pick the correct version numbers, etc.
                 name: build
@@ -50,6 +61,21 @@ jobs:
                         dotnet tool install -g --configfile=ci-nuget.config trx2junit
                     else
                         dotnet tool install -g --version="$ToolVersion" --configfile=ci-nuget.config trx2junit
+                    fi
+            - run:
+                name: project test results
+                command: |
+                    if [[ -d "tests/TestResults" ]]; then
+                        find tests/TestResults -name "*.trx" | xargs -n1 trx2junit
+                        #rm tests/TestResults/*.trx
+                    fi
+            - run:
+                name: code coverage
+                command: |
+                    if [[ -z "$CODECOV_TOKEN" ]]; then
+                        echo "codecov token not set -- skipping code coverage"
+                    else
+                        ./build.sh coverage
                     fi
             - run:
                 name: run-samples
@@ -141,7 +167,7 @@ jobs:
                     - build.sh
                     - NuGet-Packed
             - store_test_results:
-                path: TestResults
+                path: tests/TestResults
             - store_artifacts:
                 path: TestResults
                 destination: TestResults
