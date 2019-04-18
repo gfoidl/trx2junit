@@ -82,6 +82,9 @@ build() {
 }
 #------------------------------------------------------------------------------
 _testCore() {
+    # continue on error, as the results file should be moved
+    set +e
+
     local testFullName
     local testDir
     local testNameWOExtension
@@ -129,6 +132,9 @@ _testCore() {
     if [[ $result != 0 ]]; then
         exit $result
     fi
+
+    # restore previous state
+    set -e
 }
 #------------------------------------------------------------------------------
 test() {
