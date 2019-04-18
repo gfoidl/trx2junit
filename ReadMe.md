@@ -1,6 +1,6 @@
-| CircleCI | NuGet | MyGet |  
-| -- | -- | -- |     
-| [![CircleCI](https://circleci.com/gh/gfoidl/trx2junit/tree/master.svg?style=svg)](https://circleci.com/gh/gfoidl/trx2junit/tree/master) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) | [![MyGet Pre Release](https://img.shields.io/myget/gfoidl/vpre/trx2junit.svg?style=flat-square)](https://www.myget.org/feed/gfoidl/package/nuget/trx2junit) |  
+| CircleCI | Code Coverage | NuGet | MyGet |  
+| -- | -- | -- | -- |  
+| [![CircleCI](https://circleci.com/gh/gfoidl/trx2junit/tree/master.svg?style=svg)](https://circleci.com/gh/gfoidl/trx2junit/tree/master)| [![codecov](https://codecov.io/gh/gfoidl/trx2junit/branch/master/graph/badge.svg)](https://codecov.io/gh/gfoidl/trx2junit) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) | [![MyGet Pre Release](https://img.shields.io/myget/gfoidl/vpre/trx2junit.svg?style=flat-square)](https://www.myget.org/feed/gfoidl/package/nuget/trx2junit) |  
 
 # trx2junit (.NET Core global tool)
 

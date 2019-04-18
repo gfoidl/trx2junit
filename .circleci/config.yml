@@ -26,9 +26,7 @@ jobs:
                 name: init
                 command: |
                     chmod ugo+x ./*.sh
-
-                    # for .net Core global tools
-                    echo export PATH="$PATH:/root/.dotnet/tools" >> "$BASH_ENV"
+                    dotnet tool install -g coverlet.console
             - run:
                 # build has to be from the build.sh in order to pick the correct version numbers, etc.
                 name: build
@@ -61,6 +59,21 @@ jobs:
                         dotnet tool install -g --configfile=ci-nuget.config trx2junit
                     else
                         dotnet tool install -g --version="$ToolVersion" --configfile=ci-nuget.config trx2junit
+                    fi
+            - run:
+                name: project test results
+                command: |
+                    if [[ -d "tests/TestResults" ]]; then
+                        find tests/TestResults -name "*.trx" | xargs -n1 trx2junit
+                        #rm tests/TestResults/*.trx
+                    fi
+            - run:
+                name: code coverage
+                command: |
+                    if [[ -z "$CODECOV_TOKEN" ]]; then
+                        echo "codecov token not set -- skipping code coverage"
+                    else
+                        ./build.sh coverage
                     fi
             - run:
                 name: run-samples
@@ -146,13 +159,6 @@ jobs:
                     echo ""
                     ./verify-xml.sh "tests/junit-out/mstest.xml"
                     ./verify-xml.sh "tests/junit-out/nunit.xml"
-            - run:
-                name: project test results
-                command: |
-                    if [[ -d "tests/TestResults" ]]; then
-                        find tests/TestResults -name "*.trx" | xargs -n1 trx2junit
-                        #rm tests/TestResults/*.trx
-                    fi
             - persist_to_workspace:
                 root: .
                 paths:
