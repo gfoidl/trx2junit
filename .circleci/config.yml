@@ -12,6 +12,17 @@ jobs:
         steps:
             - checkout
             - run:
+                name: "set build environment"
+                command: |
+                    if [[ -z "$CI_BUILD_NUMBER" ]]; then
+                        echo 'export CI_BUILD_NUMBER="$CIRCLE_BUILD_NUM"' >> "$BASH_ENV"
+                        echo 'export BRANCH_NAME="$CIRCLE_BRANCH"' >> "$BASH_ENV"
+                        echo 'export TAG_NAME="$CIRCLE_TAG"' >> "$BASH_ENV"
+                    fi
+
+                    # Exporting / sourcing the path before installing the tool prevents the message about the PATH
+                    echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
+            - run:
                 name: init
                 command: |
                     chmod ugo+x ./*.sh

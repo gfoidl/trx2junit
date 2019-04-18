@@ -5,63 +5,54 @@
 # Arguments:
 #   build               builds the solution
 #   test                runs all tests under ./tests
+#   coverage            determines code coverage with coverlet and uploads to codecov
 #   pack                creates the NuGet-package
 #   deploy              deploys to $2, which must be either nuget or myget
 #                       * when CI_SKIP_DEPLOY is set, no deploy is done
 #                       * when DEBUG is set, the action is echoed and not done
 #
 # Environment-Variables:
-#   NAME                project-name used for packaging
+#   BUILD_CONFIG        Debug / Release as build configuration, defaults to Release
 #   CI_BUILD_NUMBER     build-number used for version-info
 #   BRANCH_NAME         branch the commit is on
 #   TAG_NAME            tag the commit is on
 #   CI_SKIP_DEPLOY      when set no deploy is done, even if deploy is called
 #   DEBUG               when set deploy is simulted by echoing the action
 #   TEST_FRAMEWORK      when set only the specified test-framework (dotnet test -f) will be used
+#   TESTS_TO_SKIP       a list of test-projects to skip / ignore, separated by ;
+#   CODECOV_TOKEN       the token for codecov to uploads the opencover-xml
 #
 # Functions (sorted alphabetically):
 #   build               builds the solution
+#   coverage            code coverage
 #   deploy              deploys the solution either to nuget or myget
 #   main                entry-point
 #   pack                creates the NuGet-package
 #   setBuildEnv         sets the environment variables regarding the build-environment
 #   test                runs tests for projects in ./tests
+#   _coverageCore       helper -- used by coverage
 #   _deployCore         helper -- used by deploy
 #   _testCore           helper -- used by test
 #
 # Exit-codes:
-#   1001                deploy target is neither 'nuget' nor 'myget', so it is unknown
-#   1002                no args given for script, help is displayed and exited
+#   101                 deploy target is neither 'nuget' nor 'myget', so it is unknown
+#   102                 no args given for script, help is displayed and exited
 #   $?                  exit-code for build-step is returned unmodified
 #------------------------------------------------------------------------------
 set -e
 #------------------------------------------------------------------------------
 help() {
-    echo "build script"
     echo ""
     echo "Arguments:"
     echo "  build                  builds the solution"
     echo "  test                   runs all tests under ./tests"
+    echo "  coverage               determines code coverage with coverlet and uploads to codecov"
     echo "  pack                   creates the NuGet-package"
     echo "  deploy [nuget|myget]   deploys to the destination"
 }
 #------------------------------------------------------------------------------
 setBuildEnv() {
-    if [[ -z "$CI_BUILD_NUMBER" ]]; then
-        if [[ -n "$CIRCLECI" ]]; then
-            export CI_BUILD_NUMBER=$CIRCLE_BUILD_NUM
-            export BRANCH_NAME=$CIRCLE_BRANCH
-            export TAG_NAME=$CIRCLE_TAG
-        elif [[ -n "$TRAVIS" ]]; then
-            export CI_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER
-            export BRANCH_NAME=$(if [[ -n "$TRAVIS_PULL_REQUEST_BRANCH" ]]; then echo "$TRAVIS_PULL_REQUEST_BRANCH"; else echo "$TRAVIS_BRANCH"; fi)
-            export TAG_NAME=$TRAVIS_TAG
-        elif [[ -n "$BITBUCKET_BUILD_NUMBER" ]]; then
-            export CI_BUILD_NUMBER=$BITBUCKET_BUILD_NUMBER
-            export BRANCH_NAME=$BITBUCKET_BRANCH
-            export TAG_NAME=$BITBUCKET_TAG
-        fi
-    fi
+    export BUILD_CONFIG=${BUILD_CONFIG-Release}
 
     # BuildNumber is used by MsBuild for version information.
     # ci tools clone usually to depth 50, so this is not good
@@ -87,21 +78,35 @@ setBuildEnv() {
 #------------------------------------------------------------------------------
 build() {
     dotnet restore
-    dotnet build -c Release --no-restore
+    dotnet build -c $BUILD_CONFIG --no-restore
 }
 #------------------------------------------------------------------------------
 _testCore() {
     local testFullName
     local testDir
+    local testNameWOExtension
     local testName
     local testResultName
     local dotnetTestArgs
+    local testsToSkip
 
     testFullName="$1"
     testDir=$(dirname "$testFullName")
+    testNameWOExtension=$(basename "$testDir")
     testName=$(basename "$testFullName")
-    testResultName="$testName-$(date +%s).trx"
-    dotnetTestArgs="-c Release --no-build --logger \"trx;LogFileName=$testResultName\" $testFullName"
+    testResultName="$testNameWOExtension-$(date +%s)"
+    dotnetTestArgs="-c $BUILD_CONFIG --no-build --logger \"trx;LogFileName=$testResultName.trx\" $testFullName"
+
+    if [[ -n "$TESTS_TO_SKIP" ]]; then
+        testsToSkip=(${TESTS_TO_SKIP//;/ })
+
+        for item in "${testsToSkip[@]}"; do
+            if [[ "$testNameWOExtension" == "$item" ]]; then
+                echo ">>> skipping test $testName, as it is set in TESTS_TO_SKIP"
+                return
+            fi
+        done
+    fi
 
     echo ""
     echo "test framework:   ${TEST_FRAMEWORK-not specified}"
@@ -119,7 +124,7 @@ _testCore() {
     local result=$?
 
     mkdir -p "./tests/TestResults"
-    mv "$testDir/TestResults/$testResultName" "./tests/TestResults/$testResultName"
+    mv $testDir/TestResults/$testResultName*.trx ./tests/TestResults
 
     if [[ $result != 0 ]]; then
         exit $result
@@ -135,14 +140,60 @@ test() {
         return
     fi
 
-    export -f _testCore
-    find "$testDir" -name "*.csproj" -print0 | xargs -0 -n1 bash -c '_testCore "$@"' _
+    for testProject in "$testDir"/**/*.csproj; do
+        _testCore "$testProject"
+    done
+}
+#------------------------------------------------------------------------------
+_coverageCore() {
+    local testFullName
+    local testDir
+    local targetFramework
+
+    testFullName="$1"
+    testDir=$(dirname "$testFullName")
+
+    cd "$testDir"
+
+    for test in ./bin/$BUILD_CONFIG/**/*.Tests.dll; do
+        targetFramework=$(basename $(dirname $test))
+        mkdir -p "coverage/$targetFramework"
+        coverlet "$test" --target "dotnet" --targetargs "test --no-build -c $BUILD_CONFIG" --format opencover -o "./coverage/$targetFramework/coverage.opencover.xml"
+    done
+
+    cd "$workingDir"
+}
+#------------------------------------------------------------------------------
+coverage() {
+    local testDir
+    testDir="./tests"
+
+    if [[ ! -d "$testDir" ]]; then
+        echo "test-directory not existing -> no coverage need to run"
+        return
+    fi
+
+    for testProject in "$testDir"/**/*.csproj; do
+        _coverageCore "$testProject"
+    done
+
+    # when $CODECOV_TOKEN is set via env-variable, so it may be omitted as argument
+    if [[ -n "$CODECOV_TOKEN" ]]; then
+        if [[ ! -f codecov.sh ]]; then
+            echo "codecov.sh does not exists -- fetching..."
+            curl -s https://codecov.io/bash > codecov.sh
+            chmod u+x codecov.sh
+        fi
+
+        # a cool script, does quite a lot without any args :-)
+        ./codecov.sh
+    else
+        echo "CODECOV_TOKEN not set -- skipping upload"
+    fi
 }
 #------------------------------------------------------------------------------
 pack() {
-    dotnet restore
-
-    find source -name "*.csproj" -print0 | xargs -0 -n1 dotnet pack -o "$(pwd)/NuGet-Packed" --no-build -c Release
+    find source -name "*.csproj" -print0 | xargs -0 -n1 dotnet pack -o "$(pwd)/NuGet-Packed" --no-build -c $BUILD_CONFIG
 
     ls -l ./NuGet-Packed
     echo ""
@@ -153,6 +204,7 @@ _deployCore() {
         find "$(pwd)/NuGet-Packed" -name "*.nupkg" -print0 | xargs -0 -n1 dotnet nuget push --source "$1" --api-key "$2" -t 60
     else
         echo "DEBUG: simulate nuget push to $1"
+        find "$(pwd)/NuGet-Packed" -name "*.nupkg" -print0 | xargs -0 -n1 echo "dotnet nuget push"
     fi
 }
 #------------------------------------------------------------------------------
@@ -170,7 +222,7 @@ deploy() {
         echo "Skipping deploy because 'local'"
     else
         echo "Unknown deploy target '$1', aborting"
-        exit 1001
+        exit 101
     fi
 }
 #------------------------------------------------------------------------------
@@ -178,26 +230,32 @@ main() {
     setBuildEnv
 
     case "$1" in
-        build)  build
-                ;;
-        test)   test
-                ;;
-        pack)   pack
-                ;;
+        build)      build
+                    ;;
+        test)       test
+                    ;;
+        coverage)   coverage
+                    ;;
+        pack)       pack
+                    ;;
         deploy)
-                shift
-                deploy "$1"
-                ;;
+                    shift
+                    deploy "$1"
+                    ;;
         *)
-                help
-                exit
-                ;;
+                    help
+                    exit
+                    ;;
     esac
 }
 #------------------------------------------------------------------------------
+echo "build script, (c) gfoidl, 2018-$(date +%Y)"
+
+workingDir=$(pwd)
+
 if [[ $# -lt 1 ]]; then
     help
-    exit 1002
+    exit 102
 fi
 
 main $*
