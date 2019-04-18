@@ -12,7 +12,7 @@ namespace XUnitSample
             new object[] { new { index = 1 } },
             new object[] { new { index = 2 } }
         };
-
+        //---------------------------------------------------------------------
         [Theory]
         [MemberData(nameof(TestData))]
         public void Two_pass_one_fails(dynamic obj)
