@@ -40,7 +40,7 @@ jobs:
                 name: pack
                 command: ./build.sh pack
             - run:
-                name: global tool install
+                name: global tool install (trx2junit)
                 command: |
                     # copied from build.sh (but modified)
                     if [[ -n "$CIRCLE_TAG" ]]; then
@@ -63,7 +63,15 @@ jobs:
                         dotnet tool install -g --version="$ToolVersion" --configfile=ci-nuget.config trx2junit
                     fi
             - run:
+                name: global tool install (trx2junit)
+                when: on_fail
+                command: |
+                    echo "Previous job failed, so use trx2junit from NuGet instead of local copy"
+                    echo ""
+                    dotnet tool install -g trx2junit
+            - run:
                 name: project test results
+                when: always
                 command: |
                     if [[ -d "tests/TestResults" ]]; then
                         find tests/TestResults -name "*.trx" | xargs -n1 trx2junit
@@ -169,7 +177,7 @@ jobs:
             - store_test_results:
                 path: tests/TestResults
             - store_artifacts:
-                path: TestResults
+                path: tests/TestResults
                 destination: TestResults
     deploy_nuget:
         <<: *defaults
