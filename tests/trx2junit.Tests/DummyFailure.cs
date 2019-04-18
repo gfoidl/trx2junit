@@ -8,7 +8,7 @@ namespace trx2junit.Tests
         [Test]
         public void Dummy()
         {
-            Assert.Fail();
+            Assert.Fail("demo -- must not be empty for trx2junit 1.2.3");
         }
     }
 }
