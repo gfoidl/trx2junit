@@ -26,7 +26,9 @@ jobs:
                 name: init
                 command: |
                     chmod ugo+x ./*.sh
-                    dotnet tool install -g coverlet.console
+
+                    # Use v1.4.1 as this supports .NET Core 2.1. Version 1.5.0 is for .NET Core 2.2.
+                    dotnet tool install -g --version=1.4.1 coverlet.console
             - run:
                 # build has to be from the build.sh in order to pick the correct version numbers, etc.
                 name: build
