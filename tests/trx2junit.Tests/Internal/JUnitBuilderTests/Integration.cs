@@ -10,11 +10,14 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests
         [Test]
         [TestCase("./data/mstest.trx"           , 3, 1)]
         [TestCase("./data/mstest-datadriven.trx", 5, 2)]
+        [TestCase("./data/mstest-ignore.trx"    , 4, 1)]
         [TestCase("./data/nunit.trx"            , 3, 1)]
         [TestCase("./data/nunit-datadriven.trx" , 5, 2)]
+        [TestCase("./data/nunit-ignore.trx"     , 5, 1)]
         [TestCase("./data/nunit-memberdata.trx" , 5, 2)]
         [TestCase("./data/xunit.trx"            , 3, 1)]
         [TestCase("./data/xunit-datadriven.trx" , 3, 1)]
+        [TestCase("./data/xunit-ignore.trx"     , 4, 1)]
         [TestCase("./data/xunit-memberdata.trx" , 5, 2)]
         public void File_given___correct_counts(string trxFile, int expectedTestCount, int expectedFailureCount)
         {

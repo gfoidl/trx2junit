@@ -26,5 +26,20 @@ namespace NUnitSample
         {
             return Task.Delay(1000);
         }
+        //---------------------------------------------------------------------
+        [Test]
+        [Ignore("Ignoring for testing ;-)")]
+        public void Ignored_test()
+        {
+            throw new System.Exception();
+        }
+        //---------------------------------------------------------------------
+        [Test]
+        public void Test_with_failed_assumption()
+        {
+            Assume.That(false);
+
+            throw new System.Exception();
+        }
     }
 }

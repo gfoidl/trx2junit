@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="e423f942-1a63-443e-9b2e-8d3058030d9c" name="gfoidl@GFOIDL-PC-2018 2019-04-19 16:10:34:839" runUser="GFOIDL-PC-2018\gfoidl" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2019-04-19T16:10:34.8518137+02:00" queuing="2019-04-19T16:10:34.8518137+02:00" start="2019-04-19T16:10:32.6076798+02:00" finish="2019-04-19T16:10:35.1088825+02:00" />
+  <TestSettings name="default" id="3ba0ece3-9475-4691-8bd1-d329795cb9c5">
+    <Deployment runDeploymentRoot="gfoidl_GFOIDL-PC-2018_2019-04-19_16_10_34_839" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="59022a90-b9de-4ad5-b4b7-7fd3f809a8b5" testId="225b4b67-b8e8-e001-c45d-3af5a6c71572" testName="XUnitSample.SimpleTests.Ignored_test" computerName="GFOIDL-PC-2018" duration="00:00:00.0010000" startTime="2019-04-19T16:10:34.9879356+02:00" endTime="2019-04-19T16:10:34.9879363+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="59022a90-b9de-4ad5-b4b7-7fd3f809a8b5">
+      <Output>
+        <StdOut>Ignoring for testing ;-)</StdOut>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="716ff25d-92a8-414f-9f5c-a2f824d5036d" testId="42b9dabc-50e2-3260-1c97-693f92e48a53" testName="XUnitSample.SimpleTests.Passing_test" computerName="GFOIDL-PC-2018" duration="00:00:00.0020000" startTime="2019-04-19T16:10:34.9845471+02:00" endTime="2019-04-19T16:10:34.9845475+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="716ff25d-92a8-414f-9f5c-a2f824d5036d" />
+    <UnitTestResult executionId="c99d70e9-7e43-48b2-95e9-758d8b91aa15" testId="95861539-7453-81f4-6db1-004fdd320efb" testName="XUnitSample.SimpleTests.Slow_test" computerName="GFOIDL-PC-2018" duration="00:00:01.0190000" startTime="2019-04-19T16:10:34.9798968+02:00" endTime="2019-04-19T16:10:34.9798976+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c99d70e9-7e43-48b2-95e9-758d8b91aa15" />
+    <UnitTestResult executionId="200426b3-eb18-4228-9770-78a4896d9f2f" testId="a4165991-a2d3-ed8e-00f3-f06b70f63c88" testName="XUnitSample.SimpleTests.Failing_test" computerName="GFOIDL-PC-2018" duration="00:00:00.0060000" startTime="2019-04-19T16:10:33.9653924+02:00" endTime="2019-04-19T16:10:33.9653975+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="200426b3-eb18-4228-9770-78a4896d9f2f">
+      <Output>
+        <ErrorInfo>
+          <Message>Failing for demo purposes&#xD;
+Expected: True&#xD;
+Actual:   False</Message>
+          <StackTrace>   at XUnitSample.SimpleTests.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\SimpleTests.cs:line 20</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="XUnitSample.SimpleTests.Passing_test" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="42b9dabc-50e2-3260-1c97-693f92e48a53">
+      <Execution id="716ff25d-92a8-414f-9f5c-a2f824d5036d" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.SimpleTests.Passing_test" />
+    </UnitTest>
+    <UnitTest name="XUnitSample.SimpleTests.Failing_test" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="a4165991-a2d3-ed8e-00f3-f06b70f63c88">
+      <Execution id="200426b3-eb18-4228-9770-78a4896d9f2f" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.SimpleTests.Failing_test" />
+    </UnitTest>
+    <UnitTest name="XUnitSample.SimpleTests.Slow_test" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="95861539-7453-81f4-6db1-004fdd320efb">
+      <Execution id="c99d70e9-7e43-48b2-95e9-758d8b91aa15" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.SimpleTests.Slow_test" />
+    </UnitTest>
+    <UnitTest name="XUnitSample.SimpleTests.Ignored_test" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="225b4b67-b8e8-e001-c45d-3af5a6c71572">
+      <Execution id="59022a90-b9de-4ad5-b4b7-7fd3f809a8b5" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.SimpleTests.Ignored_test" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="225b4b67-b8e8-e001-c45d-3af5a6c71572" executionId="59022a90-b9de-4ad5-b4b7-7fd3f809a8b5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="42b9dabc-50e2-3260-1c97-693f92e48a53" executionId="716ff25d-92a8-414f-9f5c-a2f824d5036d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="95861539-7453-81f4-6db1-004fdd320efb" executionId="c99d70e9-7e43-48b2-95e9-758d8b91aa15" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a4165991-a2d3-ed8e-00f3-f06b70f63c88" executionId="200426b3-eb18-4228-9770-78a4896d9f2f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="4" executed="3" passed="2" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.4.0 (64-bit .NET Core 4.6.27317.03)[xUnit.net 00:00:00.45]   Discovering: XUnitSample[xUnit.net 00:00:00.50]   Discovered:  XUnitSample[xUnit.net 00:00:00.51]   Starting:    XUnitSample[xUnit.net 00:00:00.67]       Failing for demo purposes[xUnit.net 00:00:00.67]       Expected: True[xUnit.net 00:00:00.67]       Actual:   False[xUnit.net 00:00:00.67]       Stack Trace:[xUnit.net 00:00:00.67]         D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\SimpleTests.cs(20,0): at XUnitSample.SimpleTests.Failing_test()[xUnit.net 00:00:01.69]       Ignoring for testing ;-)[xUnit.net 00:00:01.71]   Finished:    XUnitSampleTest 'XUnitSample.SimpleTests.Ignored_test' was skipped in the test run.</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="GFOIDL-PC-2018" outcome="Error" timestamp="2019-04-19T16:10:33.9590339+02:00">
+        <Text>[xUnit.net 00:00:00.67]     XUnitSample.SimpleTests.Failing_test [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="GFOIDL-PC-2018" outcome="Warning" timestamp="2019-04-19T16:10:34.9870309+02:00">
+        <Text>[xUnit.net 00:00:01.69]     XUnitSample.SimpleTests.Ignored_test [SKIP]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

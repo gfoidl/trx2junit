@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="b38cc38d-6872-49e7-bfd7-7234065b398a" name="gfoidl@GFOIDL-PC-2018 2019-04-19 16:22:07:090" runUser="GFOIDL-PC-2018\gfoidl" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2019-04-19T16:22:07.1003079+02:00" queuing="2019-04-19T16:22:07.1003083+02:00" start="2019-04-19T16:22:05.0234715+02:00" finish="2019-04-19T16:22:07.1130715+02:00" />
+  <TestSettings name="default" id="834eba27-04c3-4791-96cf-63ff32b2aec8">
+    <Deployment runDeploymentRoot="gfoidl_GFOIDL-PC-2018_2019-04-19_16_22_07_090" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="a79c50b2-53bf-4d1d-86fd-3425097afb42" testId="93831b92-1299-5332-b0e8-909ef99b0104" testName="Slow_test" computerName="GFOIDL-PC-2018" duration="00:00:01.0015947" startTime="2019-04-19T16:22:05.8301255+02:00" endTime="2019-04-19T16:22:06.8318858+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a79c50b2-53bf-4d1d-86fd-3425097afb42" />
+    <UnitTestResult executionId="b7d6bc0c-98d0-450a-800b-c8717e455af7" testId="adbb17fe-768b-1c0c-abd4-0d9d1cb35a20" testName="Failing_test" computerName="GFOIDL-PC-2018" duration="00:00:00.0309223" startTime="2019-04-19T16:22:05.7987743+02:00" endTime="2019-04-19T16:22:05.8300636+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b7d6bc0c-98d0-450a-800b-c8717e455af7">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Fail failed. Failing for demo purposes</Message>
+          <StackTrace>   at MsTestSample.SimpleTests.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\SimpleTests.cs:line 20&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="45f28e7f-db47-4393-83fb-cb4731bb42e5" testId="0c5d47ab-65f0-de3a-ff6c-39359ff70568" testName="Passing_test" computerName="GFOIDL-PC-2018" duration="00:00:00.0054354" startTime="2019-04-19T16:22:05.7461127+02:00" endTime="2019-04-19T16:22:05.7871369+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="45f28e7f-db47-4393-83fb-cb4731bb42e5" />
+    <UnitTestResult executionId="8657eaf0-dc6b-4ba2-b4ef-24d17036ea50" testId="f86610c2-4a6c-433f-18bd-a2846300a8c7" testName="Ignored_test" computerName="GFOIDL-PC-2018" startTime="2019-04-19T16:22:06.8319168+02:00" endTime="2019-04-19T16:22:06.8325375+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8657eaf0-dc6b-4ba2-b4ef-24d17036ea50">
+      <Output>
+        <ErrorInfo>
+          <Message>Ignoring for testing ;-)</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Slow_test" storage="d:\work-git\github\mini\trx2junit\samples\mstestsample\bin\debug\netcoreapp2.1\mstestsample.dll" id="93831b92-1299-5332-b0e8-909ef99b0104">
+      <Execution id="a79c50b2-53bf-4d1d-86fd-3425097afb42" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\bin\Debug\netcoreapp2.1\MsTestSample.dll" adapterTypeName="executor://mstestadapter/v2" className="MsTestSample.SimpleTests" name="Slow_test" />
+    </UnitTest>
+    <UnitTest name="Passing_test" storage="d:\work-git\github\mini\trx2junit\samples\mstestsample\bin\debug\netcoreapp2.1\mstestsample.dll" id="0c5d47ab-65f0-de3a-ff6c-39359ff70568">
+      <Execution id="45f28e7f-db47-4393-83fb-cb4731bb42e5" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\bin\Debug\netcoreapp2.1\MsTestSample.dll" adapterTypeName="executor://mstestadapter/v2" className="MsTestSample.SimpleTests" name="Passing_test" />
+    </UnitTest>
+    <UnitTest name="Failing_test" storage="d:\work-git\github\mini\trx2junit\samples\mstestsample\bin\debug\netcoreapp2.1\mstestsample.dll" id="adbb17fe-768b-1c0c-abd4-0d9d1cb35a20">
+      <Execution id="b7d6bc0c-98d0-450a-800b-c8717e455af7" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\bin\Debug\netcoreapp2.1\MsTestSample.dll" adapterTypeName="executor://mstestadapter/v2" className="MsTestSample.SimpleTests" name="Failing_test" />
+    </UnitTest>
+    <UnitTest name="Ignored_test" storage="d:\work-git\github\mini\trx2junit\samples\mstestsample\bin\debug\netcoreapp2.1\mstestsample.dll" id="f86610c2-4a6c-433f-18bd-a2846300a8c7">
+      <Execution id="8657eaf0-dc6b-4ba2-b4ef-24d17036ea50" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\bin\Debug\netcoreapp2.1\MsTestSample.dll" adapterTypeName="executor://mstestadapter/v2" className="MsTestSample.SimpleTests" name="Ignored_test" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="93831b92-1299-5332-b0e8-909ef99b0104" executionId="a79c50b2-53bf-4d1d-86fd-3425097afb42" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="adbb17fe-768b-1c0c-abd4-0d9d1cb35a20" executionId="b7d6bc0c-98d0-450a-800b-c8717e455af7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0c5d47ab-65f0-de3a-ff6c-39359ff70568" executionId="45f28e7f-db47-4393-83fb-cb4731bb42e5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f86610c2-4a6c-433f-18bd-a2846300a8c7" executionId="8657eaf0-dc6b-4ba2-b4ef-24d17036ea50" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="4" executed="3" passed="2" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>Test 'Ignored_test' was skipped in the test run.</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>
