@@ -148,6 +148,10 @@ namespace trx2junit
                 }
             }
 
+            // MsTest doesn't report a duration for ignored tests, but 'time' is requited by junit.xsd
+            if (!unitTestResult.Duration.HasValue)
+                unitTestResult.Duration = (unitTestResult.EndTime - unitTestResult.StartTime) ?? TimeSpan.Zero;
+
             return unitTestResult;
         }
     }

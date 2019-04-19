@@ -25,5 +25,11 @@ namespace XUnitSample
         {
             return Task.Delay(1000);
         }
+        //---------------------------------------------------------------------
+        [Fact(Skip = "Ignoring for testing ;-)")]
+        public void Ignored_test()
+        {
+            throw new System.Exception();
+        }
     }
 }

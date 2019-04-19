@@ -25,5 +25,12 @@ namespace MsTestSample
         {
             await Task.Delay(1000);
         }
+        //---------------------------------------------------------------------
+        [TestMethod]
+        [Ignore("Ignoring for testing ;-)")]
+        public void Ignored_test()
+        {
+            throw new System.Exception();
+        }
     }
 }

@@ -35,16 +35,17 @@ namespace trx2junit
 
             xTestSuite.Add(new XAttribute("name"    , testSuiteName));
             xTestSuite.Add(new XAttribute("hostname", Environment.MachineName));
-            xTestSuite.Add(new XAttribute("package" , ".net Core"));
+            xTestSuite.Add(new XAttribute("package" , ".NET Core"));
             xTestSuite.Add(new XAttribute("id"      , _testId++));
 
             xTestSuite.Add(new XElement("properties"));
             foreach (var test in tests)
                 this.AddTest(xTestSuite, test);
 
-            xTestSuite.Add(new XAttribute("errors"  , _counters.Errors));
             xTestSuite.Add(new XAttribute("tests"   , _counters.TestCount));
             xTestSuite.Add(new XAttribute("failures", _counters.Failures));
+            xTestSuite.Add(new XAttribute("errors"  , _counters.Errors));
+            xTestSuite.Add(new XAttribute("skipped" , _counters.Skipped));
             xTestSuite.Add(new XAttribute("time"    , (decimal)_counters.Time.TotalSeconds));
             xTestSuite.Add(new XElement("system-out"));
             xTestSuite.Add(new XElement("system-err"));
@@ -66,8 +67,8 @@ namespace trx2junit
                 var xTestCase = new XElement("testcase");
                 xTestSuite.Add(xTestCase);
 
-                xTestCase.Add(new XAttribute("classname", test.TestClass));
                 xTestCase.Add(new XAttribute("name"     , unitTestResult.TestName));
+                xTestCase.Add(new XAttribute("classname", test.TestClass));
 
                 if (!_counters.TimeStamp.HasValue) _counters.TimeStamp = unitTestResult.StartTime;
 
@@ -79,6 +80,7 @@ namespace trx2junit
 
                 if (unitTestResult.Outcome == Outcome.NotExecuted)
                 {
+                    _counters.Skipped++;
                     xTestCase.Add(new XElement("skipped"));
                 }
                 else if (unitTestResult.Outcome == Outcome.Failed)
@@ -87,7 +89,7 @@ namespace trx2junit
                     xTestCase.Add(new XElement("failure",
                         unitTestResult.StackTrace,
                         new XAttribute("message", unitTestResult.Message ?? ""),    // Message is allowed to be null
-                        new XAttribute("type"   , "error")
+                        new XAttribute("type"   , "not specified")
                     ));
                 }
             }
@@ -97,9 +99,10 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private struct Counters
         {
-            public int       Errors;
             public int       TestCount;
             public int       Failures;
+            public int       Errors;
+            public int       Skipped;
             public TimeSpan  Time;
             public DateTime? TimeStamp;
         }
