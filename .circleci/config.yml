@@ -1,16 +1,24 @@
-version: 2
-defaults: &defaults
-    working_directory: ~/repo
-    docker:
-        - image: gfoidl/dotnet-xmllint:3.0
-          environment:
-            DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-            DOTNET_CLI_TELEMETRY_OPTOUT: 1
-jobs:
-    build_and_test:
-        <<: *defaults
+version: 2.1
+
+executors:
+    build-executor:
+        docker:
+            - image: gfoidl/dotnet-xmllint:3.0
+              environment:
+                DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+                DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    deploy-executor:
+        docker:
+            - image: mcr.microsoft.com/dotnet/core/sdk:3.0
+              environment:
+                DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+                DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+commands:
+    set_env:
+        description: "Sets the build environment variables"
         steps:
-            - checkout
             - run:
                 name: "set build environment"
                 command: |
@@ -22,6 +30,12 @@ jobs:
 
                     # Exporting / sourcing the path before installing the tool prevents the message about the PATH
                     echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
+
+    build_test:
+        description: "Builds and tests"
+        steps:
+            - checkout
+            - set_env
             - run:
                 name: init
                 command: |
@@ -179,47 +193,54 @@ jobs:
             - store_artifacts:
                 path: tests/TestResults
                 destination: TestResults
-    deploy_nuget:
-        <<: *defaults
+
+jobs:
+    build_test_job:
+        executor: build-executor
         steps:
+            - build_test
+
+    deploy_job:
+        executor: deploy-executor
+        parameters:
+            target:
+                type: string
+        steps:
+            - set_env
             - attach_workspace:
                 at: .
             - run:
-                name: deploy to NuGet
+                name: deploy to << parameters.target >>
                 command: |
                     chmod ugo+x ./build.sh
-                    ./build.sh deploy nuget
-    deploy_myget:
-        <<: *defaults
-        steps:
-            - attach_workspace:
-                at: .
-            - run:
-                name: deploy to MyGet
-                command: |
-                    chmod ugo+x ./build.sh
-                    ./build.sh deploy myget
+                    ./build.sh deploy << parameters.target >>
 
 workflows:
     version: 2
     build_test_deploy:
         jobs:
-            - build_and_test:
+            - build_test_job:
                 filters:
                     tags:
                         only: /^v[0-9]\.[0-9]\.[0-9](-preview-[0-9]+)?$/
-            - deploy_nuget:
+
+            - deploy_job:
+                name: deploy-nuget
+                target: nuget       # parameter
                 requires:
-                    - build_and_test
+                    - build_test_job
                 filters:
                     branches:
                         ignore: /.*/
                     tags:
                         only: /^v[0-9]\.[0-9]\.[0-9]$/
                 context: org-global
-            - deploy_myget:
+
+            - deploy_job:
+                name: deploy-myget
+                target: myget       # parameter
                 requires:
-                    - build_and_test
+                    - build_test_job
                 filters:
                     branches:
                         #only: master
