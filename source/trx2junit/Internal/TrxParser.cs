@@ -92,16 +92,34 @@ namespace trx2junit
                 XElement xInnerResults = xResult.Element(s_XN + "InnerResults");
 
                 if (xInnerResults == null)
-                    this.ParseUnitTestResults(xResult);
+                {
+                    UnitTestResult unitTestResult = ParseUnitTestResults(xResult);
+                    _test.UnitTestResults.Add(unitTestResult);
+                }
                 else
                 {
+                    bool hasFailedTest = false;
+
                     foreach (XElement xInnerResult in xInnerResults.Elements())
-                        this.ParseUnitTestResults(xInnerResult);
+                    {
+                        UnitTestResult unitTestResult = ParseUnitTestResults(xInnerResult);
+                        _test.UnitTestResults.Add(unitTestResult);
+
+                        if (unitTestResult.Outcome == Outcome.Failed)
+                            hasFailedTest = true;
+                    }
+
+                    // MsTest counts the wrapper test, but we won't count it
+                    // https://github.com/gfoidl/trx2junit/pull/40#issuecomment-484682771
+                    _test.ResultSummary.Total--;
+
+                    if (hasFailedTest)
+                        _test.ResultSummary.Failed--;
                 }
             }
         }
-
-        private void ParseUnitTestResults(XElement xResult)
+        //---------------------------------------------------------------------
+        private static UnitTestResult ParseUnitTestResults(XElement xResult)
         {
             var unitTestResult = new UnitTestResult
             {
@@ -130,7 +148,7 @@ namespace trx2junit
                 }
             }
 
-            _test.UnitTestResults.Add(unitTestResult);
+            return unitTestResult;
         }
     }
 }

@@ -29,5 +29,30 @@ namespace trx2junit.Tests.Internal.TrxParserTests
                 Assert.AreEqual(expectedTestDefinitionsCount, actual.TestDefinitions.Count, nameof(expectedTestDefinitionsCount));
             });
         }
+        //---------------------------------------------------------------------
+        [Test]
+        [TestCase("./data/mstest.trx"                       , 3, 1)]
+        [TestCase("./data/mstest-datadriven.trx"            , 5, 2)]
+        [TestCase("./data/mstest-datadriven-no-failures.trx", 5, 0)]
+        [TestCase("./data/nunit.trx"                        , 3, 1)]
+        [TestCase("./data/nunit-datadriven.trx"             , 5, 2)]
+        [TestCase("./data/nunit-memberdata.trx"             , 5, 2)]
+        [TestCase("./data/xunit.trx"                        , 3, 1)]
+        [TestCase("./data/xunit-datadriven.trx"             , 5, 2)]
+        [TestCase("./data/xunit-memberdata.trx"             , 5, 2)]
+        public void File_given___correct_ResultSummary_total_failed(string trxFile, int expectedTotalCount, int expectedFailedCount)
+        {
+            XElement trx = XElement.Load(trxFile);
+            var sut = new TrxParser(trx);
+
+            sut.Parse();
+            Models.Test actual = sut.Result;
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(expectedTotalCount , actual.ResultSummary.Total , nameof(expectedTotalCount));
+                Assert.AreEqual(expectedFailedCount, actual.ResultSummary.Failed, nameof(expectedFailedCount));
+            });
+        }
     }
 }
