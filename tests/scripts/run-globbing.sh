@@ -7,6 +7,7 @@ echo ""
 trx2junit ./globbing/*.trx
 
 echo ""
-./verify-xml.sh "multiple-args/mstest.xml"
-./verify-xml.sh "multiple-args/mstest-warning.xml"
-./verify-xml.sh "multiple-args/nunit.xml"
+
+for junit in ./globbing/*.xml; do
+    ./verify-xml.sh "$junit"
+done
