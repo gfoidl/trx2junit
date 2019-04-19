@@ -40,6 +40,7 @@ commands:
                 name: init
                 command: |
                     chmod ugo+x ./*.sh
+                    chmod ugo+x ./tests/scripts/*.sh
 
                     # Use v1.4.1 as this supports .NET Core 2.1. Version 1.5.0 is for .NET Core 2.2.
                     dotnet tool install -g --version=1.4.1 coverlet.console
@@ -99,90 +100,11 @@ commands:
                     else
                         ./build.sh coverage
                     fi
-            - run:
-                name: run-samples
-                command: |
-                    # default is `set -e`, so override it on behalve that the test-failure is not reported
-                    set +e
-
-                    dotnet test --no-build -c Release --logger "trx;LogFileName=nunit.trx"  samples/NUnitSample
-                    dotnet test --no-build -c Release --logger "trx;LogFileName=mstest.trx" samples/MsTestSample
-                    dotnet test --no-build -c Release --logger "trx;LogFileName=xunit.trx" samples/XUnitSample
-
-                    echo ""
-                    mkdir ./TestResults
-                    mv samples/NUnitSample/TestResults/nunit*.trx   ./TestResults/nunit.trx
-                    mv samples/MsTestSample/TestResults/mstest*.trx ./TestResults/mstest.trx
-                    mv samples/XUnitSample/TestResults/xunit*.trx   ./TestResults/xunit.trx
-
-                    trx2junit ./TestResults/nunit.trx
-                    trx2junit ./TestResults/mstest.trx
-                    trx2junit ./TestResults/xunit.trx
-
-                    echo ""
-                    ./verify-xml.sh "TestResults/nunit.xml"
-                    ./verify-xml.sh "TestResults/mstest.xml"
-                    ./verify-xml.sh "TestResults/xunit.xml"
-            - run:
-                name: run-single-arg
-                command: |
-                    mkdir ./single-arg
-                    cp tests/trx2junit.Tests/data/nunit.trx ./single-arg
-
-                    echo "-----------------------------------------------"
-                    echo "file in different location than pwd"
-                    trx2junit ./single-arg/nunit.trx
-
-                    echo ""
-                    ./verify-xml.sh "single-arg/nunit.xml"
-
-                    echo ""
-                    echo "-----------------------------------------------"
-                    echo "file in same location than pwd"
-                    cd single-arg
-                    trx2junit nunit.trx
-
-                    echo ""
-                    cd -
-                    ./verify-xml.sh "single-arg/nunit.xml"
-            - run:
-                name: run-multiple-args
-                command: |
-                    mkdir ./multiple-args
-                    cp tests/trx2junit.Tests/data/* ./multiple-args
-
-                    echo ""
-                    trx2junit ./multiple-args/mstest.trx ./multiple-args/mstest-warning.trx ./multiple-args/nunit.trx
-
-                    echo ""
-                    ./verify-xml.sh "multiple-args/mstest.xml"
-                    ./verify-xml.sh "multiple-args/mstest-warning.xml"
-                    ./verify-xml.sh "multiple-args/nunit.xml"
-            - run:
-                name: run-globbing
-                command: |
-                    mkdir ./globbing
-                    cp tests/trx2junit.Tests/data/* ./globbing
-
-                    echo ""
-                    trx2junit ./globbing/*.trx
-
-                    echo ""
-                    ./verify-xml.sh "multiple-args/mstest.xml"
-                    ./verify-xml.sh "multiple-args/mstest-warning.xml"
-                    ./verify-xml.sh "multiple-args/nunit.xml"
-            - run:
-                name: run-different-output-location
-                command: |
-                    mkdir ./different-output-location
-                    cp tests/trx2junit.Tests/data/* ./different-output-location
-
-                    echo ""
-                    trx2junit --output ./tests/junit-out ./different-output-location/mstest.trx ./different-output-location/nunit.trx
-
-                    echo ""
-                    ./verify-xml.sh "tests/junit-out/mstest.xml"
-                    ./verify-xml.sh "tests/junit-out/nunit.xml"
+            - run: ./tests/scripts/run-samples.sh
+            - run: ./tests/scripts/run-single-arg.sh
+            - run: ./tests/scripts/run-multiple-args.sh
+            - run: ./tests/scripts/run-globbing.sh
+            - run: ./tests/scripts/run-different-output-location.sh
             - persist_to_workspace:
                 root: .
                 paths:

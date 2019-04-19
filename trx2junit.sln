@@ -48,9 +48,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B42081F2
 		tests\Directory.Build.props = tests\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "trx2junit.Tests", "tests\trx2junit.Tests\trx2junit.Tests.csproj", "{27B8F9C6-B0D5-4E66-8AB7-12A23D4EEFB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trx2junit.Tests", "tests\trx2junit.Tests\trx2junit.Tests.csproj", "{27B8F9C6-B0D5-4E66-8AB7-12A23D4EEFB9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitSample", "samples\XUnitSample\XUnitSample.csproj", "{CE59E4DA-EB17-49A6-A6E8-1484A3413C46}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{3531998A-0501-4259-A130-D982412978AC}"
+	ProjectSection(SolutionItems) = preProject
+		tests\scripts\run-different-output-location.sh = tests\scripts\run-different-output-location.sh
+		tests\scripts\run-globbing.sh = tests\scripts\run-globbing.sh
+		tests\scripts\run-multiple-args.sh = tests\scripts\run-multiple-args.sh
+		tests\scripts\run-samples.sh = tests\scripts\run-samples.sh
+		tests\scripts\run-single-arg.sh = tests\scripts\run-single-arg.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +98,7 @@ Global
 		{BA191F72-A499-4D5B-972C-66EF3BD24B99} = {15D1FCD7-8027-4DD0-BF1A-BFC295C99332}
 		{27B8F9C6-B0D5-4E66-8AB7-12A23D4EEFB9} = {B42081F2-652A-46C6-8E10-D727A3C360A1}
 		{CE59E4DA-EB17-49A6-A6E8-1484A3413C46} = {15D1FCD7-8027-4DD0-BF1A-BFC295C99332}
+		{3531998A-0501-4259-A130-D982412978AC} = {B42081F2-652A-46C6-8E10-D727A3C360A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A779269-CD77-4716-9E1A-DF4AE5817A41}
