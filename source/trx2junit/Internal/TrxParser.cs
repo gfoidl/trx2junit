@@ -89,35 +89,66 @@ namespace trx2junit
 
             foreach (XElement xResult in xResults.Elements())
             {
-                var unitTestResult = new UnitTestResult
-                {
-                    Duration    = xResult.ReadTimeSpan("duration"),
-                    EndTime     = xResult.ReadDateTime("endTime"),
-                    ExecutionId = xResult.ReadGuid("executionId"),
-                    Outcome     = Enum.Parse<Outcome>(xResult.Attribute("outcome").Value),
-                    StartTime   = xResult.ReadDateTime("startTime"),
-                    TestId      = xResult.ReadGuid("testId"),
-                    TestName    = xResult.Attribute("testName").Value
-                };
+                XElement xInnerResults = xResult.Element(s_XN + "InnerResults");
 
-                XElement xOutput = xResult.Element(s_XN + "Output");
-                if (xOutput != null)
+                if (xInnerResults == null)
                 {
-                    XElement xErrorInfo = xOutput.Element(s_XN + "ErrorInfo");
-                    if (xErrorInfo != null)
-                    {
-                        XElement xMessage = xErrorInfo.Element(s_XN + "Message");
-                        if (xMessage != null)
-                            unitTestResult.Message = xMessage.Value;
-
-                        XElement xStackTrace = xErrorInfo.Element(s_XN + "StackTrace");
-                        if (xStackTrace != null)
-                            unitTestResult.StackTrace = xStackTrace.Value;
-                    }
+                    UnitTestResult unitTestResult = ParseUnitTestResults(xResult);
+                    _test.UnitTestResults.Add(unitTestResult);
                 }
+                else
+                {
+                    bool hasFailedTest = false;
 
-                _test.UnitTestResults.Add(unitTestResult);
+                    foreach (XElement xInnerResult in xInnerResults.Elements())
+                    {
+                        UnitTestResult unitTestResult = ParseUnitTestResults(xInnerResult);
+                        _test.UnitTestResults.Add(unitTestResult);
+
+                        if (unitTestResult.Outcome == Outcome.Failed)
+                            hasFailedTest = true;
+                    }
+
+                    // MsTest counts the wrapper test, but we won't count it
+                    // https://github.com/gfoidl/trx2junit/pull/40#issuecomment-484682771
+                    _test.ResultSummary.Total--;
+
+                    if (hasFailedTest)
+                        _test.ResultSummary.Failed--;
+                }
             }
+        }
+        //---------------------------------------------------------------------
+        private static UnitTestResult ParseUnitTestResults(XElement xResult)
+        {
+            var unitTestResult = new UnitTestResult
+            {
+                Duration    = xResult.ReadTimeSpan("duration"),
+                EndTime     = xResult.ReadDateTime("endTime"),
+                ExecutionId = xResult.ReadGuid("executionId"),
+                Outcome     = Enum.Parse<Outcome>(xResult.Attribute("outcome").Value),
+                StartTime   = xResult.ReadDateTime("startTime"),
+                TestId      = xResult.ReadGuid("testId"),
+                TestName    = xResult.Attribute("testName").Value
+            };
+
+            XElement xOutput = xResult.Element(s_XN + "Output");
+            if (xOutput != null)
+            {
+                XElement xErrorInfo = xOutput.Element(s_XN + "ErrorInfo");
+                if (xErrorInfo != null)
+                {
+                    XElement xMessage = xErrorInfo.Element(s_XN + "Message");
+                    if (xMessage != null)
+                        unitTestResult.Message = xMessage.Value;
+
+                    XElement xStackTrace = xErrorInfo.Element(s_XN + "StackTrace");
+                    if (xStackTrace != null)
+                        unitTestResult.StackTrace = xStackTrace.Value;
+                }
+            }
+
+            return unitTestResult;
         }
     }
 }

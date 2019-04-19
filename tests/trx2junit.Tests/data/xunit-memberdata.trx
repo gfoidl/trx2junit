@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="a6a43086-0890-422c-835f-afc7a509f97a" name="@testuser 2019-04-18 13:28:20:652" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2019-04-18T13:28:20.6635402+01:00" queuing="2019-04-18T13:28:20.6635402+01:00" start="2019-04-18T13:28:18.2272794+01:00" finish="2019-04-18T13:28:21.3686542+01:00" />
+  <TestSettings name="default" id="ae76ebad-7329-42a1-a181-1316b4739f32">
+    <Deployment runDeploymentRoot="testuser_2019-04-18_13_28_20_652" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="501e96a4-0f97-4381-9a72-465ada88ee45" testId="452d3fa6-0698-f56d-5449-2587f368ee57" testName="XUnitSample.MemberData.Two_pass_one_fails(obj: { index = 0 })" computerName="testuser" duration="00:00:00.0720000" startTime="2019-04-18T13:28:21.2373792+01:00" endTime="2019-04-18T13:28:21.2373797+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="501e96a4-0f97-4381-9a72-465ada88ee45" />
+    <UnitTestResult executionId="ec8b6eba-e603-43ed-9343-285865038428" testId="5eb02706-c05c-c61c-b55d-e0cf11c1ff83" testName="XUnitSample.MemberData.Failing_test" computerName="testuser" duration="00:00:00.0090000" startTime="2019-04-18T13:28:20.1403536+01:00" endTime="2019-04-18T13:28:20.1403587+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ec8b6eba-e603-43ed-9343-285865038428">
+      <Output>
+        <ErrorInfo>
+          <Message>Failing for demo purposes&#xD;
+Expected: True&#xD;
+Actual:   False</Message>
+          <StackTrace>   at XUnitSample.MemberData.Failing_test() in C:\code\trx2junit\samples\XUnitSample\MemberData.cs:line 32</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="3fb78887-e130-4364-9047-ca0f9262a0a4" testId="a6e017b4-8b60-1f4f-14a2-c4fb102fe07d" testName="XUnitSample.MemberData.Slow_test" computerName="testuser" duration="00:00:01.0150000" startTime="2019-04-18T13:28:21.1484107+01:00" endTime="2019-04-18T13:28:21.1484111+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3fb78887-e130-4364-9047-ca0f9262a0a4" />
+    <UnitTestResult executionId="89fcce9d-9013-4f41-b365-dbaaad64c8fc" testId="452d3fa6-0698-f56d-5449-2587f368ee57" testName="XUnitSample.MemberData.Two_pass_one_fails(obj: { index = 1 })" computerName="testuser" duration="00:00:00.0010000" startTime="2019-04-18T13:28:21.2383974+01:00" endTime="2019-04-18T13:28:21.2383976+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="89fcce9d-9013-4f41-b365-dbaaad64c8fc">
+      <Output>
+        <ErrorInfo>
+          <Message>Failing for demo purposes&#xD;
+Expected: True&#xD;
+Actual:   False</Message>
+          <StackTrace>   at XUnitSample.MemberData.Two_pass_one_fails(Object obj) in C:\code\trx2junit\samples\XUnitSample\MemberData.cs:line 23</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f5661b09-1002-4573-81f7-228011af04dd" testId="452d3fa6-0698-f56d-5449-2587f368ee57" testName="XUnitSample.MemberData.Two_pass_one_fails(obj: { index = 2 })" computerName="testuser" duration="00:00:00.0010000" startTime="2019-04-18T13:28:21.2384360+01:00" endTime="2019-04-18T13:28:21.2384361+01:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f5661b09-1002-4573-81f7-228011af04dd" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="XUnitSample.MemberData.Slow_test" storage="C:\code\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="a6e017b4-8b60-1f4f-14a2-c4fb102fe07d">
+      <Execution id="3fb78887-e130-4364-9047-ca0f9262a0a4" />
+      <TestMethod codeBase="C:\code\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.MemberData.Slow_test" />
+    </UnitTest>
+    <UnitTest name="XUnitSample.MemberData.Two_pass_one_fails" storage="C:\code\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="452d3fa6-0698-f56d-5449-2587f368ee57">
+      <Execution id="501e96a4-0f97-4381-9a72-465ada88ee45" />
+      <TestMethod codeBase="C:\code\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.MemberData.Two_pass_one_fails" />
+    </UnitTest>
+    <UnitTest name="XUnitSample.MemberData.Failing_test" storage="C:\code\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="5eb02706-c05c-c61c-b55d-e0cf11c1ff83">
+      <Execution id="ec8b6eba-e603-43ed-9343-285865038428" />
+      <TestMethod codeBase="C:\code\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.MemberData.Failing_test" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="452d3fa6-0698-f56d-5449-2587f368ee57" executionId="501e96a4-0f97-4381-9a72-465ada88ee45" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5eb02706-c05c-c61c-b55d-e0cf11c1ff83" executionId="ec8b6eba-e603-43ed-9343-285865038428" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a6e017b4-8b60-1f4f-14a2-c4fb102fe07d" executionId="3fb78887-e130-4364-9047-ca0f9262a0a4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="452d3fa6-0698-f56d-5449-2587f368ee57" executionId="89fcce9d-9013-4f41-b365-dbaaad64c8fc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="452d3fa6-0698-f56d-5449-2587f368ee57" executionId="f5661b09-1002-4573-81f7-228011af04dd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="5" executed="5" passed="3" failed="2" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.4.0 (64-bit .NET Core 4.6.27414.06)[xUnit.net 00:00:00.52]   Discovering: XUnitSample[xUnit.net 00:00:00.64]   Discovered:  XUnitSample[xUnit.net 00:00:00.65]   Starting:    XUnitSample[xUnit.net 00:00:00.95]       Failing for demo purposes[xUnit.net 00:00:00.95]       Expected: True[xUnit.net 00:00:00.95]       Actual:   False[xUnit.net 00:00:00.96]       Stack Trace:[xUnit.net 00:00:00.96]         C:\code\trx2junit\samples\XUnitSample\MemberData.cs(32,0): at XUnitSample.MemberData.Failing_test()[xUnit.net 00:00:02.06]       Failing for demo purposes[xUnit.net 00:00:02.06]       Expected: True[xUnit.net 00:00:02.06]       Actual:   False[xUnit.net 00:00:02.06]       Stack Trace:[xUnit.net 00:00:02.06]         C:\code\trx2junit\samples\XUnitSample\MemberData.cs(23,0): at XUnitSample.MemberData.Two_pass_one_fails(Object obj)[xUnit.net 00:00:02.08]   Finished:    XUnitSample</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="testuser" outcome="Error" timestamp="2019-04-18T13:28:20.1314226+01:00">
+        <Text>[xUnit.net 00:00:00.95]     XUnitSample.MemberData.Failing_test [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="testuser" outcome="Error" timestamp="2019-04-18T13:28:21.2384167+01:00">
+        <Text>[xUnit.net 00:00:02.06]     XUnitSample.MemberData.Two_pass_one_fails(obj: { index = 1 }) [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="dc5e55fa-61e6-4be2-9702-2f5a1caaf9b9" name="gfoidl@GFOIDL-PC-2018 2019-04-18 18:31:08:155" runUser="GFOIDL-PC-2018\gfoidl" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2019-04-18T18:31:08.1652839+02:00" queuing="2019-04-18T18:31:08.1652839+02:00" start="2019-04-18T18:31:06.0455259+02:00" finish="2019-04-18T18:31:08.1794544+02:00" />
+  <TestSettings name="default" id="3fd13437-2645-4f07-8659-cc1c8d716205">
+    <Deployment runDeploymentRoot="gfoidl_GFOIDL-PC-2018_2019-04-18_18_31_08_155" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="a90d3814-5c5f-4657-8ad5-4a44e0caff57" testId="e4e435cf-0799-8f23-0725-3c33de71c7de" testName="Failing_test" computerName="GFOIDL-PC-2018" duration="00:00:00.0006181" startTime="2019-04-18T18:31:06.9259054+02:00" endTime="2019-04-18T18:31:06.9267004+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a90d3814-5c5f-4657-8ad5-4a44e0caff57">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Fail failed. Failing for demo purposes</Message>
+          <StackTrace>   at MsTestSample.DataDriven.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\DataDriven.cs:line 25&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="5cd75120-0062-480d-9e29-5cf91032f4d8" testId="9bd50cb6-9a7b-ab65-9d0d-4fb94c650e5a" testName="Two_pass_one_fails" computerName="GFOIDL-PC-2018" duration="00:00:00.0372035" startTime="2019-04-18T18:31:06.8401400+02:00" endTime="2019-04-18T18:31:06.9144445+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5cd75120-0062-480d-9e29-5cf91032f4d8" resultType="DataDrivenTest">
+      <InnerResults>
+        <UnitTestResult executionId="43c3f3e5-47d6-4147-8288-2b5dec20668c" parentExecutionId="5cd75120-0062-480d-9e29-5cf91032f4d8" testId="9bd50cb6-9a7b-ab65-9d0d-4fb94c650e5a" testName="Two_pass_one_fails (0)" computerName="GFOIDL-PC-2018" duration="00:00:00.0051356" startTime="2019-04-18T18:31:06.8401400+02:00" endTime="2019-04-18T18:31:06.9144445+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="43c3f3e5-47d6-4147-8288-2b5dec20668c" dataRowInfo="1" resultType="DataDrivenDataRow" />
+        <UnitTestResult executionId="6079ea36-bd64-42a8-a2be-f7f404b36e79" parentExecutionId="5cd75120-0062-480d-9e29-5cf91032f4d8" testId="9bd50cb6-9a7b-ab65-9d0d-4fb94c650e5a" testName="Two_pass_one_fails (1)" computerName="GFOIDL-PC-2018" duration="00:00:00.0275393" startTime="2019-04-18T18:31:06.8401400+02:00" endTime="2019-04-18T18:31:06.9144445+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6079ea36-bd64-42a8-a2be-f7f404b36e79" dataRowInfo="2" resultType="DataDrivenDataRow">
+          <Output>
+            <ErrorInfo>
+              <Message>Assert.Fail failed. Failing for demo purposes</Message>
+              <StackTrace>   at MsTestSample.DataDriven.Two_pass_one_fails(Int32 arg) in D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\DataDriven.cs:line 16&#xD;
+</StackTrace>
+            </ErrorInfo>
+          </Output>
+        </UnitTestResult>
+        <UnitTestResult executionId="d4e00ee8-e5cb-40d4-8a10-dda5522c5583" parentExecutionId="5cd75120-0062-480d-9e29-5cf91032f4d8" testId="9bd50cb6-9a7b-ab65-9d0d-4fb94c650e5a" testName="Two_pass_one_fails (2)" computerName="GFOIDL-PC-2018" duration="00:00:00.0000065" startTime="2019-04-18T18:31:06.8401400+02:00" endTime="2019-04-18T18:31:06.9144445+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d4e00ee8-e5cb-40d4-8a10-dda5522c5583" dataRowInfo="3" resultType="DataDrivenDataRow" />
+      </InnerResults>
+    </UnitTestResult>
+    <UnitTestResult executionId="3e134cd8-59c4-4556-b4cd-1dc598a27161" testId="c637cdd3-8976-3be9-8e7f-c014e5751380" testName="Slow_test" computerName="GFOIDL-PC-2018" duration="00:00:01.0009908" startTime="2019-04-18T18:31:06.9267230+02:00" endTime="2019-04-18T18:31:07.9278184+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3e134cd8-59c4-4556-b4cd-1dc598a27161" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Slow_test" storage="d:\work-git\github\mini\trx2junit\samples\mstestsample\bin\debug\netcoreapp2.1\mstestsample.dll" id="c637cdd3-8976-3be9-8e7f-c014e5751380">
+      <Execution id="3e134cd8-59c4-4556-b4cd-1dc598a27161" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\bin\Debug\netcoreapp2.1\MsTestSample.dll" adapterTypeName="executor://mstestadapter/v2" className="MsTestSample.DataDriven" name="Slow_test" />
+    </UnitTest>
+    <UnitTest name="Two_pass_one_fails" storage="d:\work-git\github\mini\trx2junit\samples\mstestsample\bin\debug\netcoreapp2.1\mstestsample.dll" id="9bd50cb6-9a7b-ab65-9d0d-4fb94c650e5a">
+      <Execution id="5cd75120-0062-480d-9e29-5cf91032f4d8" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\bin\Debug\netcoreapp2.1\MsTestSample.dll" adapterTypeName="executor://mstestadapter/v2" className="MsTestSample.DataDriven" name="Two_pass_one_fails" />
+    </UnitTest>
+    <UnitTest name="Failing_test" storage="d:\work-git\github\mini\trx2junit\samples\mstestsample\bin\debug\netcoreapp2.1\mstestsample.dll" id="e4e435cf-0799-8f23-0725-3c33de71c7de">
+      <Execution id="a90d3814-5c5f-4657-8ad5-4a44e0caff57" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\bin\Debug\netcoreapp2.1\MsTestSample.dll" adapterTypeName="executor://mstestadapter/v2" className="MsTestSample.DataDriven" name="Failing_test" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="e4e435cf-0799-8f23-0725-3c33de71c7de" executionId="a90d3814-5c5f-4657-8ad5-4a44e0caff57" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9bd50cb6-9a7b-ab65-9d0d-4fb94c650e5a" executionId="5cd75120-0062-480d-9e29-5cf91032f4d8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c637cdd3-8976-3be9-8e7f-c014e5751380" executionId="3e134cd8-59c4-4556-b4cd-1dc598a27161" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="6" executed="6" passed="3" failed="3" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+</TestRun>
