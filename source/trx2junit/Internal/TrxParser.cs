@@ -89,35 +89,48 @@ namespace trx2junit
 
             foreach (XElement xResult in xResults.Elements())
             {
-                var unitTestResult = new UnitTestResult
-                {
-                    Duration    = xResult.ReadTimeSpan("duration"),
-                    EndTime     = xResult.ReadDateTime("endTime"),
-                    ExecutionId = xResult.ReadGuid("executionId"),
-                    Outcome     = Enum.Parse<Outcome>(xResult.Attribute("outcome").Value),
-                    StartTime   = xResult.ReadDateTime("startTime"),
-                    TestId      = xResult.ReadGuid("testId"),
-                    TestName    = xResult.Attribute("testName").Value
-                };
+                XElement xInnerResults = xResult.Element(s_XN + "InnerResults");
 
-                XElement xOutput = xResult.Element(s_XN + "Output");
-                if (xOutput != null)
+                if (xInnerResults == null)
+                    this.ParseUnitTestResults(xResult);
+                else
                 {
-                    XElement xErrorInfo = xOutput.Element(s_XN + "ErrorInfo");
-                    if (xErrorInfo != null)
-                    {
-                        XElement xMessage = xErrorInfo.Element(s_XN + "Message");
-                        if (xMessage != null)
-                            unitTestResult.Message = xMessage.Value;
-
-                        XElement xStackTrace = xErrorInfo.Element(s_XN + "StackTrace");
-                        if (xStackTrace != null)
-                            unitTestResult.StackTrace = xStackTrace.Value;
-                    }
+                    foreach (XElement xInnerResult in xInnerResults.Elements())
+                        this.ParseUnitTestResults(xInnerResult);
                 }
-
-                _test.UnitTestResults.Add(unitTestResult);
             }
+        }
+
+        private void ParseUnitTestResults(XElement xResult)
+        {
+            var unitTestResult = new UnitTestResult
+            {
+                Duration    = xResult.ReadTimeSpan("duration"),
+                EndTime     = xResult.ReadDateTime("endTime"),
+                ExecutionId = xResult.ReadGuid("executionId"),
+                Outcome     = Enum.Parse<Outcome>(xResult.Attribute("outcome").Value),
+                StartTime   = xResult.ReadDateTime("startTime"),
+                TestId      = xResult.ReadGuid("testId"),
+                TestName    = xResult.Attribute("testName").Value
+            };
+
+            XElement xOutput = xResult.Element(s_XN + "Output");
+            if (xOutput != null)
+            {
+                XElement xErrorInfo = xOutput.Element(s_XN + "ErrorInfo");
+                if (xErrorInfo != null)
+                {
+                    XElement xMessage = xErrorInfo.Element(s_XN + "Message");
+                    if (xMessage != null)
+                        unitTestResult.Message = xMessage.Value;
+
+                    XElement xStackTrace = xErrorInfo.Element(s_XN + "StackTrace");
+                    if (xStackTrace != null)
+                        unitTestResult.StackTrace = xStackTrace.Value;
+                }
+            }
+
+            _test.UnitTestResults.Add(unitTestResult);
         }
     }
 }
