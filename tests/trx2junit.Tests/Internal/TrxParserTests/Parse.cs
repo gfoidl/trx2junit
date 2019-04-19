@@ -7,53 +7,27 @@ namespace trx2junit.Tests.Internal.TrxParserTests
     public class Parse
     {
         [Test]
-        public void Parse_NUnit___OK()
+        [TestCase("./data/mstest.trx"           , 3, 3)]
+        [TestCase("./data/mstest-datadriven.trx", 5, 3)]
+        [TestCase("./data/nunit.trx"            , 3, 3)]
+        [TestCase("./data/nunit-datadriven.trx" , 5, 5)]
+        [TestCase("./data/nunit-memberdata.trx" , 5, 5)]
+        [TestCase("./data/xunit.trx"            , 3, 3)]
+        [TestCase("./data/xunit-datadriven.trx" , 5, 5)]
+        [TestCase("./data/xunit-memberdata.trx" , 5, 3)]
+        public void File_given___correct_counts(string trxFile, int expectedUnitTestResultsCount, int expectedTestDefinitionsCount)
         {
-            Models.Test actual = this.ParseCore("./data/nunit.trx");
-
-            Assert.IsNotNull(actual);
-        }
-        //---------------------------------------------------------------------
-        [Test]
-        public void Parse_NUnit_with_no_tests___OK()
-        {
-            Models.Test actual = this.ParseCore("./data/nunit-no-tests.trx");
-
-            Assert.IsNotNull(actual);
-        }
-        //---------------------------------------------------------------------
-        [Test]
-        public void Parse_MsTest___OK()
-        {
-            Models.Test actual = this.ParseCore("./data/mstest.trx");
-
-            Assert.IsNotNull(actual);
-        }
-        //---------------------------------------------------------------------
-        [Test]
-        public void Parse_MsTest_with_warnings___OK()
-        {
-            Models.Test actual = this.ParseCore("./data/mstest-warning.trx");
-
-            Assert.IsNotNull(actual);
-        }
-        //---------------------------------------------------------------------
-        [Test]
-        public void Parse_XUnit___OK()
-        {
-            Models.Test actual = this.ParseCore("./data/xunit.trx");
-
-            Assert.IsNotNull(actual);
-        }
-        //---------------------------------------------------------------------
-        private Models.Test ParseCore(string fileName)
-        {
-            XElement trx = XElement.Load(fileName);
+            XElement trx = XElement.Load(trxFile);
             var sut      = new TrxParser(trx);
 
             sut.Parse();
+            Models.Test actual = sut.Result;
 
-            return sut.Result;
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(expectedUnitTestResultsCount, actual.UnitTestResults.Count, nameof(expectedUnitTestResultsCount));
+                Assert.AreEqual(expectedTestDefinitionsCount, actual.TestDefinitions.Count, nameof(expectedTestDefinitionsCount));
+            });
         }
     }
 }
