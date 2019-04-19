@@ -11,11 +11,7 @@ namespace trx2junit
         private readonly Test                 _test;
         private readonly XElement             _xJUnit = new XElement("testsuites");
         private int                           _testId;
-        private int                           _errors;
-        private int                           _testCount;
-        private int                           _failures;
-        private TimeSpan                      _time;
-        private DateTime?                     _timeStamp;
+        private Counters                      _counters;
         private ILookup<Guid, UnitTestResult> _lookup;
         //---------------------------------------------------------------------
         public XElement Result => _xJUnit;
@@ -46,15 +42,15 @@ namespace trx2junit
             foreach (var test in tests)
                 this.AddTest(xTestSuite, test);
 
-            xTestSuite.Add(new XAttribute("errors"  , _errors));
-            xTestSuite.Add(new XAttribute("tests"   , _testCount));
-            xTestSuite.Add(new XAttribute("failures", _failures));
-            xTestSuite.Add(new XAttribute("time"    , (decimal)_time.TotalSeconds));
+            xTestSuite.Add(new XAttribute("errors"  , _counters.Errors));
+            xTestSuite.Add(new XAttribute("tests"   , _counters.TestCount));
+            xTestSuite.Add(new XAttribute("failures", _counters.Failures));
+            xTestSuite.Add(new XAttribute("time"    , (decimal)_counters.Time.TotalSeconds));
             xTestSuite.Add(new XElement("system-out"));
             xTestSuite.Add(new XElement("system-err"));
 
-            if (_timeStamp.HasValue)
-                xTestSuite.Add(new XAttribute("timestamp", _timeStamp.Value.ToJUnitDateTime()));
+            if (_counters.TimeStamp.HasValue)
+                xTestSuite.Add(new XAttribute("timestamp", _counters.TimeStamp.Value.ToJUnitDateTime()));
 
             _xJUnit.Add(xTestSuite);
         }
@@ -65,7 +61,7 @@ namespace trx2junit
 
             foreach (var unitTestResult in unitTestResults)
             {
-                _testCount++;
+                _counters.TestCount++;
 
                 var xTestCase = new XElement("testcase");
                 xTestSuite.Add(xTestCase);
@@ -73,11 +69,11 @@ namespace trx2junit
                 xTestCase.Add(new XAttribute("classname", test.TestClass));
                 xTestCase.Add(new XAttribute("name"     , unitTestResult.TestName));
 
-                if (!_timeStamp.HasValue) _timeStamp = unitTestResult.StartTime;
+                if (!_counters.TimeStamp.HasValue) _counters.TimeStamp = unitTestResult.StartTime;
 
                 if (unitTestResult.Duration.HasValue)
                 {
-                    _time += unitTestResult.Duration.Value;
+                    _counters.Time += unitTestResult.Duration.Value;
                     xTestCase.Add(new XAttribute("time", (decimal)unitTestResult.Duration.Value.TotalSeconds));
                 }
 
@@ -87,7 +83,7 @@ namespace trx2junit
                 }
                 else if (unitTestResult.Outcome == Outcome.Failed)
                 {
-                    _failures++;
+                    _counters.Failures++;
                     xTestCase.Add(new XElement("failure",
                         unitTestResult.StackTrace,
                         new XAttribute("message", unitTestResult.Message ?? ""),    // Message is allowed to be null
@@ -97,13 +93,15 @@ namespace trx2junit
             }
         }
         //---------------------------------------------------------------------
-        private void ResetCounters()
+        private void ResetCounters() => _counters = default;
+        //---------------------------------------------------------------------
+        private struct Counters
         {
-            _errors    = 0;
-            _testCount = 0;
-            _failures  = 0;
-            _time      = TimeSpan.Zero;
-            _timeStamp = null;
+            public int       Errors;
+            public int       TestCount;
+            public int       Failures;
+            public TimeSpan  Time;
+            public DateTime? TimeStamp;
         }
     }
 }
