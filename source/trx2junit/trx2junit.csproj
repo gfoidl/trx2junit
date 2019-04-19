@@ -9,7 +9,7 @@
 
     <PropertyGroup>
         <Description>Transforms XML from trx-Testresults to JUnit-Testresults / trx to JUnit XML</Description>
-        <PackageLicenseUrl>https://github.com/gfoidl/trx2junit/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/gfoidl/trx2junit</PackageProjectUrl>
         <RepositoryUrl>https://github.com/gfoidl/trx2junit</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
