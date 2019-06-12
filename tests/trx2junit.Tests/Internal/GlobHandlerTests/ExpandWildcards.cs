@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 
@@ -86,6 +87,21 @@ namespace trx2junit.Tests.Internal.GlobHandlerTests
             GlobHandler sut = this.CreateSut();
 
             sut.ExpandWildcards(options);
+
+            CollectionAssert.AreEqual(expected, options.InputFiles);
+        }
+        //---------------------------------------------------------------------
+        [Test]
+        public void Integration_Test()
+        {
+            string[] inputFiles = { "data/*.trx" };
+
+            var options = new WorkerOptions(inputFiles);
+            var sut     = new GlobHandler(new FileSystem());
+
+            sut.ExpandWildcards(options);
+
+            string[] expected = Directory.EnumerateFiles("data", "*.trx", SearchOption.TopDirectoryOnly).ToArray();
 
             CollectionAssert.AreEqual(expected, options.InputFiles);
         }
