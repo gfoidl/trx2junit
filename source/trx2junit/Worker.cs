@@ -12,7 +12,7 @@ namespace trx2junit
     {
         private static readonly Encoding s_utf8 = new UTF8Encoding(false);
 
-        private readonly IFileSystem _fileSystem;
+        private readonly IFileSystem  _fileSystem;
         private readonly IGlobHandler _globHandler;
         //---------------------------------------------------------------------
         public Worker(IFileSystem fileSystem = null, IGlobHandler globHandler = null)
