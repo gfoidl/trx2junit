@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace trx2junit
 {
@@ -6,5 +7,6 @@ namespace trx2junit
     {
         Stream OpenRead(string path);
         void CreateDirectory(string directory);
+        IEnumerable<string> EnumerateFiles(string path, string pattern);
     }
 }
