@@ -11,6 +11,13 @@ namespace trx2junit
     public class Worker
     {
         private static readonly Encoding s_utf8 = new UTF8Encoding(false);
+
+        private readonly IFileSystem _fileSystem;
+        //---------------------------------------------------------------------
+        public Worker(IFileSystem fileSystem = null)
+        {
+            _fileSystem = fileSystem ?? new FileSystem();
+        }
         //---------------------------------------------------------------------
         public async Task RunAsync(WorkerOptions options)
         {
@@ -31,11 +38,11 @@ namespace trx2junit
         internal async Task Convert(string trxFile, string outputPath = null)
         {
             string jUnitFile = GetJunitFile(trxFile, outputPath);
-            EnsureOutputDirectoryExists(jUnitFile);
+            this.EnsureOutputDirectoryExists(jUnitFile);
 
             Console.WriteLine($"Converting '{trxFile}' to '{jUnitFile}'");
 
-            using (Stream input      = File.OpenRead(trxFile))
+            using (Stream input      = _fileSystem.OpenRead(trxFile))
             using (TextWriter output = new StreamWriter(jUnitFile, false, s_utf8))
             {
                 var converter = new Trx2JunitConverter();
@@ -55,12 +62,12 @@ namespace trx2junit
             return Path.Combine(outputPath, fileName);
         }
         //---------------------------------------------------------------------
-        private static void EnsureOutputDirectoryExists(string jUnitFile)
+        private void EnsureOutputDirectoryExists(string jUnitFile)
         {
             string directory = Path.GetDirectoryName(jUnitFile);
 
             if (!string.IsNullOrWhiteSpace(directory))
-                Directory.CreateDirectory(directory);
+                _fileSystem.CreateDirectory(directory);
         }
     }
 }
