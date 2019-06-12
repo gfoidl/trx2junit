@@ -104,6 +104,7 @@ commands:
             - run: ./tests/scripts/run-single-arg.sh
             - run: ./tests/scripts/run-multiple-args.sh
             - run: ./tests/scripts/run-globbing.sh
+            - run: ./tests/scripts/run-no-globbing.sh
             - run: ./tests/scripts/run-different-output-location.sh
             - persist_to_workspace:
                 root: .
