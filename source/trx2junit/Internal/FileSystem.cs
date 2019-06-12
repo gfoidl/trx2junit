@@ -12,6 +12,6 @@ namespace trx2junit
             => Directory.CreateDirectory(directory);
         //---------------------------------------------------------------------
         public IEnumerable<string> EnumerateFiles(string path, string pattern)
-            => Directory.EnumerateFiles(path, path, SearchOption.TopDirectoryOnly);
+            => Directory.EnumerateFiles(path, pattern, SearchOption.TopDirectoryOnly);
     }
 }
