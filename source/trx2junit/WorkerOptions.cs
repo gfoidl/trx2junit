@@ -5,7 +5,7 @@ namespace trx2junit
 {
     public class WorkerOptions
     {
-        public IList<string> InputFiles { get; }
+        public IList<string> InputFiles { get; set; }
         public string OutputDirectory   { get; }
         //---------------------------------------------------------------------
         public WorkerOptions(IList<string> inputFiles, string outputDirectory = null)
