@@ -13,10 +13,12 @@ namespace trx2junit
         private static readonly Encoding s_utf8 = new UTF8Encoding(false);
 
         private readonly IFileSystem _fileSystem;
+        private readonly IGlobHandler _globHandler;
         //---------------------------------------------------------------------
-        public Worker(IFileSystem fileSystem = null)
+        public Worker(IFileSystem fileSystem = null, IGlobHandler globHandler = null)
         {
-            _fileSystem = fileSystem ?? new FileSystem();
+            _fileSystem  = fileSystem  ?? new FileSystem();
+            _globHandler = globHandler ?? new GlobHandler(_fileSystem);
         }
         //---------------------------------------------------------------------
         public async Task RunAsync(WorkerOptions options)
@@ -25,6 +27,8 @@ namespace trx2junit
 
             Thread.CurrentThread.CurrentCulture   = CultureInfo.InvariantCulture;
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+
+            _globHandler.ExpandWildcards(options);
 
             Console.WriteLine($"Converting {options.InputFiles.Count} trx file(s) to JUnit-xml...");
             DateTime start = DateTime.Now;

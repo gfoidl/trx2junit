@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace trx2junit.Tests.WorkerTests.RunAsync
 {
     [TestFixture]
-    public class DifferentOutputLocation
+    public class DifferentOutputLocation : Base
     {
         [Test]
         public async Task Single_file_given___converted()
@@ -15,7 +15,7 @@ namespace trx2junit.Tests.WorkerTests.RunAsync
             if (Directory.Exists("./data/out"))
                 Directory.Delete("./data/out", true);
 
-            var sut = new Worker();
+            Worker sut = this.CreateSut();
 
             string[] args = { "./data/nunit.trx", "--output", "./data/out" };
             var options   = WorkerOptions.Parse(args);
@@ -32,7 +32,7 @@ namespace trx2junit.Tests.WorkerTests.RunAsync
             if (Directory.Exists("./data/out"))
                 Directory.Delete("./data/out", true);
 
-            var sut = new Worker();
+            Worker sut = this.CreateSut();
 
             string[] args = { "./data/nunit.trx", "./data/mstest.trx", "./data/mstest-warning.trx", "--output", "./data/out" };
             var options   = WorkerOptions.Parse(args);
