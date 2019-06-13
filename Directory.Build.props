@@ -3,8 +3,8 @@
     <PropertyGroup>
         <VersionMajor Condition="'$(VersionMajor)' == ''">1</VersionMajor>
         <VersionMinor Condition="'$(VersionMinor)' == ''">2</VersionMinor>
-        <VersionPatch Condition="'$(VersionPatch)' == ''">4</VersionPatch>
-        <BuildNumber Condition="'$(BuildNumber)' == ''">77</BuildNumber>
+        <VersionPatch Condition="'$(VersionPatch)' == ''">5</VersionPatch>
+        <BuildNumber Condition="'$(BuildNumber)' == ''">82</BuildNumber>
         <VersionSuffix Condition="'$(Configuration)' == 'Debug' and '$(VersionSuffix)' == ''">dev</VersionSuffix>
         <Authors>gfoidl</Authors>
         <Company>Foidl Günther</Company>
