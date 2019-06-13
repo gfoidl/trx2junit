@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace trx2junit.Tests.WorkerTests.RunAsync
 {
     [TestFixture]
-    public class SameOutputLocation
+    public class SameOutputLocation : Base
     {
         [Test]
         public async Task Single_file_given___converted()
@@ -13,7 +13,7 @@ namespace trx2junit.Tests.WorkerTests.RunAsync
             string[] expectedFiles = { "./data/nunit.xml" };
             DeleteExpectedFiles(expectedFiles);
 
-            var sut = new Worker();
+            Worker sut = this.CreateSut();
 
             string[] args = { "./data/nunit.trx" };
             var options   = new WorkerOptions(args);
@@ -28,7 +28,7 @@ namespace trx2junit.Tests.WorkerTests.RunAsync
             string[] expectedFiles = { "./data/nunit.xml", "./data/mstest.xml", "./data/mstest-warning.xml" };
             DeleteExpectedFiles(expectedFiles);
 
-            var sut = new Worker();
+            Worker sut = this.CreateSut();
 
             string[] args = { "./data/nunit.trx", "./data/mstest.trx", "./data/mstest-warning.trx" };
             var options   = new WorkerOptions(args);

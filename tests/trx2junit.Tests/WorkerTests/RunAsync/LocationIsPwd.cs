@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace trx2junit.Tests.WorkerTests.RunAsync
 {
     [TestFixture]
-    public class LocationIsPwd
+    public class LocationIsPwd : Base
     {
         private string _curDir;
         //---------------------------------------------------------------------
@@ -29,7 +29,7 @@ namespace trx2junit.Tests.WorkerTests.RunAsync
             string[] expectedFiles = { "nunit.xml" };
             DeleteExpectedFiles(expectedFiles);
 
-            var sut = new Worker();
+            Worker sut = this.CreateSut();
 
             string[] args = { "nunit.trx" };
             var options   = new WorkerOptions(args);
@@ -44,7 +44,7 @@ namespace trx2junit.Tests.WorkerTests.RunAsync
             string[] expectedFiles = { "nunit.xml", "mstest.xml", "mstest-warning.xml" };
             DeleteExpectedFiles(expectedFiles);
 
-            var sut = new Worker();
+            Worker sut = this.CreateSut();
 
             string[] args = { "nunit.trx", "mstest.trx", "mstest-warning.trx" };
             var options   = new WorkerOptions(args);
