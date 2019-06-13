@@ -5,13 +5,12 @@
 # trx2junit (.NET Core global tool)
 
 Helper for converting trx-Testresults (`dotnet test --logger "trx"`) to a JUnit-based XML file.  
-The JUnit-output will be in the same directory than the trx-file.
 
 Can be used for CI-scenarios, like [CircleCi](https://circleci.com/) or [GitLab](https://docs.gitlab.com/ee/ci/junit_test_reports.html), where as test results JUnit is expected.
 
 ## Usage
 
-When installed as [.NET Core 2.1 Global Tools](https://natemcmaster.com/blog/2018/05/12/dotnet-global-tools/):  
+When installed as [.NET Core Global Tool](https://natemcmaster.com/blog/2018/05/12/dotnet-global-tools/):   
 `trx2junit {trxFile}` where _trxFile_ is the path to the trx-file.
 
 You can pass more than one trx file, each will create it's own junit xml file.
@@ -30,6 +29,7 @@ Converting 1 trx file(s) to JUnit-xml...
 Converting 'example.trx' to 'example.xml'
 done in 0.1234567 seconds. bye.
 ```
+If the shell won't handle wildcard expansion, `trx2junit` handles the expansion of files in the same directory.
 
 A different location for the JUnit-output can be specified:
 
@@ -51,7 +51,12 @@ For CI-scenarios execute before usage:
 ```sh
 export PATH="$PATH:/root/.dotnet/tools"
 ```
+Check also the documentation of your CI-system on how to persist the `PATH` between steps, etc.
+E.g. in CircleCI you need to run
+```sh
+echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
+```
 
 ### Prequisites
 
-[.NET Core 2.1 SDK](https://aka.ms/DotNetCore21)
+[.NET Core SDK](https://dotnet.microsoft.com/download) 2.1 onwards.
