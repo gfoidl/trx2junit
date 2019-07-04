@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using trx2junit.Models;
+
+#nullable enable
 
 namespace trx2junit
 {
@@ -14,7 +17,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public Test Result => _test;
         //---------------------------------------------------------------------
-        public TrxParser(XElement trx) => _trx = trx ?? throw new ArgumentNullException(nameof(trx));
+        public TrxParser(XElement? trx) => _trx = trx ?? throw new ArgumentNullException(nameof(trx));
         //---------------------------------------------------------------------
         public void Parse()
         {
@@ -111,6 +114,7 @@ namespace trx2junit
 
                     // MsTest counts the wrapper test, but we won't count it
                     // https://github.com/gfoidl/trx2junit/pull/40#issuecomment-484682771
+                    Debug.Assert(_test.ResultSummary != null);
                     _test.ResultSummary.Total--;
 
                     if (hasFailedTest)

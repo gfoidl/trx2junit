@@ -3,11 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+#nullable enable
+
 namespace trx2junit
 {
     public class Trx2JunitConverter : ITrx2JunitConverter
     {
-        public async Task Convert(Stream trxInput, TextWriter jUnitOutput)
+        public async Task Convert(Stream? trxInput, TextWriter? jUnitOutput)
         {
             XElement trx = await XElement.LoadAsync(trxInput, LoadOptions.None, CancellationToken.None);
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+#nullable enable
+
 namespace trx2junit
 {
     public class GlobHandler : IGlobHandler
@@ -14,8 +16,10 @@ namespace trx2junit
             _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         }
         //---------------------------------------------------------------------
-        public void ExpandWildcards(WorkerOptions options)
+        public void ExpandWildcards(WorkerOptions? options)
         {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
             var expandedFiles = new List<string>();
 
             foreach (string inpupt in options.InputFiles)

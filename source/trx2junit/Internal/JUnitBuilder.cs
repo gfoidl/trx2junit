@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using trx2junit.Models;
+
+#nullable enable
 
 namespace trx2junit
 {
     public class JUnitBuilder : IJUnitBuilder
     {
-        private readonly Test                 _test;
-        private readonly XElement             _xJUnit = new XElement("testsuites");
-        private int                           _testId;
-        private Counters                      _counters;
-        private ILookup<Guid, UnitTestResult> _lookup;
+        private readonly Test                  _test;
+        private readonly XElement              _xJUnit = new XElement("testsuites");
+        private int                            _testId;
+        private Counters                       _counters;
+        private ILookup<Guid, UnitTestResult>? _lookup;
         //---------------------------------------------------------------------
         public XElement Result => _xJUnit;
         //---------------------------------------------------------------------
-        public JUnitBuilder(Test test) => _test = test ?? throw new ArgumentNullException(nameof(test));
+        public JUnitBuilder(Test? test) => _test = test ?? throw new ArgumentNullException(nameof(test));
         //---------------------------------------------------------------------
         public void Build()
         {
@@ -58,6 +61,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void AddTest(XElement xTestSuite, TestDefinition test)
         {
+            Debug.Assert(_lookup != null);
             IEnumerable<UnitTestResult> unitTestResults = _lookup[test.Id];
 
             foreach (var unitTestResult in unitTestResults)
