@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+#nullable enable
+
 namespace trx2junit
 {
     public class Worker
@@ -15,13 +17,13 @@ namespace trx2junit
         private readonly IFileSystem  _fileSystem;
         private readonly IGlobHandler _globHandler;
         //---------------------------------------------------------------------
-        public Worker(IFileSystem fileSystem = null, IGlobHandler globHandler = null)
+        public Worker(IFileSystem? fileSystem = null, IGlobHandler? globHandler = null)
         {
             _fileSystem  = fileSystem  ?? new FileSystem();
             _globHandler = globHandler ?? new GlobHandler(_fileSystem);
         }
         //---------------------------------------------------------------------
-        public async Task RunAsync(WorkerOptions options)
+        public async Task RunAsync(WorkerOptions? options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 
@@ -39,7 +41,7 @@ namespace trx2junit
         }
         //---------------------------------------------------------------------
         // internal for testing
-        internal async Task Convert(string trxFile, string outputPath = null)
+        internal async Task Convert(string trxFile, string? outputPath = null)
         {
             string jUnitFile = GetJunitFile(trxFile, outputPath);
             this.EnsureOutputDirectoryExists(jUnitFile);
@@ -55,7 +57,7 @@ namespace trx2junit
         }
         //---------------------------------------------------------------------
         // internal for testing
-        internal static string GetJunitFile(string trxFile, string outputPath = null)
+        internal static string GetJunitFile(string trxFile, string? outputPath = null)
         {
             string junitFile = Path.ChangeExtension(trxFile, "xml");
 
