@@ -133,7 +133,7 @@ jobs:
     debug_build_test_job:
         executor: build-executor
         environment:
-            BUILD_CONFIG: debug
+            BUILD_CONFIG: Debug
         steps:
             - build_test:
                 debug-build: true
