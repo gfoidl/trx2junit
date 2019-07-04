@@ -33,6 +33,10 @@ commands:
 
     build_test:
         description: "Builds and tests"
+        parameters:
+            debug-build:
+                type: boolean
+                default: false
         steps:
             - checkout
             - set_env
@@ -51,66 +55,69 @@ commands:
             - run:
                 name: test
                 command: ./build.sh test
-            - run:
-                name: pack
-                command: ./build.sh pack
-            - run:
-                name: global tool install (trx2junit)
-                command: |
-                    # copied from build.sh (but modified)
-                    if [[ -n "$CIRCLE_TAG" ]]; then
-                        if [[ "$CIRCLE_TAG" =~ ^v([0-9])\.([0-9])\.([0-9])(-(preview-[0-9]+))$ ]]; then
-                            VersionMajor="${BASH_REMATCH[1]}"
-                            VersionMinor="${BASH_REMATCH[2]}"
-                            VersionPatch="${BASH_REMATCH[3]}"
-                            VersionSuffix="${BASH_REMATCH[5]}"
+            - unless:
+                condition: << parameters.debug-build >>
+                steps:
+                    - run:
+                        name: pack
+                        command: ./build.sh pack
+                    - run:
+                        name: global tool install (trx2junit)
+                        command: |
+                            # copied from build.sh (but modified)
+                            if [[ -n "$CIRCLE_TAG" ]]; then
+                                if [[ "$CIRCLE_TAG" =~ ^v([0-9])\.([0-9])\.([0-9])(-(preview-[0-9]+))$ ]]; then
+                                    VersionMajor="${BASH_REMATCH[1]}"
+                                    VersionMinor="${BASH_REMATCH[2]}"
+                                    VersionPatch="${BASH_REMATCH[3]}"
+                                    VersionSuffix="${BASH_REMATCH[5]}"
 
-                            ToolVersion="$VersionMajor.$VersionMinor.$VersionPatch-$VersionSuffix"
-                        fi
-                    fi
+                                    ToolVersion="$VersionMajor.$VersionMinor.$VersionPatch-$VersionSuffix"
+                                fi
+                            fi
 
-                    # special handling for pre-releases (is a constraint by .net Core global tools)
-                    # and also to prevent installation from NuGet-feed (which may have higher version than the
-                    # built tool)
-                    if [[ -z "$ToolVersion" ]]; then
-                        dotnet tool install -g --configfile=ci-nuget.config trx2junit
-                    else
-                        dotnet tool install -g --version="$ToolVersion" --configfile=ci-nuget.config trx2junit
-                    fi
-            - run:
-                name: global tool install (trx2junit)
-                when: on_fail
-                command: |
-                    echo "Previous job failed, so use trx2junit from NuGet instead of local copy"
-                    echo ""
-                    dotnet tool install -g trx2junit
-            - run:
-                name: project test results
-                when: always
-                command: |
-                    if [[ -d "tests/TestResults" ]]; then
-                        trx2junit tests/TestResults/*.trx
-                        #rm tests/TestResults/*.trx
-                    fi
-            - run:
-                name: code coverage
-                command: |
-                    if [[ -z "$CODECOV_TOKEN" ]]; then
-                        echo "codecov token not set -- skipping code coverage"
-                    else
-                        ./build.sh coverage
-                    fi
-            - run: ./tests/scripts/run-samples.sh
-            - run: ./tests/scripts/run-single-arg.sh
-            - run: ./tests/scripts/run-multiple-args.sh
-            - run: ./tests/scripts/run-globbing.sh
-            - run: ./tests/scripts/run-no-globbing.sh
-            - run: ./tests/scripts/run-different-output-location.sh
-            - persist_to_workspace:
-                root: .
-                paths:
-                    - build.sh
-                    - NuGet-Packed
+                            # special handling for pre-releases (is a constraint by .net Core global tools)
+                            # and also to prevent installation from NuGet-feed (which may have higher version than the
+                            # built tool)
+                            if [[ -z "$ToolVersion" ]]; then
+                                dotnet tool install -g --configfile=ci-nuget.config trx2junit
+                            else
+                                dotnet tool install -g --version="$ToolVersion" --configfile=ci-nuget.config trx2junit
+                            fi
+                    - run:
+                        name: global tool install (trx2junit)
+                        when: on_fail
+                        command: |
+                            echo "Previous job failed, so use trx2junit from NuGet instead of local copy"
+                            echo ""
+                            dotnet tool install -g trx2junit
+                    - run:
+                        name: project test results
+                        when: always
+                        command: |
+                            if [[ -d "tests/TestResults" ]]; then
+                                trx2junit tests/TestResults/*.trx
+                                #rm tests/TestResults/*.trx
+                            fi
+                    - run:
+                        name: code coverage
+                        command: |
+                            if [[ -z "$CODECOV_TOKEN" ]]; then
+                                echo "codecov token not set -- skipping code coverage"
+                            else
+                                ./build.sh coverage
+                            fi
+                    - run: ./tests/scripts/run-samples.sh
+                    - run: ./tests/scripts/run-single-arg.sh
+                    - run: ./tests/scripts/run-multiple-args.sh
+                    - run: ./tests/scripts/run-globbing.sh
+                    - run: ./tests/scripts/run-no-globbing.sh
+                    - run: ./tests/scripts/run-different-output-location.sh
+                    - persist_to_workspace:
+                        root: .
+                        paths:
+                            - build.sh
+                            - NuGet-Packed
             - store_test_results:
                 path: tests/TestResults
             - store_artifacts:
@@ -118,10 +125,18 @@ commands:
                 destination: TestResults
 
 jobs:
-    build_test_job:
+    release_build_test_job:
         executor: build-executor
         steps:
             - build_test
+
+    debug_build_test_job:
+        executor: build-executor
+        environment:
+            BUILD_CONFIG: debug
+        steps:
+            - build_test:
+                debug-build: true
 
     deploy_job:
         executor: deploy-executor
@@ -142,7 +157,12 @@ workflows:
     version: 2
     build_test_deploy:
         jobs:
-            - build_test_job:
+            - release_build_test_job:
+                filters:
+                    tags:
+                        only: /^v[0-9]\.[0-9]\.[0-9](-preview-[0-9]+)?$/
+
+            - debug_build_test_job:
                 filters:
                     tags:
                         only: /^v[0-9]\.[0-9]\.[0-9](-preview-[0-9]+)?$/
@@ -151,7 +171,8 @@ workflows:
                 name: deploy-nuget
                 target: nuget       # parameter
                 requires:
-                    - build_test_job
+                    - release_build_test_job
+                    - debug_build_test_job
                 filters:
                     branches:
                         ignore: /.*/
@@ -163,7 +184,8 @@ workflows:
                 name: deploy-myget
                 target: myget       # parameter
                 requires:
-                    - build_test_job
+                    - release_build_test_job
+                    - debug_build_test_job
                 filters:
                     branches:
                         #only: master
