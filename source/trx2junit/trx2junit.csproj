@@ -3,7 +3,6 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFrameworks>netcoreapp3.0;netcoreapp2.1</TargetFrameworks>
-        <LangVersion>latest</LangVersion>
         <PackAsTool>true</PackAsTool>
     </PropertyGroup>
 

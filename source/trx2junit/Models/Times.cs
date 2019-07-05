@@ -1,5 +1,7 @@
 ﻿using System;
 
+#nullable enable
+
 namespace trx2junit
 {
     public class Times

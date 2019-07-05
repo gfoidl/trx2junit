@@ -13,6 +13,10 @@
         <VersionPrefix>$(VersionMajor).$(VersionMinor).$(VersionPatch)</VersionPrefix>
         <AssemblyVersion>$(VersionMajor).$(VersionMinor).$(BuildNumber).$(VersionPatch)</AssemblyVersion>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <LangVersion>8.0</LangVersion>
+    </PropertyGroup>
     
     <PropertyGroup>
         <PackageOutputPath>$(MSBuildThisFileDirectory)NuGet-Packed</PackageOutputPath>

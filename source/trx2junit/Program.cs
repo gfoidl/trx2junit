@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
+#nullable enable
+
 namespace trx2junit
 {
     static class Program
