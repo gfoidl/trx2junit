@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 using NUnit.Framework;
@@ -80,7 +80,10 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests.Build
         {
             XElement testsuite = this.GetTestSuite();
 
-            Assert.AreEqual(4.0, int.Parse(testsuite.Attribute("time").Value));
+            string actual = testsuite.Attribute("time").Value;
+            TestContext.WriteLine(actual);
+
+            Assert.AreEqual(4.0, decimal.Parse(actual, CultureInfo.InvariantCulture), "actual: {0}", actual);
         }
         //---------------------------------------------------------------------
         private XElement GetTestSuite() => this.GetTestSuites().First();

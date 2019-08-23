@@ -49,7 +49,7 @@ namespace trx2junit
             xTestSuite.Add(new XAttribute("failures", _counters.Failures));
             xTestSuite.Add(new XAttribute("errors"  , _counters.Errors));
             xTestSuite.Add(new XAttribute("skipped" , _counters.Skipped));
-            xTestSuite.Add(new XAttribute("time"    , (decimal)_counters.Time.TotalSeconds));
+            xTestSuite.Add(new XAttribute("time"    , _counters.Time.TotalSeconds.ToJUnitTime()));
             xTestSuite.Add(new XElement("system-out"));
             xTestSuite.Add(new XElement("system-err"));
 
@@ -79,7 +79,7 @@ namespace trx2junit
                 if (unitTestResult.Duration.HasValue)
                 {
                     _counters.Time += unitTestResult.Duration.Value;
-                    xTestCase.Add(new XAttribute("time", (decimal)unitTestResult.Duration.Value.TotalSeconds));
+                    xTestCase.Add(new XAttribute("time", unitTestResult.Duration.Value.TotalSeconds.ToJUnitTime()));
                 }
 
                 if (unitTestResult.Outcome == Outcome.NotExecuted)

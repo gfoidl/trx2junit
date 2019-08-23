@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Xml.Linq;
 
 namespace trx2junit
@@ -41,5 +42,7 @@ namespace trx2junit
         {
             return $"{dt.Year}-{dt.Month:00}-{dt.Day:00}T{dt.Hour:00}:{dt.Minute:00}:{dt.Second:00}";
         }
+        //---------------------------------------------------------------------
+        public static string ToJUnitTime(this double value) => value.ToString("0.000", CultureInfo.InvariantCulture);
     }
 }
