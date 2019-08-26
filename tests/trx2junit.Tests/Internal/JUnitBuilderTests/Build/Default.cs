@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml.Linq;
 using NUnit.Framework;
 
@@ -119,10 +120,10 @@ namespace trx2junit.Tests.Internal.JUnitBuilderTests.Build
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(6.0 , decimal.Parse(testsuiteList[0].Attribute("time").Value));
-                Assert.AreEqual(3.0 , decimal.Parse(testsuiteList[1].Attribute("time").Value));
-                Assert.AreEqual(20.0, decimal.Parse(testsuiteList[2].Attribute("time").Value));
-                Assert.AreEqual(2.0 , decimal.Parse(testsuiteList[3].Attribute("time").Value));
+                Assert.AreEqual(6.0 , decimal.Parse(testsuiteList[0].Attribute("time").Value, CultureInfo.InvariantCulture));
+                Assert.AreEqual(3.0 , decimal.Parse(testsuiteList[1].Attribute("time").Value, CultureInfo.InvariantCulture));
+                Assert.AreEqual(20.0, decimal.Parse(testsuiteList[2].Attribute("time").Value, CultureInfo.InvariantCulture));
+                Assert.AreEqual(2.0 , decimal.Parse(testsuiteList[3].Attribute("time").Value, CultureInfo.InvariantCulture));
             });
         }
     }
