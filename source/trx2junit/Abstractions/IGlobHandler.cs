@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace trx2junit
+﻿namespace trx2junit
 {
     public interface IGlobHandler
     {

@@ -3,8 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-#nullable enable
-
 namespace trx2junit
 {
     public class Trx2JunitConverter : ITrx2JunitConverter

@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-#nullable enable
-
 namespace trx2junit
 {
     static class Program
@@ -38,7 +36,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private static void PrintInfo()
         {
-            Version version = typeof(Program).Assembly.GetName().Version;
+            Version version = typeof(Program).Assembly.GetName().Version!;
 
             Console.WriteLine($"trx2junit (c) gfoidl -- v{version.Major}.{version.Minor}.{version.Revision}");
             Console.WriteLine("https://github.com/gfoidl/trx2junit");

@@ -60,7 +60,7 @@ setBuildEnv() {
     export BuildNumber=$CI_BUILD_NUMBER
 
     if [[ -n "$TAG_NAME" ]]; then
-        if [[ "$TAG_NAME" =~ ^v([0-9])\.([0-9])\.([0-9])(-(preview-[0-9]+))?$ ]]; then
+        if [[ "$TAG_NAME" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)(-(preview-[0-9]+))?$ ]]; then
             export VersionMajor="${BASH_REMATCH[1]}"
             export VersionMinor="${BASH_REMATCH[2]}"
             export VersionPatch="${BASH_REMATCH[3]}"
@@ -98,7 +98,7 @@ _testCore() {
     testNameWOExtension=$(basename "$testDir")
     testName=$(basename "$testFullName")
     testResultName="$testNameWOExtension-$(date +%s)"
-    dotnetTestArgs="-c $BUILD_CONFIG --no-build --logger \"trx;LogFileName=$testResultName.trx\" $testFullName"
+    dotnetTestArgs="-c $BUILD_CONFIG --no-build --verbosity quiet --logger \"trx;LogFileName=$testResultName.trx\" $testFullName"
 
     if [[ -n "$TESTS_TO_SKIP" ]]; then
         testsToSkip=(${TESTS_TO_SKIP//;/ })
@@ -148,6 +148,7 @@ test() {
 
     for testProject in "$testDir"/**/*.csproj; do
         _testCore "$testProject"
+		echo "-------------------------------------------------"
     done
 }
 #------------------------------------------------------------------------------
@@ -161,7 +162,7 @@ _coverageCore() {
 
     cd "$testDir"
 
-    for test in ./bin/$BUILD_CONFIG/**/*.Tests.dll; do
+    for test in ./bin/$BUILD_CONFIG/**/*.Tests*.dll; do
         targetFramework=$(basename $(dirname $test))
         mkdir -p "coverage/$targetFramework"
         coverlet "$test" --target "dotnet" --targetargs "test --no-build -c $BUILD_CONFIG" --format opencover -o "./coverage/$targetFramework/coverage.opencover.xml"
