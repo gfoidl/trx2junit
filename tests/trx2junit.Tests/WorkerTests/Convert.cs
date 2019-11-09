@@ -8,19 +8,19 @@ namespace trx2junit.Tests.WorkerTests
     public class Convert
     {
         [Test]
-        [TestCase("./data/mstest.trx")]
-        [TestCase("./data/mstest-datadriven.trx")]
-        [TestCase("./data/mstest-ignore.trx")]
-        [TestCase("./data/mstest-warning.trx")]
-        [TestCase("./data/nunit.trx")]
-        [TestCase("./data/nunit-datadriven.trx")]
-        [TestCase("./data/nunit-ignore.trx")]
-        [TestCase("./data/nunit-no-tests.trx")]
-        [TestCase("./data/xunit.trx")]
-        [TestCase("./data/xunit-datadriven.trx")]
-        [TestCase("./data/xunit-ignore.trx")]
-        [TestCase("./data/xunit-memberdata.trx")]
-        public async Task File_given___converted(string trxFile)
+        [TestCase("./data/trx/mstest.trx")]
+        [TestCase("./data/trx/mstest-datadriven.trx")]
+        [TestCase("./data/trx/mstest-ignore.trx")]
+        [TestCase("./data/trx/mstest-warning.trx")]
+        [TestCase("./data/trx/nunit.trx")]
+        [TestCase("./data/trx/nunit-datadriven.trx")]
+        [TestCase("./data/trx/nunit-ignore.trx")]
+        [TestCase("./data/trx/nunit-no-tests.trx")]
+        [TestCase("./data/trx/xunit.trx")]
+        [TestCase("./data/trx/xunit-datadriven.trx")]
+        [TestCase("./data/trx/xunit-ignore.trx")]
+        [TestCase("./data/trx/xunit-memberdata.trx")]
+        public async Task Trx_file_given___converted(string trxFile)
         {
             string junitFile = Path.ChangeExtension(trxFile, "xml");
             File.Delete(junitFile);
@@ -34,19 +34,19 @@ namespace trx2junit.Tests.WorkerTests
         }
         //---------------------------------------------------------------------
         [Test]
-        [TestCase("./data/mstest.trx")]
-        [TestCase("./data/mstest-datadriven.trx")]
-        [TestCase("./data/mstest-ignore.trx")]
-        [TestCase("./data/mstest-warning.trx")]
-        [TestCase("./data/nunit.trx")]
-        [TestCase("./data/nunit-datadriven.trx")]
-        [TestCase("./data/nunit-ignore.trx")]
-        [TestCase("./data/nunit-no-tests.trx")]
-        [TestCase("./data/xunit.trx")]
-        [TestCase("./data/xunit-datadriven.trx")]
-        [TestCase("./data/xunit-ignore.trx")]
-        [TestCase("./data/xunit-memberdata.trx")]
-        public async Task File_given___generated_xml_is_valid_against_schema(string trxFile)
+        [TestCase("./data/trx/mstest.trx")]
+        [TestCase("./data/trx/mstest-datadriven.trx")]
+        [TestCase("./data/trx/mstest-ignore.trx")]
+        [TestCase("./data/trx/mstest-warning.trx")]
+        [TestCase("./data/trx/nunit.trx")]
+        [TestCase("./data/trx/nunit-datadriven.trx")]
+        [TestCase("./data/trx/nunit-ignore.trx")]
+        [TestCase("./data/trx/nunit-no-tests.trx")]
+        [TestCase("./data/trx/xunit.trx")]
+        [TestCase("./data/trx/xunit-datadriven.trx")]
+        [TestCase("./data/trx/xunit-ignore.trx")]
+        [TestCase("./data/trx/xunit-memberdata.trx")]
+        public async Task Trx_file_given___generated_xml_is_valid_against_schema(string trxFile)
         {
             string junitFile = Path.ChangeExtension(trxFile, "xml");
             File.Delete(junitFile);

@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace trx2junit.Abstractions
+namespace trx2junit
 {
     public interface ITrxBuilder
     {

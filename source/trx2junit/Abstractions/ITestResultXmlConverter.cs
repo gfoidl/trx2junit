@@ -5,6 +5,7 @@ namespace trx2junit
 {
     public interface ITestResultXmlConverter
     {
-        Task Convert(Stream? input, TextWriter? output);
+        Task ConvertAsync(Stream? input, TextWriter? output);
+        string GetOutputFile(string? inputFile, string? outputPath = null);
     }
 }

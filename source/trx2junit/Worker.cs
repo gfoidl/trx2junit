@@ -53,7 +53,7 @@ namespace trx2junit
         internal async Task Convert(string inputFile, string? outputPath = null, ITestResultXmlConverter? converter = null)
         {
             converter       ??= new Trx2JunitConverter();
-            string outputFile = GetOutputFile(inputFile, outputPath);
+            string outputFile = converter.GetOutputFile(inputFile, outputPath);
             this.EnsureOutputDirectoryExists(outputFile);
 
             Console.WriteLine($"Converting '{inputFile}' to '{outputFile}'");
@@ -61,20 +61,8 @@ namespace trx2junit
             using (Stream input      = _fileSystem.OpenRead(inputFile))
             using (TextWriter output = new StreamWriter(outputFile, false, s_utf8))
             {
-                await converter.Convert(input, output);
+                await converter.ConvertAsync(input, output);
             }
-        }
-        //---------------------------------------------------------------------
-        // internal for testing
-        internal static string GetOutputFile(string inputFile, string? outputPath = null)
-        {
-            string outputFile = Path.ChangeExtension(inputFile, "xml");
-
-            if (outputPath == null)
-                return outputFile;
-
-            string fileName = Path.GetFileName(outputFile);
-            return Path.Combine(outputPath, fileName);
         }
         //---------------------------------------------------------------------
         private void EnsureOutputDirectoryExists(string outputFile)

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <xs:schema xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="http://microsoft.com/schemas/VisualStudio/TeamTest/2010"
            elementFormDefault="qualified" attributeFormDefault="unqualified" version="2010.04">
   <xs:complexType name="BaseTestType" abstract="true">
     <xs:annotation>

@@ -14,7 +14,7 @@ namespace trx2junit.Tests.WorkerTests.RunAsync
         public void SetUp()
         {
             _curDir = Environment.CurrentDirectory;
-            Environment.CurrentDirectory = "./data";
+            Environment.CurrentDirectory = "./data/trx";
         }
         //---------------------------------------------------------------------
         [TearDown]

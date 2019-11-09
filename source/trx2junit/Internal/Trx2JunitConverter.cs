@@ -5,9 +5,11 @@ using System.Xml.Linq;
 
 namespace trx2junit
 {
-    public class Trx2JunitConverter : ITestResultXmlConverter
+    public class Trx2JunitConverter : TestResultXmlConverter
     {
-        public async Task Convert(Stream? trxInput, TextWriter? jUnitOutput)
+        protected override string Extension => "xml";
+        //---------------------------------------------------------------------
+        public override async Task ConvertAsync(Stream? trxInput, TextWriter? jUnitOutput)
         {
             XElement trx = await XElement.LoadAsync(trxInput, LoadOptions.None, CancellationToken.None);
 

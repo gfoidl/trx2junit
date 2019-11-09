@@ -1,6 +1,6 @@
 ﻿using trx2junit.Models;
 
-namespace trx2junit.Abstractions
+namespace trx2junit
 {
     public interface IJunitParser
     {

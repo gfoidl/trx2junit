@@ -10,12 +10,12 @@ namespace trx2junit.Tests.WorkerTests.RunAsync
         [Test]
         public async Task Single_file_given___converted()
         {
-            string[] expectedFiles = { "./data/nunit.xml" };
+            string[] expectedFiles = { "./data/trx/nunit.xml" };
             DeleteExpectedFiles(expectedFiles);
 
             Worker sut = this.CreateSut();
 
-            string[] args = { "./data/nunit.trx" };
+            string[] args = { "./data/trx/nunit.trx" };
             var options   = new WorkerOptions(args);
             await sut.RunAsync(options);
 
@@ -25,12 +25,12 @@ namespace trx2junit.Tests.WorkerTests.RunAsync
         [Test]
         public async Task Multiple_files_given___converted()
         {
-            string[] expectedFiles = { "./data/nunit.xml", "./data/mstest.xml", "./data/mstest-warning.xml" };
+            string[] expectedFiles = { "./data/trx/nunit.xml", "./data/trx/mstest.xml", "./data/trx/mstest-warning.xml" };
             DeleteExpectedFiles(expectedFiles);
 
             Worker sut = this.CreateSut();
 
-            string[] args = { "./data/nunit.trx", "./data/mstest.trx", "./data/mstest-warning.trx" };
+            string[] args = { "./data/trx/nunit.trx", "./data/trx/mstest.trx", "./data/trx/mstest-warning.trx" };
             var options   = new WorkerOptions(args);
             await sut.RunAsync(options);
 

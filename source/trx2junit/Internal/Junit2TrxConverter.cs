@@ -6,9 +6,11 @@ using System.Xml.Linq;
 
 namespace trx2junit
 {
-    public class Junit2TrxConverter : ITestResultXmlConverter
+    public class Junit2TrxConverter : TestResultXmlConverter
     {
-        public async Task Convert(Stream? trxInput, TextWriter? jUnitOutput)
+        protected override string Extension => "trx";
+        //---------------------------------------------------------------------
+        public override async Task ConvertAsync(Stream? trxInput, TextWriter? jUnitOutput)
         {
             throw new NotImplementedException();
         }

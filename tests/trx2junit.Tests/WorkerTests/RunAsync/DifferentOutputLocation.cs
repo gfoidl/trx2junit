@@ -17,7 +17,7 @@ namespace trx2junit.Tests.WorkerTests.RunAsync
 
             Worker sut = this.CreateSut();
 
-            string[] args = { "./data/nunit.trx", "--output", "./data/out" };
+            string[] args = { "./data/trx/nunit.trx", "--output", "./data/out" };
             var options   = WorkerOptions.Parse(args);
             await sut.RunAsync(options);
 
@@ -34,7 +34,7 @@ namespace trx2junit.Tests.WorkerTests.RunAsync
 
             Worker sut = this.CreateSut();
 
-            string[] args = { "./data/nunit.trx", "./data/mstest.trx", "./data/mstest-warning.trx", "--output", "./data/out" };
+            string[] args = { "./data/trx/nunit.trx", "./data/trx/mstest.trx", "./data/trx/mstest-warning.trx", "--output", "./data/out" };
             var options   = WorkerOptions.Parse(args);
             await sut.RunAsync(options);
 

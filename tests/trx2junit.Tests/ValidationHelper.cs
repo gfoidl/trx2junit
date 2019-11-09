@@ -7,22 +7,28 @@ namespace trx2junit.Tests
 {
     internal static class ValidationHelper
     {
-        private static readonly XmlSchemaSet s_schema;
+        private static readonly XmlSchemaSet s_schemaJunit = LoadSchema("./data/junit.xsd");
+        private static readonly XmlSchemaSet s_schemaTrx   = LoadSchema("./data/vstst.xsd");
         //---------------------------------------------------------------------
-        static ValidationHelper()
+        public static void IsXmlValidJunit(string fileName, bool validateJunit = true)
         {
-            s_schema = new XmlSchemaSet();
+            XDocument xml          = XDocument.Load(fileName);
+            XmlSchemaSet xmlSchema = validateJunit
+                ? s_schemaJunit
+                : s_schemaTrx;
 
-            using (Stream s = File.OpenRead("./data/junit.xsd"))
-            using (XmlReader xr = XmlReader.Create(s))
-                s_schema.Add("", xr);
+            xml.Validate(xmlSchema, (o, e) => throw e.Exception);
         }
         //---------------------------------------------------------------------
-        public static void IsXmlValidJunit(string fileName)
+        private static XmlSchemaSet LoadSchema(string xsdFile)
         {
-            XDocument junit = XDocument.Load(fileName);
+            var schema = new XmlSchemaSet();
 
-            junit.Validate(s_schema, (o, e) => throw e.Exception);
+            using (Stream s = File.OpenRead(xsdFile))
+            using (XmlReader xr = XmlReader.Create(s))
+                schema.Add("", xr);
+
+            return schema;
         }
     }
 }
