@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir ./different-output-location
-cp tests/trx2junit.Tests/data/* ./different-output-location
+cp tests/trx2junit.Tests/data/trx/* ./different-output-location
 
 echo ""
 trx2junit --output ./tests/junit-out ./different-output-location/mstest.trx ./different-output-location/nunit.trx

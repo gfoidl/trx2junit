@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir ./no-globbing
-cp tests/trx2junit.Tests/data/* ./no-globbing
+cp tests/trx2junit.Tests/data/trx/* ./no-globbing
 
 echo ""
 # -f disables filename expansion
@@ -11,7 +11,7 @@ set +f
 echo ""
 
 for junit in ./no-globbing/*.xml; do
-    ./verify-xml.sh "$junit"
+	./verify-xml.sh "$junit"
 done
 
 nTrx=$(ls -l ./no-globbing/*.trx | wc -l)
@@ -22,8 +22,8 @@ echo "Count of trx-files: $nTrx"
 echo "Count of xml-files: $nXml"
 
 if [[ $nTrx != $nXml ]]; then
-    echo "FAILURE: not all trx-files were converted"
-    exit 1
+	echo "FAILURE: not all trx-files were converted"
+	exit 1
 else
-    echo "all trx-files were converted"
+	echo "all trx-files were converted"
 fi
