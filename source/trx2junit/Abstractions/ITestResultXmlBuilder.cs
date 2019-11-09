@@ -2,7 +2,7 @@
 
 namespace trx2junit
 {
-    public interface ITrxBuilder
+    public interface ITestResultXmlBuilder
     {
         XElement Result { get; }
 

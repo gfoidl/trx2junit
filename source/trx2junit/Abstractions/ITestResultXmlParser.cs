@@ -2,7 +2,7 @@
 
 namespace trx2junit
 {
-    public interface ITrxParser
+    public interface ITestResultXmlParser
     {
         Test Result { get; }
 

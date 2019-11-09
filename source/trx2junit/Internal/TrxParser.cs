@@ -6,7 +6,7 @@ using trx2junit.Models;
 
 namespace trx2junit
 {
-    public class TrxParser : ITrxParser
+    public class TrxParser : ITestResultXmlParser
     {
         private static readonly XNamespace s_XN = "http://microsoft.com/schemas/VisualStudio/TeamTest/2010";
         //---------------------------------------------------------------------

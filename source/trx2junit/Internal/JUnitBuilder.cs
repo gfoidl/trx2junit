@@ -7,7 +7,7 @@ using trx2junit.Models;
 
 namespace trx2junit
 {
-    public class JUnitBuilder : IJUnitBuilder
+    public class JUnitBuilder : ITestResultXmlBuilder
     {
         private readonly Test                  _test;
         private readonly XElement              _xJUnit = new XElement("testsuites");

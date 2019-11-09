@@ -1,18 +1,13 @@
 ﻿using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Xml.Linq;
+using trx2junit.Models;
 
 namespace trx2junit
 {
     public class Junit2TrxConverter : TestResultXmlConverter
     {
-        protected override string Extension => "trx";
-        //---------------------------------------------------------------------
-        public override async Task ConvertAsync(Stream? trxInput, TextWriter? jUnitOutput)
-        {
-            throw new NotImplementedException();
-        }
+        protected override Func<XElement, ITestResultXmlParser> ParserFactory => testXml => new JunitParser(testXml);
+        protected override Func<Test, ITestResultXmlBuilder> BuilderFactory   => test    => new TrxBuilder(test);
+        protected override string Extension                                   => "trx";
     }
 }
