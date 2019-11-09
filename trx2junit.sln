@@ -37,6 +37,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{7F5905D2-5BCD-4D98-AE53-98F2FFC9DE9D}"
 	ProjectSection(SolutionItems) = preProject
 		schemas\junit.xsd = schemas\junit.xsd
+		schemas\vstst.xsd = schemas\vstst.xsd
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitSample", "samples\NUnitSample\NUnitSample.csproj", "{AB4EB02B-E16A-40B7-8524-A4F752FDFBBA}"

@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace trx2junit
 {
-    public class Trx2JunitConverter : ITrx2JunitConverter
+    public class Trx2JunitConverter : ITestResultXmlConverter
     {
         public async Task Convert(Stream? trxInput, TextWriter? jUnitOutput)
         {

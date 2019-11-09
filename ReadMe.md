@@ -4,13 +4,15 @@
 
 # trx2junit (.NET Core global tool)
 
-Helper for converting trx-Testresults (`dotnet test --logger "trx"`) to a JUnit-based XML file.  
+Helper for converting trx-Testresults (`dotnet test --logger "trx"`) to a JUnit-based XML file.	 
 
 Can be used for CI-scenarios, like [CircleCi](https://circleci.com/) or [GitLab](https://docs.gitlab.com/ee/ci/junit_test_reports.html), where as test results JUnit is expected.
 
 ## Usage
 
-When installed as [.NET Core Global Tool](https://natemcmaster.com/blog/2018/05/12/dotnet-global-tools/):   
+### trx to junit
+
+When installed as [.NET Core Global Tool](https://natemcmaster.com/blog/2018/05/12/dotnet-global-tools/):	
 `trx2junit {trxFile}` where _trxFile_ is the path to the trx-file.
 
 You can pass more than one trx file, each will create it's own junit xml file.
@@ -40,6 +42,10 @@ $ trx2junit a.trx --output ../results
 # or
 $ trx2junit --output results a.trx ../tests/b.trx
 ```
+
+### junit to trx
+
+With option `--junit2trx` a conversion from _junit_ to _trx_ can be performed.
 
 ## Installation
 

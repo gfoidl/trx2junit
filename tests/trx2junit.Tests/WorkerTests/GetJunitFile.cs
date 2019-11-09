@@ -12,7 +12,7 @@ namespace trx2junit.Tests.WorkerTests
             string trxFile  = "./data/nunit.trx";
             string expected = "./data/nunit.xml";
 
-            string actual = Worker.GetJunitFile(trxFile);
+            string actual = Worker.GetOutputFile(trxFile);
 
             Assert.AreEqual(expected, actual);
         }
@@ -23,7 +23,7 @@ namespace trx2junit.Tests.WorkerTests
             string trxFile  = "./data/nunit.trx";
             string expected = Path.Combine("./data/out", "nunit.xml");
 
-            string actual = Worker.GetJunitFile(trxFile, "./data/out");
+            string actual = Worker.GetOutputFile(trxFile, "./data/out");
 
             Assert.AreEqual(expected, actual);
         }

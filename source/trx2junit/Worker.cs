@@ -30,45 +30,56 @@ namespace trx2junit
 
             _globHandler.ExpandWildcards(options);
 
-            Console.WriteLine($"Converting {options.InputFiles.Count} trx file(s) to JUnit-xml...");
+            ITestResultXmlConverter converter;
+
+            if (options.ConvertToJunit)
+            {
+                converter = new Trx2JunitConverter();
+                Console.WriteLine($"Converting {options.InputFiles.Count} trx file(s) to JUnit-xml...");
+            }
+            else
+            {
+                converter = new Junit2TrxConverter();
+                Console.WriteLine($"Converting {options.InputFiles.Count} junit file(s) to trx-xml...");
+            }
             DateTime start = DateTime.Now;
 
-            await Task.WhenAll(options.InputFiles.Select(trx => this.Convert(trx, options.OutputDirectory)));
+            await Task.WhenAll(options.InputFiles.Select(input => this.Convert(input, options.OutputDirectory, converter)));
 
             Console.WriteLine($"done in {(DateTime.Now - start).TotalSeconds} seconds. bye.");
         }
         //---------------------------------------------------------------------
         // internal for testing
-        internal async Task Convert(string trxFile, string? outputPath = null)
+        internal async Task Convert(string inputFile, string? outputPath = null, ITestResultXmlConverter? converter = null)
         {
-            string jUnitFile = GetJunitFile(trxFile, outputPath);
-            this.EnsureOutputDirectoryExists(jUnitFile);
+            converter       ??= new Trx2JunitConverter();
+            string outputFile = GetOutputFile(inputFile, outputPath);
+            this.EnsureOutputDirectoryExists(outputFile);
 
-            Console.WriteLine($"Converting '{trxFile}' to '{jUnitFile}'");
+            Console.WriteLine($"Converting '{inputFile}' to '{outputFile}'");
 
-            using (Stream input      = _fileSystem.OpenRead(trxFile))
-            using (TextWriter output = new StreamWriter(jUnitFile, false, s_utf8))
+            using (Stream input      = _fileSystem.OpenRead(inputFile))
+            using (TextWriter output = new StreamWriter(outputFile, false, s_utf8))
             {
-                var converter = new Trx2JunitConverter();
                 await converter.Convert(input, output);
             }
         }
         //---------------------------------------------------------------------
         // internal for testing
-        internal static string GetJunitFile(string trxFile, string? outputPath = null)
+        internal static string GetOutputFile(string inputFile, string? outputPath = null)
         {
-            string junitFile = Path.ChangeExtension(trxFile, "xml");
+            string outputFile = Path.ChangeExtension(inputFile, "xml");
 
             if (outputPath == null)
-                return junitFile;
+                return outputFile;
 
-            string fileName = Path.GetFileName(junitFile);
+            string fileName = Path.GetFileName(outputFile);
             return Path.Combine(outputPath, fileName);
         }
         //---------------------------------------------------------------------
-        private void EnsureOutputDirectoryExists(string jUnitFile)
+        private void EnsureOutputDirectoryExists(string outputFile)
         {
-            string? directory = Path.GetDirectoryName(jUnitFile);
+            string? directory = Path.GetDirectoryName(outputFile);
 
             if (!string.IsNullOrWhiteSpace(directory))
                 _fileSystem.CreateDirectory(directory);
