@@ -5,8 +5,6 @@ using System.Linq;
 using System.Xml.Linq;
 using trx2junit.Models;
 
-#nullable enable
-
 namespace trx2junit
 {
     public class JUnitBuilder : IJUnitBuilder

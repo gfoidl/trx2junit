@@ -4,6 +4,7 @@
         <OutputType>Exe</OutputType>
         <TargetFrameworks>netcoreapp3.0;netcoreapp2.1</TargetFrameworks>
         <PackAsTool>true</PackAsTool>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <PropertyGroup>

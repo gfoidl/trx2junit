@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>$(SampleTfm)</TargetFramework>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
         <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />

@@ -6,8 +6,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-#nullable enable
-
 namespace trx2junit
 {
     public class Worker
@@ -70,7 +68,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void EnsureOutputDirectoryExists(string jUnitFile)
         {
-            string directory = Path.GetDirectoryName(jUnitFile);
+            string? directory = Path.GetDirectoryName(jUnitFile);
 
             if (!string.IsNullOrWhiteSpace(directory))
                 _fileSystem.CreateDirectory(directory);

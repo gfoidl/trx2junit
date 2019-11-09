@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-#nullable enable
-
 namespace trx2junit
 {
     public interface IFileSystem

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
-
-#nullable enable
 
 namespace trx2junit
 {
@@ -38,7 +37,8 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void Expand(string input, List<string> expandedFiles)
         {
-            string path    = Path.GetDirectoryName(input);
+            string? path   = Path.GetDirectoryName(input);
+            Debug.Assert(path != null);
             string pattern = Path.GetFileName(input);
 
             IEnumerable<string> files = _fileSystem.EnumerateFiles(path, pattern);
