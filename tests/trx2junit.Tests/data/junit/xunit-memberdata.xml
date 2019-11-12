@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+    <testsuite name="XUnitSample" hostname="GFOIDL-PC-2018" package=".NET Core" id="0" tests="5" failures="2" errors="0" skipped="0" time="1.098" timestamp="2019-04-18T14:28:21">
+        <properties />
+        <testcase name="XUnitSample.MemberData.Slow_test" classname="XUnitSample" time="1.015" />
+        <testcase name="XUnitSample.MemberData.Two_pass_one_fails(obj: { index = 0 })" classname="XUnitSample" time="0.072" />
+        <testcase name="XUnitSample.MemberData.Two_pass_one_fails(obj: { index = 1 })" classname="XUnitSample" time="0.001">
+            <failure message="Failing for demo purposes&#xD;&#xA;Expected: True&#xD;&#xA;Actual:   False" type="not specified">   at XUnitSample.MemberData.Two_pass_one_fails(Object obj) in C:\code\trx2junit\samples\XUnitSample\MemberData.cs:line 23</failure>
+        </testcase>
+        <testcase name="XUnitSample.MemberData.Two_pass_one_fails(obj: { index = 2 })" classname="XUnitSample" time="0.001" />
+        <testcase name="XUnitSample.MemberData.Failing_test" classname="XUnitSample" time="0.009">
+            <failure message="Failing for demo purposes&#xD;&#xA;Expected: True&#xD;&#xA;Actual:   False" type="not specified">   at XUnitSample.MemberData.Failing_test() in C:\code\trx2junit\samples\XUnitSample\MemberData.cs:line 32</failure>
+        </testcase>
+        <system-out />
+        <system-err />
+    </testsuite>
+</testsuites>

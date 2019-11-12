@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+    <testsuite name="NUnitSample.SimpleTests" hostname="GFOIDL-PC-2018" package=".NET Core" id="0" tests="5" failures="1" errors="0" skipped="2" time="1.074" timestamp="2019-04-19T16:06:41">
+        <properties />
+        <testcase name="Passing_test" classname="NUnitSample.SimpleTests" time="0.001" />
+        <testcase name="Failing_test" classname="NUnitSample.SimpleTests" time="0.059">
+            <failure message="Failing for demo purposes" type="not specified">
+                at NUnitSample.SimpleTests.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\SimpleTests.cs:line 21
+            </failure>
+        </testcase>
+        <testcase name="Ignored_test" classname="NUnitSample.SimpleTests" time="0.001">
+            <skipped />
+        </testcase>
+        <testcase name="Slow_test" classname="NUnitSample.SimpleTests" time="1.002" />
+        <testcase name="Test_with_failed_assumption" classname="NUnitSample.SimpleTests" time="0.011">
+            <skipped />
+        </testcase>
+        <system-out />
+        <system-err />
+    </testsuite>
+</testsuites>

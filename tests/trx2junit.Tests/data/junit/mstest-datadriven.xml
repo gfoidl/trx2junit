@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+    <testsuite name="MsTestSample.DataDriven" hostname="GFOIDL-PC-2018" package=".NET Core" id="0" tests="5" failures="2" errors="0" skipped="0" time="1.034" timestamp="2019-04-18T18:31:06">
+        <properties />
+        <testcase name="Slow_test" classname="MsTestSample.DataDriven" time="1.001" />
+        <testcase name="Two_pass_one_fails (0)" classname="MsTestSample.DataDriven" time="0.005" />
+        <testcase name="Two_pass_one_fails (1)" classname="MsTestSample.DataDriven" time="0.028">
+            <failure message="Assert.Fail failed. Failing for demo purposes" type="not specified">
+                at MsTestSample.DataDriven.Two_pass_one_fails(Int32 arg) in D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\DataDriven.cs:line 16
+            </failure>
+        </testcase>
+        <testcase name="Two_pass_one_fails (2)" classname="MsTestSample.DataDriven" time="0.000" />
+        <testcase name="Failing_test" classname="MsTestSample.DataDriven" time="0.001">
+            <failure message="Assert.Fail failed. Failing for demo purposes" type="not specified">
+                at MsTestSample.DataDriven.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\DataDriven.cs:line 25
+            </failure>
+        </testcase>
+        <system-out />
+        <system-err />
+    </testsuite>
+</testsuites>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+    <testsuite name="MsTestSample.SimpleTests" hostname="GFOIDL-PC-2018" package=".NET Core" id="0" tests="4" failures="1" errors="0" skipped="1" time="1.039" timestamp="2019-04-19T16:22:05">
+        <properties />
+        <testcase name="Slow_test" classname="MsTestSample.SimpleTests" time="1.002" />
+        <testcase name="Passing_test" classname="MsTestSample.SimpleTests" time="0.005" />
+        <testcase name="Failing_test" classname="MsTestSample.SimpleTests" time="0.031">
+            <failure message="Assert.Fail failed. Failing for demo purposes" type="not specified">
+                at MsTestSample.SimpleTests.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\MsTestSample\SimpleTests.cs:line 20
+            </failure>
+        </testcase>
+        <testcase name="Ignored_test" classname="MsTestSample.SimpleTests" time="0.001">
+            <skipped />
+        </testcase>
+        <system-out />
+        <system-err />
+    </testsuite>
+</testsuites>

@@ -2,9 +2,9 @@
 
 namespace trx2junit
 {
-    public interface ITestResultXmlParser
+    public interface ITestResultXmlParser<TTest> where TTest : Test
     {
-        Test Result { get; }
+        TTest Result { get; }
 
         void Parse();
     }

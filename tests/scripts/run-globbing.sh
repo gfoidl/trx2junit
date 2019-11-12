@@ -9,7 +9,7 @@ trx2junit ./globbing/*.trx
 echo ""
 
 for junit in ./globbing/*.xml; do
-	./verify-xml.sh "$junit"
+    ./verify-xml.sh "$junit"
 done
 
 nTrx=$(ls -l ./globbing/*.trx | wc -l)
@@ -20,8 +20,8 @@ echo "Count of trx-files: $nTrx"
 echo "Count of xml-files: $nXml"
 
 if [[ $nTrx != $nXml ]]; then
-	echo "FAILURE: not all trx-files were converted"
-	exit 1
+    echo "FAILURE: not all trx-files were converted"
+    exit 1
 else
-	echo "all trx-files were converted"
+    echo "all trx-files were converted"
 fi

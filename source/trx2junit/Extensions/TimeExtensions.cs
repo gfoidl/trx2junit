@@ -1,0 +1,21 @@
+﻿using System;
+using System.Globalization;
+
+namespace trx2junit
+{
+    internal static class TimeExtensions
+    {
+        public static string ToJUnitDateTime(this DateTime dt)
+        {
+            return $"{dt.Year}-{dt.Month:00}-{dt.Day:00}T{dt.Hour:00}:{dt.Minute:00}:{dt.Second:00}";
+        }
+        //---------------------------------------------------------------------
+        public static string ToTrxDateTime(this DateTime dt)
+        {
+            dt = dt.ToUniversalTime();
+            return $"{dt.ToJUnitDateTime()}.{dt.Millisecond:000}+00:00";
+        }
+        //---------------------------------------------------------------------
+        public static string ToJUnitTime(this double value) => value.ToString("0.000", CultureInfo.InvariantCulture);
+    }
+}

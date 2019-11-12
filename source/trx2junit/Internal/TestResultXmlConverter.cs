@@ -6,20 +6,28 @@ using System.Xml.Linq;
 
 namespace trx2junit
 {
-    public abstract class TestResultXmlConverter : ITestResultXmlConverter
+    public abstract class TestResultXmlConverter<TIn, TOut> : ITestResultXmlConverter
+        where TIn  : Models.Test
+        where TOut : Models.Test
     {
-        protected abstract Func<XElement, ITestResultXmlParser> ParserFactory      { get; }
-        protected abstract Func<Models.Test, ITestResultXmlBuilder> BuilderFactory { get; }
+        protected abstract Func<XElement, ITestResultXmlParser<TIn>> ParserFactory { get; }
+        protected abstract Func<TIn, ITestConverter<TIn, TOut>> ConverterFactory   { get; }
+        protected abstract Func<TOut, ITestResultXmlBuilder<TOut>> BuilderFactory  { get; }
         protected abstract string Extension                                        { get; }
         //---------------------------------------------------------------------
         public virtual async Task ConvertAsync(Stream? input, TextWriter? output)
         {
             XElement testXml = await XElement.LoadAsync(input, LoadOptions.None, CancellationToken.None);
 
-            ITestResultXmlParser parser = this.ParserFactory(testXml);
+            ITestResultXmlParser<TIn> parser = this.ParserFactory(testXml);
             parser.Parse();
+            TIn sourceTest = parser.Result;
 
-            ITestResultXmlBuilder builder = this.BuilderFactory(parser.Result);
+            ITestConverter<TIn, TOut> testConverter = this.ConverterFactory(sourceTest);
+            testConverter.Convert();
+            TOut targetTest = testConverter.Result;
+
+            ITestResultXmlBuilder<TOut> builder = this.BuilderFactory(targetTest);
             builder.Build();
 
             await builder.Result.SaveAsync(output, SaveOptions.None, CancellationToken.None);

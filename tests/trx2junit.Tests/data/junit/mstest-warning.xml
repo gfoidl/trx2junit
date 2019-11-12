@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+    <testsuite name="Project.TestClass, Project, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" hostname="GFOIDL-PC-2018" package=".NET Core" id="0" tests="1" failures="0" errors="0" skipped="0" time="0.004" timestamp="2018-09-04T14:43:05">
+        <properties />
+        <testcase name="MyTest" classname="Project.TestClass, Project, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" time="0.004" />
+        <system-out />
+        <system-err />
+    </testsuite>
+</testsuites>

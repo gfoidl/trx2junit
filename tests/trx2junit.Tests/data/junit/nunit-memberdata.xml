@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+    <testsuite name="NUnitSample.MemberData" hostname="GFOIDL-PC-2018" package=".NET Core" id="0" tests="5" failures="2" errors="0" skipped="0" time="1.132" timestamp="2019-04-18T18:29:07">
+        <properties />
+        <testcase name="Two_pass_one_fails({ index = 0 })" classname="NUnitSample.MemberData" time="0.068" />
+        <testcase name="Failing_test" classname="NUnitSample.MemberData" time="0.061">
+            <failure message="  Failing for demo purposes&#xD;&#xA;  Expected: True&#xD;&#xA;  But was:  False&#xD;&#xA;" type="not specified">
+                at NUnitSample.MemberData.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\MemberData.cs:line 31
+            </failure>
+        </testcase>
+        <testcase name="Two_pass_one_fails({ index = 2 })" classname="NUnitSample.MemberData" time="0.000" />
+        <testcase name="Two_pass_one_fails({ index = 1 })" classname="NUnitSample.MemberData" time="0.001">
+            <failure message="  Failing for demo purposes&#xD;&#xA;  Expected: True&#xD;&#xA;  But was:  False&#xD;&#xA;" type="not specified">
+                at NUnitSample.MemberData.Two_pass_one_fails(Object obj) in D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\MemberData.cs:line 22
+            </failure>
+        </testcase>
+        <testcase name="Slow_test" classname="NUnitSample.MemberData" time="1.002" />
+        <system-out />
+        <system-err />
+    </testsuite>
+</testsuites>

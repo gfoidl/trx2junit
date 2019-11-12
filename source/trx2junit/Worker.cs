@@ -34,35 +34,32 @@ namespace trx2junit
 
             if (options.ConvertToJunit)
             {
-                converter = new Trx2JunitConverter();
+                converter = new Trx2JunitTestResultXmlConverter();
                 Console.WriteLine($"Converting {options.InputFiles.Count} trx file(s) to JUnit-xml...");
             }
             else
             {
-                converter = new Junit2TrxConverter();
+                converter = new Junit2TrxTestResultXmlConverter();
                 Console.WriteLine($"Converting {options.InputFiles.Count} junit file(s) to trx-xml...");
             }
             DateTime start = DateTime.Now;
 
-            await Task.WhenAll(options.InputFiles.Select(input => this.Convert(input, options.OutputDirectory, converter)));
+            await Task.WhenAll(options.InputFiles.Select(input => this.ConvertAsync(converter, input, options.OutputDirectory)));
 
             Console.WriteLine($"done in {(DateTime.Now - start).TotalSeconds} seconds. bye.");
         }
         //---------------------------------------------------------------------
         // internal for testing
-        internal async Task Convert(string inputFile, string? outputPath = null, ITestResultXmlConverter? converter = null)
+        internal async Task ConvertAsync(ITestResultXmlConverter converter, string inputFile, string? outputPath = null)
         {
-            converter       ??= new Trx2JunitConverter();
             string outputFile = converter.GetOutputFile(inputFile, outputPath);
             this.EnsureOutputDirectoryExists(outputFile);
 
             Console.WriteLine($"Converting '{inputFile}' to '{outputFile}'");
 
-            using (Stream input      = _fileSystem.OpenRead(inputFile))
-            using (TextWriter output = new StreamWriter(outputFile, false, s_utf8))
-            {
-                await converter.ConvertAsync(input, output);
-            }
+            using Stream input      = _fileSystem.OpenRead(inputFile);
+            using TextWriter output = new StreamWriter(outputFile, false, s_utf8);
+            await converter.ConvertAsync(input, output);
         }
         //---------------------------------------------------------------------
         private void EnsureOutputDirectoryExists(string outputFile)
