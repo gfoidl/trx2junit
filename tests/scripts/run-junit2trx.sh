@@ -19,3 +19,12 @@ trx2junit --junit2trx nunit.xml
 echo ""
 cd -
 ./verify-xml.sh "schemas/vstst.xsd" "junit2trx/nunit.trx"
+
+echo ""
+echo "-----------------------------------------------"
+echo "junit2trx: jenkins-junit style xml"
+cp tests/trx2junit.Tests/data/junit/yanlend.xml ./junit2trx
+trx2junit ./junit2trx/yanlend.xml --junit2trx
+
+echo ""
+./verify-xml.sh "schemas/vstst.xsd" "junit2trx/yanlend.trx"
