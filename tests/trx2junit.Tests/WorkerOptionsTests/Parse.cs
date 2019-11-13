@@ -144,7 +144,11 @@ namespace trx2junit.Tests.WorkerOptionsTests
 
             var actual = WorkerOptions.Parse(args);
 
-            Assert.IsFalse(actual.ConvertToJunit);
+            Assert.Multiple(() =>
+            {
+                Assert.IsFalse(actual.ConvertToJunit);
+                CollectionAssert.AreEqual(new string[] { "a.trx" }, actual.InputFiles);
+            });
         }
     }
 }
