@@ -47,6 +47,8 @@ $ trx2junit --output results a.trx ../tests/b.trx
 
 With option `--junit2trx` a conversion from _junit_ to _trx_ can be performed.
 
+If a given _xml_-file is not a junit-file, a message will be logged to _stderr_ and the exit-code is set to 1.
+
 ## Installation
 
 ```sh

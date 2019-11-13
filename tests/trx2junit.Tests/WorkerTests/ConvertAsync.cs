@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace trx2junit.Tests.WorkerTests
 {
-    [TestFixture]
+    [TestFixture, NonParallelizable]
     public class ConvertAsync
     {
         [OneTimeSetUp]
@@ -124,6 +125,27 @@ namespace trx2junit.Tests.WorkerTests
 
             Assume.That(junitFile, Is.Not.EqualTo("./data/junit/nunit-no-tests.xml"), "not valid, VS will open it. Conversion so far OK");
             ValidationHelper.IsXmlValidJunit(trxFile, validateJunit: false);
+        }
+        //---------------------------------------------------------------------
+        [Test]
+        [TestCase("./data/junit/no-junit.xml")]
+        public async Task Junit_is_not_valid___logs_to_stderr_no_junit_file_and_exit_code_set_to_1(string junitFile)
+        {
+            string trxFile = Path.ChangeExtension(junitFile, "trx");
+            var sut        = new Worker();
+
+            TextWriter origConsoleErr = Console.Error;
+            using var stringWriter    = new StringWriter();
+            Console.SetError(stringWriter);
+
+            await sut.ConvertAsync(new Junit2TrxTestResultXmlConverter(), junitFile);
+
+            string consoleOutput = stringWriter.ToString();
+            TestContext.WriteLine(consoleOutput);
+            Console.SetError(origConsoleErr);
+
+            Assert.AreEqual("Given xml file is not a junit file" + Environment.NewLine, consoleOutput);
+            Assert.AreEqual(1, Environment.ExitCode);
         }
     }
 }

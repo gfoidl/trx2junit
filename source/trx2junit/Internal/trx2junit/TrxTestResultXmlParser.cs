@@ -66,7 +66,7 @@ namespace trx2junit
 
             if (xTestDefinitions == null) return;
 
-            foreach (XElement xUnitTest in xTestDefinitions.Elements())
+            foreach (XElement xUnitTest in xTestDefinitions.Elements(s_XN + "UnitTest"))
             {
                 var testDefinition = new TrxTestDefinition
                 {
@@ -86,7 +86,7 @@ namespace trx2junit
 
             if (xResults == null) return;
 
-            foreach (XElement xResult in xResults.Elements())
+            foreach (XElement xResult in xResults.Elements(s_XN + "UnitTestResult"))
             {
                 XElement xInnerResults = xResult.Element(s_XN + "InnerResults");
 
@@ -99,7 +99,7 @@ namespace trx2junit
                 {
                     bool hasFailedTest = false;
 
-                    foreach (XElement xInnerResult in xInnerResults.Elements())
+                    foreach (XElement xInnerResult in xInnerResults.Elements(s_XN + "UnitTestResult"))
                     {
                         TrxUnitTestResult unitTestResult = ParseUnitTestResults(xInnerResult);
                         _test.UnitTestResults.Add(unitTestResult);

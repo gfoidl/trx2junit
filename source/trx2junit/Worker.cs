@@ -59,7 +59,19 @@ namespace trx2junit
 
             using Stream input      = _fileSystem.OpenRead(inputFile);
             using TextWriter output = new StreamWriter(outputFile, false, s_utf8);
-            await converter.ConvertAsync(input, output);
+
+            try
+            {
+                await converter.ConvertAsync(input, output);
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Error.WriteLine(ex.Message);
+                Console.ResetColor();
+
+                Environment.ExitCode = 1;
+            }
         }
         //---------------------------------------------------------------------
         private void EnsureOutputDirectoryExists(string outputFile)

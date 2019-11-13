@@ -2,6 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using trx2junit.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace trx2junit
 {
@@ -16,7 +18,12 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public void Parse()
         {
-            foreach (XElement xTestSuite in _junit.Elements())
+            if (_junit.Name.LocalName != "testsuites")
+            {
+                throw new Exception("Given xml file is not a junit file");
+            }
+
+            foreach (XElement xTestSuite in _junit.Elements("testsuite"))
             {
                 JUnitTestSuite testSuite = ParseTestSuite(xTestSuite);
                 _test.TestSuites.Add(testSuite);
