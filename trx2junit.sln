@@ -58,6 +58,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{3531
 	ProjectSection(SolutionItems) = preProject
 		tests\scripts\run-different-output-location.sh = tests\scripts\run-different-output-location.sh
 		tests\scripts\run-globbing.sh = tests\scripts\run-globbing.sh
+		tests\scripts\run-junit2trx.sh = tests\scripts\run-junit2trx.sh
 		tests\scripts\run-multiple-args.sh = tests\scripts\run-multiple-args.sh
 		tests\scripts\run-no-globbing.sh = tests\scripts\run-no-globbing.sh
 		tests\scripts\run-samples.sh = tests\scripts\run-samples.sh
