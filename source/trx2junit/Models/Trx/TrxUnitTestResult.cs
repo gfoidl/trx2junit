@@ -14,5 +14,7 @@ namespace trx2junit
         public string?    ComputerName { get; set; }
         public string?    Message      { get; set; }
         public string?    StackTrace   { get; set; }
+        public string?    StdOut       { get; set; }
+        public string?    StdErr       { get; set; }
     }
 }

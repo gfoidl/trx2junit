@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="74d2c02a-4d28-4c4b-a6f4-a6e2ff0adb9e" name="@b1c9b4be3f08 2018-07-10 10:16:56" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+    <Times creation="2018-07-10T10:16:56.6460518+00:00" queuing="2018-07-10T10:16:56.6460644+00:00" start="2018-07-10T10:16:54.3977331+00:00" finish="2018-07-10T10:16:56.6722455+00:00" />
+    <TestSettings name="default" id="8ee21b83-5b10-4ce6-8e86-6f6629904b2b">
+        <Deployment runDeploymentRoot="_b1c9b4be3f08_2018-07-10_10_16_56" />
+    </TestSettings>
+    <Results>
+        <UnitTestResult executionId="b38409e9-177b-49a2-aed3-c49363ce2f08" testId="9938e175-680b-4783-ae44-17edffa3471e" testName="Passing_test" computerName="b1c9b4be3f08" duration="00:00:00.0010000" startTime="2018-07-10T10:16:55.0000000+00:00" endTime="2018-07-10T10:16:55.0000000+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b38409e9-177b-49a2-aed3-c49363ce2f08">
+            <Output>
+                <StdOut>message written to stdout</StdOut>
+            </Output>
+        </UnitTestResult>
+    </Results>
+    <TestDefinitions>
+        <UnitTest name="Passing_test" storage="/root/repo/samples/nunitsample/bin/release/netcoreapp2.1/nunitsample.dll" id="9938e175-680b-4783-ae44-17edffa3471e">
+            <Execution id="b38409e9-177b-49a2-aed3-c49363ce2f08" />
+            <TestMethod codeBase="/root/repo/samples/NUnitSample/bin/Release/netcoreapp2.1/NUnitSample.dll" adapterTypeName="executor://nunit3testexecutor/" className="SimpleUnitTest.SimpleTests" name="Passing_test" />
+        </UnitTest>
+    </TestDefinitions>
+    <TestEntries>
+        <TestEntry testId="9938e175-680b-4783-ae44-17edffa3471e" executionId="b38409e9-177b-49a2-aed3-c49363ce2f08" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    </TestEntries>
+    <TestLists>
+        <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+        <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+    </TestLists>
+    <ResultSummary outcome="Failed">
+        <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+        <Output>
+            <StdOut>NUnit Adapter 3.10.0.21: Test execution startedRunning all tests in /root/repo/samples/NUnitSample/bin/Release/netcoreapp2.1/NUnitSample.dllNUnit3TestExecutor converted 3 of 3 NUnit test casesNUnit Adapter 3.10.0.21: Test execution complete</StdOut>
+        </Output>
+    </ResultSummary>
+</TestRun>

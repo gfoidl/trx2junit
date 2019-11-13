@@ -40,6 +40,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/trx/nunit.trx")]
         [TestCase("./data/trx/nunit-datadriven.trx")]
         [TestCase("./data/trx/nunit-ignore.trx")]
+        [TestCase("./data/trx/nunit-with-stdout.trx")]
         [TestCase("./data/trx/nunit-no-tests.trx")]
         [TestCase("./data/trx/xunit.trx")]
         [TestCase("./data/trx/xunit-datadriven.trx")]
@@ -64,6 +65,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/trx/nunit.trx")]
         [TestCase("./data/trx/nunit-datadriven.trx")]
         [TestCase("./data/trx/nunit-ignore.trx")]
+        [TestCase("./data/trx/nunit-with-stdout.trx")]
         [TestCase("./data/trx/nunit-no-tests.trx")]
         [TestCase("./data/trx/xunit.trx")]
         [TestCase("./data/trx/xunit-datadriven.trx")]
@@ -92,6 +94,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/junit/xunit-datadriven.xml")]
         [TestCase("./data/junit/xunit-ignore.xml")]
         [TestCase("./data/junit/xunit-memberdata.xml")]
+        [TestCase("./data/junit/yanlend.xml")]
         public async Task JUnit_file_given___converted(string junitFile)
         {
             string trxFile = Path.ChangeExtension(junitFile, "trx");
@@ -116,6 +119,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/junit/xunit-datadriven.xml")]
         [TestCase("./data/junit/xunit-ignore.xml")]
         [TestCase("./data/junit/xunit-memberdata.xml")]
+        [TestCase("./data/junit/yanlend.xml")]
         public async Task JUnit_file_given___generated_xml_is_valid_against_schema(string junitFile)
         {
             string trxFile = Path.ChangeExtension(junitFile, "trx");
@@ -144,7 +148,7 @@ namespace trx2junit.Tests.WorkerTests
             TestContext.WriteLine(consoleOutput);
             Console.SetError(origConsoleErr);
 
-            Assert.AreEqual("Given xml file is not a junit file" + Environment.NewLine, consoleOutput);
+            Assert.AreEqual("Given xml file is not a valid junit file" + Environment.NewLine, consoleOutput);
             Assert.AreEqual(1, Environment.ExitCode);
         }
     }

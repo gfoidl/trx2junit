@@ -23,6 +23,8 @@ namespace trx2junit.Tests
                 TestContext.WriteLine($"Message: {e.Message}");
                 TestContext.WriteLine($"LineNo: {e.Exception.LineNumber}, LinePos: {e.Exception.LinePosition}");
                 TestContext.WriteLine("Object: {0}", o);
+                TestContext.WriteLine();
+                TestContext.WriteLine(xml);
                 throw new XmlSchemaException("See test output for further details", e.Exception);
             });
         }

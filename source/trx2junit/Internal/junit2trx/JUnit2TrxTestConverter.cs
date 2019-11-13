@@ -32,10 +32,10 @@ namespace trx2junit
             foreach (JUnitTestSuite jUnitTestSuite in jUnitTestSuites)
             {
                 trxResultSummary.Total    += jUnitTestSuite.TestCount;
-                trxResultSummary.Errors   += jUnitTestSuite.ErrorCount;
-                trxResultSummary.Executed += jUnitTestSuite.TestCount - jUnitTestSuite.SkippedCount;
-                trxResultSummary.Failed   += jUnitTestSuite.FailureCount;
-                trxResultSummary.Passed   += (jUnitTestSuite.TestCount - jUnitTestSuite.ErrorCount - jUnitTestSuite.FailureCount - jUnitTestSuite.SkippedCount);
+                trxResultSummary.Errors   += jUnitTestSuite.ErrorCount                              ?? 0;
+                trxResultSummary.Executed += jUnitTestSuite.TestCount - jUnitTestSuite.SkippedCount ?? 0;
+                trxResultSummary.Failed   += jUnitTestSuite.FailureCount                            ?? 0;
+                trxResultSummary.Passed   += (jUnitTestSuite.TestCount - (jUnitTestSuite.ErrorCount ?? 0) - (jUnitTestSuite.FailureCount ?? 0) - (jUnitTestSuite.SkippedCount ?? 0));
                 executionTime             += TimeSpan.FromSeconds(jUnitTestSuite.TimeInSeconds);
                 SetOutcome          (jUnitTestSuite, trxResultSummary);
                 SetCreationTimestamp(jUnitTestSuite, trxTimes);
@@ -90,6 +90,9 @@ namespace trx2junit
                 trxUnitTestResult.Message    = jUnitTestCase.Error.Message;
                 trxUnitTestResult.StackTrace = jUnitTestCase.Error.StackTrace;
             }
+
+            trxUnitTestResult.StdErr = jUnitTestCase.SystemErr;
+            trxUnitTestResult.StdOut = jUnitTestCase.SystemOut;
 
             var trxTestDefinition = new TrxTestDefinition
             {

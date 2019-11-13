@@ -57,11 +57,11 @@ namespace trx2junit
             if (resultSummary != null)
             {
                 xResultSummary.Add(new XAttribute("outcome", resultSummary.Outcome.ToString()));
-                xCounters.Add(new XAttribute("error"       , resultSummary.Errors));
-                xCounters.Add(new XAttribute("executed"    , resultSummary.Executed));
-                xCounters.Add(new XAttribute("failed"      , resultSummary.Failed));
-                xCounters.Add(new XAttribute("passed"      , resultSummary.Passed));
-                xCounters.Add(new XAttribute("total"       , resultSummary.Total));
+                xCounters.Write("total"   , resultSummary.Total);
+                xCounters.Write("passed"  , resultSummary.Passed);
+                xCounters.Write("failed"  , resultSummary.Failed);
+                xCounters.Write("executed", resultSummary.Executed);
+                xCounters.Write("error"   , resultSummary.Errors);
 
                 var xOutput = new XElement(s_XN + "Output");
                 xResultSummary.Add(xOutput);
@@ -114,10 +114,11 @@ namespace trx2junit
                 xUnitTestResult.WriteTrxDateTime("endTime"       , unitTestResult.EndTime);
                 xUnitTestResult.Write("duration"                 , unitTestResult.Duration);
 
+                XElement? xOutput = null;
+
                 if (unitTestResult.Message != null || unitTestResult.StackTrace != null)
                 {
-                    var xOutput = new XElement(s_XN + "Output");
-                    xUnitTestResult.Add(xOutput);
+                    xOutput = new XElement(s_XN + "Output");
 
                     var xErrorInfo = new XElement(s_XN + "ErrorInfo");
                     xOutput.Add(xErrorInfo);
@@ -131,6 +132,23 @@ namespace trx2junit
                     {
                         xErrorInfo.Add(new XElement(s_XN + "StackTrace", unitTestResult.StackTrace));
                     }
+                }
+
+                if (unitTestResult.StdOut != null)
+                {
+                    xOutput ??= new XElement(s_XN + "Output");
+                    xOutput.Add(new XElement(s_XN + "StdOut", unitTestResult.StdOut));
+                }
+
+                if (unitTestResult.StdErr != null)
+                {
+                    xOutput ??= new XElement(s_XN + "Output");
+                    xOutput.Add(new XElement(s_XN + "StdErr", unitTestResult.StdErr));
+                }
+
+                if (xOutput != null)
+                {
+                    xUnitTestResult.Add(xOutput);
                 }
 
                 xTestEntries.Add(new XElement(s_XN + "TestEntry",

@@ -10,7 +10,7 @@ namespace trx2junit
     {
         private int                               _testId;
         private Counters                          _counters;
-        private ILookup<Guid, TrxUnitTestResult>? _lookup;
+        private ILookup<Guid, TrxUnitTestResult>? _trxTestDefinitionLookup;
         //---------------------------------------------------------------------
         public TrxTest SourceTest { get; }
         public JUnitTest Result   { get; } = new JUnitTest();
@@ -22,8 +22,8 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public void Convert()
         {
-            var testSuites = this.SourceTest.TestDefinitions.GroupBy(t => t.TestClass);
-            _lookup        = this.SourceTest.UnitTestResults.ToLookup(x => x.TestId);
+            var testSuites           = this.SourceTest.TestDefinitions.GroupBy (t => t.TestClass);
+            _trxTestDefinitionLookup = this.SourceTest.UnitTestResults.ToLookup(x => x.TestId);
 
             foreach (var testSuite in testSuites)
             {
@@ -31,7 +31,7 @@ namespace trx2junit
             }
         }
         //---------------------------------------------------------------------
-        private void AddTestSuite(string testSuiteName, IEnumerable<TrxTestDefinition> trxTests)
+        private void AddTestSuite(string testSuiteName, IEnumerable<TrxTestDefinition> trxTestDefinitions)
         {
             this.ResetCounters();
 
@@ -41,7 +41,7 @@ namespace trx2junit
             testSuite.Name = testSuiteName;
             testSuite.Id   = _testId++;
 
-            foreach (TrxTestDefinition trxTest in trxTests)
+            foreach (TrxTestDefinition trxTest in trxTestDefinitions)
             {
                 this.AddTest(testSuite, trxTest);
             }
@@ -60,49 +60,52 @@ namespace trx2junit
             Debug.Assert(testSuite.HostName != null);
         }
         //---------------------------------------------------------------------
-        private void AddTest(JUnitTestSuite testSuite, TrxTestDefinition test)
+        private void AddTest(JUnitTestSuite junitTestSuite, TrxTestDefinition trxTestDefinition)
         {
-            Debug.Assert(_lookup != null);
-            IEnumerable<TrxUnitTestResult> unitTestResults = _lookup![test.Id];
+            Debug.Assert(_trxTestDefinitionLookup != null);
+            IEnumerable<TrxUnitTestResult> trxUnitTestResults = _trxTestDefinitionLookup![trxTestDefinition.Id];
 
-            foreach (TrxUnitTestResult unitTestResult in unitTestResults)
+            foreach (TrxUnitTestResult trxUnitTestResult in trxUnitTestResults)
             {
                 _counters.TestCount++;
 
-                var testCase = new JUnitTestCase();
-                testSuite.TestCases.Add(testCase);
+                var junitTestCase = new JUnitTestCase();
+                junitTestSuite.TestCases.Add(junitTestCase);
 
-                testSuite.HostName = unitTestResult.ComputerName;
-                testCase.Name      = unitTestResult.TestName;
-                testCase.ClassName = test.TestClass;
+                junitTestSuite.HostName = trxUnitTestResult.ComputerName;
+                junitTestCase.Name      = trxUnitTestResult.TestName;
+                junitTestCase.ClassName = trxTestDefinition.TestClass;
 
                 if (!_counters.TimeStamp.HasValue)
                 {
-                    _counters.TimeStamp = unitTestResult.StartTime;
+                    _counters.TimeStamp = trxUnitTestResult.StartTime;
                 }
 
-                if (unitTestResult.Duration.HasValue)
+                if (trxUnitTestResult.Duration.HasValue)
                 {
-                    _counters.Time        += unitTestResult.Duration.Value;
-                    testCase.TimeInSeconds = unitTestResult.Duration.Value.TotalSeconds;
+                    _counters.Time        += trxUnitTestResult.Duration.Value;
+                    junitTestCase.TimeInSeconds = trxUnitTestResult.Duration.Value.TotalSeconds;
                 }
 
-                if (unitTestResult.Outcome == TrxOutcome.NotExecuted)
+                if (trxUnitTestResult.Outcome == TrxOutcome.NotExecuted)
                 {
                     _counters.Skipped++;
-                    testCase.Skipped = true;
+                    junitTestCase.Skipped = true;
                 }
-                else if (unitTestResult.Outcome == TrxOutcome.Failed)
+                else if (trxUnitTestResult.Outcome == TrxOutcome.Failed)
                 {
                     _counters.Failures++;
 
-                    testCase.Error = new JUnitError
+                    junitTestCase.Error = new JUnitError
                     {
-                        Message    = unitTestResult.Message ?? "",        // Message is allowed to be null
+                        Message    = trxUnitTestResult.Message ?? "",        // Message is allowed to be null
                         Type       = "not specified",
-                        StackTrace = unitTestResult.StackTrace,
+                        StackTrace = trxUnitTestResult.StackTrace,
                     };
                 }
+
+                junitTestCase.SystemErr = trxUnitTestResult.StdErr;
+                junitTestCase.SystemOut = trxUnitTestResult.StdOut;
             }
         }
         //---------------------------------------------------------------------

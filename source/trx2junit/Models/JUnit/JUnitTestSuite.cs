@@ -5,14 +5,14 @@ namespace trx2junit.Models
 {
     public class JUnitTestSuite
     {
-        public int      Id                           { get; set; }
+        public int?     Id                           { get; set; }
         public string?  Name                         { get; set; }
         public DateTime TimeStamp                    { get; set; }
         public string?  HostName                     { get; set; }
         public int      TestCount                    { get; set; }
-        public int      FailureCount                 { get; set; }
-        public int      ErrorCount                   { get; set; }
-        public int      SkippedCount                 { get; set; }
+        public int?     FailureCount                 { get; set; }
+        public int?     ErrorCount                   { get; set; }
+        public int?     SkippedCount                 { get; set; }
         public double   TimeInSeconds                { get; set; }
         public string?  SystemOut                    { get; set; }
         public string?  SystemErr                    { get; set; }

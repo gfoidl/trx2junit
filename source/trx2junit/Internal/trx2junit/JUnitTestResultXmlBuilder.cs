@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Xml.Linq;
 using trx2junit.Models;
 
@@ -8,6 +9,8 @@ namespace trx2junit
     {
         private readonly JUnitTest _test;
         private readonly XElement  _xJUnit = new XElement("testsuites");
+        private StringBuilder?     _junitTestSuiteSystemOutStringBuilder;
+        private StringBuilder?     _junitTestSuiteSystemErrStringBuilder;
         //---------------------------------------------------------------------
         public JUnitTestResultXmlBuilder(JUnitTest? test) => _test = test ?? throw new ArgumentNullException(nameof(test));
         //---------------------------------------------------------------------
@@ -44,8 +47,26 @@ namespace trx2junit
             xTestSuite.Add(new XAttribute("skipped"  , testSuite.SkippedCount));
             xTestSuite.Add(new XAttribute("time"     , testSuite.TimeInSeconds.ToJUnitTime()));
             xTestSuite.Add(new XAttribute("timestamp", testSuite.TimeStamp.ToJUnitDateTime()));
-            xTestSuite.Add(new XElement("system-out"));
-            xTestSuite.Add(new XElement("system-err"));
+
+            if (_junitTestSuiteSystemOutStringBuilder?.Length > 0)
+            {
+                xTestSuite.Add(new XElement("system-out", _junitTestSuiteSystemOutStringBuilder.ToString().Trim()));
+                _junitTestSuiteSystemOutStringBuilder.Clear();
+            }
+            else
+            {
+                xTestSuite.Add(new XElement("system-out"));
+            }
+
+            if (_junitTestSuiteSystemErrStringBuilder?.Length > 0)
+            {
+                xTestSuite.Add(new XElement("system-err", _junitTestSuiteSystemErrStringBuilder.ToString().Trim()));
+                _junitTestSuiteSystemErrStringBuilder.Clear();
+            }
+            else
+            {
+                xTestSuite.Add(new XElement("system-err"));
+            }
 
             _xJUnit.Add(xTestSuite);
         }
@@ -70,6 +91,18 @@ namespace trx2junit
                     new XAttribute("message", testCase.Error.Message),
                     new XAttribute("type"   , testCase.Error.Type)
                 ));
+            }
+
+            if (testCase.SystemErr != null)
+            {
+                _junitTestSuiteSystemErrStringBuilder ??= new StringBuilder();
+                _junitTestSuiteSystemErrStringBuilder.AppendLine(testCase.SystemErr);
+            }
+
+            if (testCase.SystemOut != null)
+            {
+                _junitTestSuiteSystemOutStringBuilder ??= new StringBuilder();
+                _junitTestSuiteSystemOutStringBuilder.AppendLine(testCase.SystemOut);
             }
         }
     }

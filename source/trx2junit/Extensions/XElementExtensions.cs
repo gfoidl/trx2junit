@@ -26,10 +26,14 @@ namespace trx2junit
             return ts;
         }
         //---------------------------------------------------------------------
-        public static int ReadInt(this XElement element, string attributeName)
+        public static int? ReadInt(this XElement element, string attributeName)
         {
-            string value = element.Attribute(attributeName).Value;
-            return int.Parse(value);
+            string value = (string)element.Attribute(attributeName);
+
+            if (!int.TryParse(value, out int res))
+                return null;
+
+            return res;
         }
         //---------------------------------------------------------------------
         public static double ReadDouble(this XElement element, string attributeName)

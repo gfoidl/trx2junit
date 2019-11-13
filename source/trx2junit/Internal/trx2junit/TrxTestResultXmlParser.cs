@@ -82,14 +82,13 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void ReadUnitTestResults()
         {
-            XElement xResults = _trx.Element(s_XN + "Results");
+            XElement? xResults = _trx.Element(s_XN + "Results");
 
             if (xResults == null) return;
 
             foreach (XElement xResult in xResults.Elements(s_XN + "UnitTestResult"))
             {
-                XElement xInnerResults = xResult.Element(s_XN + "InnerResults");
-
+                XElement? xInnerResults = xResult.Element(s_XN + "InnerResults");
                 if (xInnerResults == null)
                 {
                     TrxUnitTestResult unitTestResult = ParseUnitTestResults(xResult);
@@ -133,20 +132,23 @@ namespace trx2junit
                 ComputerName = xResult.Attribute("computerName").Value
             };
 
-            XElement xOutput = xResult.Element(s_XN + "Output");
+            XElement? xOutput = xResult.Element(s_XN + "Output");
             if (xOutput != null)
             {
-                XElement xErrorInfo = xOutput.Element(s_XN + "ErrorInfo");
+                XElement? xErrorInfo = xOutput.Element(s_XN + "ErrorInfo");
                 if (xErrorInfo != null)
                 {
-                    XElement xMessage = xErrorInfo.Element(s_XN + "Message");
+                    XElement? xMessage = xErrorInfo.Element(s_XN + "Message");
                     if (xMessage != null)
                         unitTestResult.Message = xMessage.Value;
 
-                    XElement xStackTrace = xErrorInfo.Element(s_XN + "StackTrace");
+                    XElement? xStackTrace = xErrorInfo.Element(s_XN + "StackTrace");
                     if (xStackTrace != null)
                         unitTestResult.StackTrace = xStackTrace.Value;
                 }
+
+                unitTestResult.StdOut = xOutput.Element(s_XN + "StdOut")?.Value;
+                unitTestResult.StdErr = xOutput.Element(s_XN + "StdErr")?.Value;
             }
 
             // MsTest doesn't report a duration for ignored tests, but 'time' is requited by junit.xsd

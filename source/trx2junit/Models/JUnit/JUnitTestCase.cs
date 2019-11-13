@@ -7,5 +7,7 @@
         public double      TimeInSeconds { get; set; }
         public bool        Skipped       { get; set; }
         public JUnitError? Error         { get; set; }
+        public string?     SystemOut     { get; set; }
+        public string?     SystemErr     { get; set; }
     }
 }

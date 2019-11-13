@@ -37,6 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{15D1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{7F5905D2-5BCD-4D98-AE53-98F2FFC9DE9D}"
 	ProjectSection(SolutionItems) = preProject
+		schemas\jenkins-junit.xsd = schemas\jenkins-junit.xsd
 		schemas\junit.xsd = schemas\junit.xsd
 		schemas\vstst.xsd = schemas\vstst.xsd
 	EndProjectSection

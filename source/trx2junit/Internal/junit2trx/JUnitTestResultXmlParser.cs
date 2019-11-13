@@ -18,15 +18,24 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public void Parse()
         {
-            if (_junit.Name.LocalName != "testsuites")
-            {
-                throw new Exception("Given xml file is not a junit file");
-            }
+            string rootElementName = _junit.Name.LocalName;
 
-            foreach (XElement xTestSuite in _junit.Elements("testsuite"))
+            if (rootElementName == "testsuites")
             {
-                JUnitTestSuite testSuite = ParseTestSuite(xTestSuite);
+                foreach (XElement xTestSuite in _junit.Elements("testsuite"))
+                {
+                    JUnitTestSuite testSuite = ParseTestSuite(xTestSuite);
+                    _test.TestSuites.Add(testSuite);
+                }
+            }
+            else if (rootElementName == "testsuite")
+            {
+                JUnitTestSuite testSuite = ParseTestSuite(_junit);
                 _test.TestSuites.Add(testSuite);
+            }
+            else
+            {
+                throw new Exception("Given xml file is not a valid junit file");
             }
         }
         //---------------------------------------------------------------------
@@ -37,13 +46,22 @@ namespace trx2junit
                 Name          = xTestSuite.Attribute("name").Value,
                 HostName      = xTestSuite.Attribute("hostname").Value,
                 Id            = xTestSuite.ReadInt("id"),
-                TestCount     = xTestSuite.ReadInt("tests"),
                 ErrorCount    = xTestSuite.ReadInt("errors"),
                 FailureCount  = xTestSuite.ReadInt("failures"),
                 SkippedCount  = xTestSuite.ReadInt("skipped"),
                 TimeInSeconds = xTestSuite.ReadDouble("time"),
                 TimeStamp     = xTestSuite.ReadDateTime("timestamp")!.Value,
             };
+
+            int? testCount = xTestSuite.ReadInt("tests");
+            if (testCount.HasValue)
+            {
+                testSuite.TestCount = testCount.Value;
+            }
+            else
+            {
+                throw new Exception("Given xml file is not a valid junit file, attribute 'tests' is missing on testsuite-element");
+            }
 
             XElement? xStdErr = xTestSuite.Element("system-err");
             if (xStdErr != null)
@@ -57,7 +75,7 @@ namespace trx2junit
                 testSuite.SystemOut = xStdOut.Value;
             }
 
-            foreach(XElement xProperty in xTestSuite.Elements("properties"))
+            foreach (XElement xProperty in xTestSuite.Elements("properties"))
             {
                 if (TryParseProperty(xProperty, out JUnitProperty? property))
                 {
@@ -114,6 +132,18 @@ namespace trx2junit
                     Type    = xFailure.Attribute("type").Value,
                     Message = xFailure.Attribute("message").Value
                 };
+            }
+
+            XElement? xStdErr = xTestCase.Element("system-err");
+            if (xStdErr != null)
+            {
+                testCase.SystemErr = xStdErr.Value;
+            }
+
+            XElement? xStdOut = xTestCase.Element("system-out");
+            if (xStdOut != null)
+            {
+                testCase.SystemOut = xStdOut.Value;
             }
 
             return testCase;

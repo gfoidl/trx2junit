@@ -23,7 +23,7 @@ namespace trx2junit.Tests.Extensions.XElementExtensionsTests
         }
         //---------------------------------------------------------------------
         [Test]
-        public void Xml_without_DateTime___null()
+        public void Xml_without_DateTime_value___null()
         {
             var xml = new XElement("data", new XAttribute("foo", "123"));
 
