@@ -6,9 +6,10 @@ namespace trx2junit
 {
     public class TrxTestResultXmlBuilder : TrxBase, ITestResultXmlBuilder<TrxTest>
     {
+        private static readonly Guid s_testTypeId = Guid.Parse("13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b");
+
         private readonly TrxTest  _test;
         private readonly XElement _xTrx       = new XElement(s_XN + "TestRun");
-        private readonly Guid     _testTypeId = Guid.NewGuid();
         private readonly Guid     _testListId = Guid.NewGuid();
         //---------------------------------------------------------------------
         public TrxTestResultXmlBuilder(TrxTest? test) => _test = test ?? throw new ArgumentNullException(nameof(test));
@@ -108,7 +109,7 @@ namespace trx2junit
                 xUnitTestResult.Add(new XAttribute("testName"    , unitTestResult.TestName));
                 xUnitTestResult.Add(new XAttribute("outcome"     , unitTestResult.Outcome));
                 xUnitTestResult.Add(new XAttribute("computerName", unitTestResult.ComputerName));
-                xUnitTestResult.Add(new XAttribute("testType"    , _testTypeId));
+                xUnitTestResult.Add(new XAttribute("testType"    , s_testTypeId));
                 xUnitTestResult.Add(new XAttribute("testListId"  , _testListId));
                 xUnitTestResult.WriteTrxDateTime("startTime"     , unitTestResult.StartTime);
                 xUnitTestResult.WriteTrxDateTime("endTime"       , unitTestResult.EndTime);

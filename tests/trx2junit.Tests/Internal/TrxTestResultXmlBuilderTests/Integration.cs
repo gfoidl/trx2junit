@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using NUnit.Framework;
 
@@ -43,6 +45,38 @@ namespace trx2junit.Tests.Internal.TrxTestResultXmlBuilderTests
                 Assert.AreEqual(expectedTestCount   , xCounters.ReadInt("total") , nameof(expectedTestCount));
                 Assert.AreEqual(expectedFailureCount, xCounters.ReadInt("failed"), nameof(expectedFailureCount));
                 Assert.AreEqual(expectedErrorCount  , xCounters.ReadInt("error") , nameof(expectedErrorCount));
+            });
+        }
+        //---------------------------------------------------------------------
+        [TestCase("./data/junit/nunit.xml")]
+        [TestCase("./data/junit/nunit-datadriven.xml")]
+        public void JUnit_file_given___testTypeId_set_to_known_value_for_Visual_Studio(string junitFile)
+        {
+            XElement junit = XElement.Load(junitFile);
+            var parser     = new JUnitTestResultXmlParser(junit);
+
+            parser.Parse();
+            Models.JUnitTest testData = parser.Result;
+
+            var converter = new JUnit2TrxTestConverter(testData);
+            converter.Convert();
+
+            Models.TrxTest trxTest = converter.Result;
+            var sut                = new TrxTestResultXmlBuilder(trxTest);
+            sut.Build();
+
+            var xUnitTestResults         = sut.Result.Descendants(TrxBase.s_XN + "UnitTestResult");
+            List<Guid> actualTestTypeIds = xUnitTestResults.Select(x => x.ReadGuid("testType")).ToList();
+
+            // I have no idea why this guid, but testing showed VS likes this one :-)
+            Guid expectedTestTypeId = Guid.Parse("13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b");
+
+            Assert.Multiple(() =>
+            {
+                foreach (Guid actual in actualTestTypeIds)
+                {
+                    Assert.AreEqual(expectedTestTypeId, actual);
+                }
             });
         }
         //---------------------------------------------------------------------
