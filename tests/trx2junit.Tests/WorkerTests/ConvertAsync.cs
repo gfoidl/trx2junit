@@ -94,7 +94,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/junit/xunit-datadriven.xml")]
         [TestCase("./data/junit/xunit-ignore.xml")]
         [TestCase("./data/junit/xunit-memberdata.xml")]
-        [TestCase("./data/junit/yanlend.xml")]
+        [TestCase("./data/junit/jenkins-style.xml")]
         public async Task JUnit_file_given___converted(string junitFile)
         {
             string trxFile = Path.ChangeExtension(junitFile, "trx");
@@ -119,7 +119,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/junit/xunit-datadriven.xml")]
         [TestCase("./data/junit/xunit-ignore.xml")]
         [TestCase("./data/junit/xunit-memberdata.xml")]
-        [TestCase("./data/junit/yanlend.xml")]
+        [TestCase("./data/junit/jenkins-style.xml")]
         public async Task JUnit_file_given___generated_xml_is_valid_against_schema(string junitFile)
         {
             string trxFile = Path.ChangeExtension(junitFile, "trx");

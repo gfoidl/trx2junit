@@ -21,7 +21,7 @@ namespace trx2junit.Tests.Internal.TrxTestResultXmlBuilderTests
         [TestCase("./data/junit/xunit-datadriven.xml" , 5, 2, 0)]
         [TestCase("./data/junit/xunit-ignore.xml"     , 4, 1, 0)]
         [TestCase("./data/junit/xunit-memberdata.xml" , 5, 2, 0)]
-        [TestCase("./data/junit/yanlend.xml"          , 3, 0, 1)]
+        [TestCase("./data/junit/jenkins-style.xml"    , 3, 0, 1)]
         public void File_given___correct_counts(string junitFile, int expectedTestCount, int expectedFailureCount, int? expectedErrorCount)
         {
             XElement junit = XElement.Load(junitFile);

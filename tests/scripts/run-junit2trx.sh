@@ -23,8 +23,8 @@ cd -
 echo ""
 echo "-----------------------------------------------"
 echo "junit2trx: jenkins-junit style xml"
-cp tests/trx2junit.Tests/data/junit/yanlend.xml ./junit2trx
-trx2junit ./junit2trx/yanlend.xml --junit2trx
+cp tests/trx2junit.Tests/data/junit/jenkins-style.xml ./junit2trx
+trx2junit ./junit2trx/jenkins-style.xml --junit2trx
 
 echo ""
-./verify-xml.sh "schemas/vstst.xsd" "junit2trx/yanlend.trx"
+./verify-xml.sh "schemas/vstst.xsd" "junit2trx/jenkins-style.trx"
