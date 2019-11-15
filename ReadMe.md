@@ -47,7 +47,8 @@ $ trx2junit --output results a.trx ../tests/b.trx
 
 With option `--junit2trx` a conversion from _junit_ to _trx_ can be performed.
 
-If a given _xml_-file is not a junit-file, a message will be logged to _stderr_ and the exit-code is set to 1.
+If a given _xml_-file is not a junit-file, a message will be logged to _stderr_ and the exit-code is set to `1`.
+A junit-file is considered valid if it either conforms to [junit.xsd](./schemas/junit.xsd) or [jenkins-junit.xsd](./schemas/jenkins-junit.xsd).
 
 ## Installation
 
