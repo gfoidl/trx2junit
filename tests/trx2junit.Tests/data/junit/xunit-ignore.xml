@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+    <testsuite name="XUnitSample" hostname="GFOIDL-PC-2018" package=".NET Core" id="0" tests="4" failures="1" errors="0" skipped="1" time="1.028" timestamp="2019-04-19T16:10:34">
+        <properties />
+        <testcase name="XUnitSample.SimpleTests.Passing_test" classname="XUnitSample" time="0.002" />
+        <testcase name="XUnitSample.SimpleTests.Failing_test" classname="XUnitSample" time="0.006">
+            <failure message="Failing for demo purposes&#xD;&#xA;Expected: True&#xD;&#xA;Actual:   False" type="not specified">   at XUnitSample.SimpleTests.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\SimpleTests.cs:line 20</failure>
+        </testcase>
+        <testcase name="XUnitSample.SimpleTests.Slow_test" classname="XUnitSample" time="1.019" />
+        <testcase name="XUnitSample.SimpleTests.Ignored_test" classname="XUnitSample" time="0.001">
+            <skipped />
+        </testcase>
+        <system-out />
+        <system-err />
+    </testsuite>
+</testsuites>

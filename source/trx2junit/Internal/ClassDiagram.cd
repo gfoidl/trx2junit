@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="trx2junit.Trx2JunitTestConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\Trx2JunitTestConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="trx2junit.JUnit2TrxTestConverter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\JUnit2TrxTestConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="trx2junit.TrxTestResultXmlParser" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAoAAAAAAAAAgAAAAAAAAQAAAAAgQAABAAQAABAAAA=</HashCode>
+      <FileName>Internal\TrxTestResultXmlParser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="trx2junit.JUnitTestResultXmlParser" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAQAAAAAAEEAQAAAAAAAAABAAAAAQAAAA=</HashCode>
+      <FileName>Internal\JUnitTestResultXmlParser.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="trx2junit.TrxBase" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Internal\TrxBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="trx2junit.JUnitTestResultXmlBuilder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAgBAAAABAAAAAEQAAAAAwAAABAAACAAAEAA=</HashCode>
+      <FileName>Internal\JUnitTestResultXmlBuilder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="trx2junit.TestResultXmlConverter&lt;TIn, TOut&gt;" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAEAAAgAAAAAAQAAAAAAAAgAAAA=</HashCode>
+      <FileName>Internal\TestResultXmlConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="trx2junit.TrxTestResultXmlBuilder" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAASAAAAAAAAAAQAAAAAgwAAAAAACAAAABA=</HashCode>
+      <FileName>Internal\TrxTestResultXmlBuilder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="trx2junit.Trx2JUnitConverter" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAgAAAAAAQAAAAAAAAgAAAA=</HashCode>
+      <FileName>Internal\Trx2JunitConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="trx2junit.JUnit2TrxConverter" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAgAAAAAAQAAAAAAAAgAAAA=</HashCode>
+      <FileName>Internal\Junit2TrxConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="trx2junit.ITestConverter&lt;TIn, TOut&gt;" Collapsed="true">
+    <Position X="5.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Abstractions\ITestConverter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="trx2junit.ITestResultXmlBuilder&lt;TTest&gt;" Collapsed="true">
+    <Position X="7" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAgAAAAAAACAAAAAA=</HashCode>
+      <FileName>Abstractions\ITestResultXmlBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="trx2junit.ITestResultXmlConverter" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Abstractions\ITestResultXmlConverter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="trx2junit.ITestResultXmlParser&lt;TTest&gt;" Collapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Abstractions\ITestResultXmlParser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9.16" />
+</ClassDiagram>

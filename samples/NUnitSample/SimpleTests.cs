@@ -41,5 +41,11 @@ namespace NUnitSample
 
             throw new System.Exception();
         }
+        //---------------------------------------------------------------------
+        [Test]
+        public void Test_with_StdOut()
+        {
+            TestContext.WriteLine("message written to stdout");
+        }
     }
 }

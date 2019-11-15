@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir ./globbing
-cp tests/trx2junit.Tests/data/* ./globbing
+cp tests/trx2junit.Tests/data/trx/* ./globbing
 
 echo ""
 trx2junit ./globbing/*.trx
@@ -9,7 +9,7 @@ trx2junit ./globbing/*.trx
 echo ""
 
 for junit in ./globbing/*.xml; do
-    ./verify-xml.sh "$junit"
+    ./verify-xml.sh "schemas/junit.xsd" "$junit"
 done
 
 nTrx=$(ls -l ./globbing/*.trx | wc -l)

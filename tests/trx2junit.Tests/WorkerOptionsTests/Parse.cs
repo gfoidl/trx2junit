@@ -18,6 +18,7 @@ namespace trx2junit.Tests.WorkerOptionsTests
                 string[] expected = { "a.trx" };
                 CollectionAssert.AreEqual(expected, actual.InputFiles);
                 Assert.IsNull(actual.OutputDirectory);
+                Assert.IsTrue(actual.ConvertToJunit);
             });
         }
         //---------------------------------------------------------------------
@@ -134,6 +135,20 @@ namespace trx2junit.Tests.WorkerOptionsTests
             ArgumentException actual = Assert.Throws<ArgumentException>(() => WorkerOptions.Parse(args));
 
             Assert.AreEqual("--output specified, but no value is given. An output-directory needs to specified in this case.", actual.Message);
+        }
+        //---------------------------------------------------------------------
+        [Test]
+        public void Convert_to_trx___option_false()
+        {
+            string[] args = { "a.trx", "--junit2trx" };
+
+            var actual = WorkerOptions.Parse(args);
+
+            Assert.Multiple(() =>
+            {
+                Assert.IsFalse(actual.ConvertToJunit);
+                CollectionAssert.AreEqual(new string[] { "a.trx" }, actual.InputFiles);
+            });
         }
     }
 }

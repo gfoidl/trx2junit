@@ -1,16 +1,18 @@
-| CircleCI | Code Coverage | NuGet | MyGet |  
-| -- | -- | -- | -- |  
-| [![CircleCI](https://circleci.com/gh/gfoidl/trx2junit/tree/master.svg?style=svg)](https://circleci.com/gh/gfoidl/trx2junit/tree/master)| [![codecov](https://codecov.io/gh/gfoidl/trx2junit/branch/master/graph/badge.svg)](https://codecov.io/gh/gfoidl/trx2junit) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) | [![MyGet Pre Release](https://img.shields.io/myget/gfoidl/vpre/trx2junit.svg?style=flat-square)](https://www.myget.org/feed/gfoidl/package/nuget/trx2junit) |  
+| CircleCI | Code Coverage | NuGet | MyGet |
+| -- | -- | -- | -- |
+| [![CircleCI](https://circleci.com/gh/gfoidl/trx2junit/tree/master.svg?style=svg)](https://circleci.com/gh/gfoidl/trx2junit/tree/master)| [![codecov](https://codecov.io/gh/gfoidl/trx2junit/branch/master/graph/badge.svg)](https://codecov.io/gh/gfoidl/trx2junit) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) | [![MyGet Pre Release](https://img.shields.io/myget/gfoidl/vpre/trx2junit.svg?style=flat-square)](https://www.myget.org/feed/gfoidl/package/nuget/trx2junit) |
 
 # trx2junit (.NET Core global tool)
 
-Helper for converting trx-Testresults (`dotnet test --logger "trx"`) to a JUnit-based XML file.  
+Helper for converting trx-Testresults (`dotnet test --logger "trx"`) to a JUnit-based XML file.
 
 Can be used for CI-scenarios, like [CircleCi](https://circleci.com/) or [GitLab](https://docs.gitlab.com/ee/ci/junit_test_reports.html), where as test results JUnit is expected.
 
 ## Usage
 
-When installed as [.NET Core Global Tool](https://natemcmaster.com/blog/2018/05/12/dotnet-global-tools/):   
+### trx to junit
+
+When installed as [.NET Core Global Tool](https://natemcmaster.com/blog/2018/05/12/dotnet-global-tools/):
 `trx2junit {trxFile}` where _trxFile_ is the path to the trx-file.
 
 You can pass more than one trx file, each will create it's own junit xml file.
@@ -40,6 +42,13 @@ $ trx2junit a.trx --output ../results
 # or
 $ trx2junit --output results a.trx ../tests/b.trx
 ```
+
+### junit to trx
+
+With option `--junit2trx` a conversion from _junit_ to _trx_ can be performed.
+
+If a given _xml_-file is not a junit-file, a message will be logged to _stderr_ and the exit-code is set to `1`.
+A junit-file is considered valid if it either conforms to [junit.xsd](./schemas/junit.xsd) or [jenkins-junit.xsd](./schemas/jenkins-junit.xsd).
 
 ## Installation
 

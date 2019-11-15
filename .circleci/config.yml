@@ -66,7 +66,7 @@ commands:
                         command: |
                             # copied from build.sh (but modified)
                             if [[ -n "$CIRCLE_TAG" ]]; then
-                                if [[ "$CIRCLE_TAG" =~ ^v([0-9])\.([0-9])\.([0-9])(-(preview-[0-9]+))$ ]]; then
+                                if [[ "$CIRCLE_TAG" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)(-(preview-[0-9]+))$ ]]; then
                                     VersionMajor="${BASH_REMATCH[1]}"
                                     VersionMinor="${BASH_REMATCH[2]}"
                                     VersionPatch="${BASH_REMATCH[3]}"
@@ -113,6 +113,7 @@ commands:
                     - run: ./tests/scripts/run-globbing.sh
                     - run: ./tests/scripts/run-no-globbing.sh
                     - run: ./tests/scripts/run-different-output-location.sh
+                    - run: ./tests/scripts/run-junit2trx.sh
                     - persist_to_workspace:
                         root: .
                         paths:
@@ -160,12 +161,12 @@ workflows:
             - release_build_test_job:
                 filters:
                     tags:
-                        only: /^v[0-9]\.[0-9]\.[0-9](-preview-[0-9]+)?$/
+                        only: /^v[0-9]+\.[0-9]+\.[0-9]+(-preview-[0-9]+)?$/
 
             - debug_build_test_job:
                 filters:
                     tags:
-                        only: /^v[0-9]\.[0-9]\.[0-9](-preview-[0-9]+)?$/
+                        only: /^v[0-9]+\.[0-9]+\.[0-9]+(-preview-[0-9]+)?$/
 
             - deploy_job:
                 name: deploy-nuget
@@ -177,7 +178,7 @@ workflows:
                     branches:
                         ignore: /.*/
                     tags:
-                        only: /^v[0-9]\.[0-9]\.[0-9]$/
+                        only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
                 context: org-global
 
             - deploy_job:
@@ -191,5 +192,5 @@ workflows:
                         #only: master
                         ignore: /.*/
                     tags:
-                        only: /^v[0-9]\.[0-9]\.[0-9](-preview-[0-9]+)?$/
+                        only: /^v[0-9]+\.[0-9]+\.[0-9]+(-preview-[0-9]+)?$/
                 context: org-global

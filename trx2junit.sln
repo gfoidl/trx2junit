@@ -5,6 +5,7 @@ VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B5D05395-4D8B-40A2-A03E-BFF4E76D7F7B}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		LICENSE = LICENSE
@@ -36,7 +37,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{15D1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "schemas", "schemas", "{7F5905D2-5BCD-4D98-AE53-98F2FFC9DE9D}"
 	ProjectSection(SolutionItems) = preProject
+		schemas\jenkins-junit.xsd = schemas\jenkins-junit.xsd
 		schemas\junit.xsd = schemas\junit.xsd
+		schemas\vstst.xsd = schemas\vstst.xsd
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitSample", "samples\NUnitSample\NUnitSample.csproj", "{AB4EB02B-E16A-40B7-8524-A4F752FDFBBA}"
@@ -56,6 +59,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{3531
 	ProjectSection(SolutionItems) = preProject
 		tests\scripts\run-different-output-location.sh = tests\scripts\run-different-output-location.sh
 		tests\scripts\run-globbing.sh = tests\scripts\run-globbing.sh
+		tests\scripts\run-junit2trx.sh = tests\scripts\run-junit2trx.sh
 		tests\scripts\run-multiple-args.sh = tests\scripts\run-multiple-args.sh
 		tests\scripts\run-no-globbing.sh = tests\scripts\run-no-globbing.sh
 		tests\scripts\run-samples.sh = tests\scripts\run-samples.sh

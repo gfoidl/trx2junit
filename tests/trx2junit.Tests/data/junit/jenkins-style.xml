@@ -1,0 +1,61 @@
+<testsuite errors="1" failures="0" hostname="samplename" name="PatientRegistration.Patient Registration (Example)" skipped="0" tests="3" time="0.036988" timestamp="2019-11-08T09:10:24.803951">
+    <testcase classname="PatientRegistration.Patient Registration (Example)" name="Create patient" status="passed" time="0.015996">
+        <system-out>
+            <![CDATA[
+@scenario.begin
+
+  @tc:62
+  Scenario: Create patient
+    When I create a patient with name "John Doe" on the host ... passed in 0.005s
+    Then the patient "John Doe" should also be created in the application. ... passed in 0.011s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="PatientRegistration.Patient Registration (Example)" name="Close patient" status="passed" time="0.015">
+        <system-out>
+            <![CDATA[
+@scenario.begin
+
+  @tc:63
+  Scenario: Close patient
+    Given a patient is opened in the application ... passed in 0.005s
+    When I close the patient on the host ... passed in 0.005s
+    Then the patient should also be closed in the application. ... passed in 0.005s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="PatientRegistration.Patient Registration (Example)" name="Edit patient" status="failed" time="0.005992">
+        <error message="edit() missing 2 required positional arguments: 'birth_date' and 'sex'" type="TypeError">
+            <![CDATA[
+Failing step: When I change the patient name to "John Doe" on the host ... failed in 0.001s
+Location: tests/features/PatientRegistration.feature:20
+Traceback (most recent call last):
+  File "D:\dev\bdd_demo_behave\.venv\lib\site-packages\behave\model.py", line 1329, in run
+    match.run(runner.context)
+  File "D:\dev\bdd_demo_behave\.venv\lib\site-packages\behave\matchers.py", line 98, in run
+    self.func(context, *args, **kwargs)
+  File "tests\features\steps\step_patient_registration.py", line 33, in step_impl
+    context.patient.edit(first_name="John", last_name="Doe")
+TypeError: edit() missing 2 required positional arguments: 'birth_date' and 'sex'
+]]>
+        </error>
+        <system-out>
+            <![CDATA[
+@scenario.begin
+  Scenario: Edit patient
+    Given a patient is opened in the application ... passed in 0.005s
+    When I change the patient name to "John Doe" on the host ... failed in 0.001s
+    Then the patient name should also be changed to "John Doe" in the application. ... skipped in 0.000s
+
+@scenario.end
+--------------------------------------------------------------------------------
+]]>
+        </system-out>
+    </testcase>
+</testsuite>

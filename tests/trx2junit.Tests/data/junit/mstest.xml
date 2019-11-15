@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+    <testsuite name="MsTestSample.SimpleTests" hostname="GFOIDL-PC-2018" package=".NET Core" id="0" tests="3" failures="1" errors="0" skipped="0" time="1.036" timestamp="2018-07-10T12:16:58">
+        <properties />
+        <testcase name="Slow_test" classname="MsTestSample.SimpleTests" time="1.001" />
+        <testcase name="Failing_test" classname="MsTestSample.SimpleTests" time="0.028">
+            <failure message="Assert.Fail failed. Failing for demo purposes" type="not specified" />
+        </testcase>
+        <testcase name="Passing_test" classname="MsTestSample.SimpleTests" time="0.007" />
+        <system-out />
+        <system-err />
+    </testsuite>
+</testsuites>

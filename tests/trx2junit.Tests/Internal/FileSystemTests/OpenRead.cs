@@ -9,7 +9,7 @@ namespace trx2junit.Tests.Internal.FileSystemTests
         [Test]
         public void Path_given___OK()
         {
-            string path = "./data/nunit.trx";
+            string path = "./data/trx/nunit.trx";
             var sut     = new FileSystem();
 
             using (Stream actual = sut.OpenRead(path))

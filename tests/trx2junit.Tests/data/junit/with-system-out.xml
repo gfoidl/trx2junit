@@ -1,0 +1,6 @@
+<testsuite errors="0" failures="0" hostname="samplename" name="PatientRegistration.Patient Registration (Example)" skipped="0" tests="1" time="0.036988" timestamp="2019-11-08T09:10:24.803951">
+    <testcase classname="PatientRegistration.Patient Registration (Example)" name="Create patient" status="passed" time="0.015996">
+        <system-out>message written to system-out</system-out>
+        <system-err>message written to system-err</system-err>
+    </testcase>
+</testsuite>
