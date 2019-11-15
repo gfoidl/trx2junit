@@ -16,6 +16,7 @@ namespace trx2junit.Tests.Extensions.TimeExtensionsTests
         private static IEnumerable<TestCaseData> DateTime_given___correct_format_TestCases()
         {
             yield return new TestCaseData(new DateTime(2019, 11, 10, 15, 33, 27)).Returns("2019-11-10T15:33:27");
+            yield return new TestCaseData(new DateTime(2019, 01, 02, 05, 03, 07)).Returns("2019-01-02T05:03:07");
         }
     }
 }
