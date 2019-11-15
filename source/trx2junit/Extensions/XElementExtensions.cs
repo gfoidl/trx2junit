@@ -38,14 +38,12 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public static double ReadDouble(this XElement element, string attributeName)
         {
-            string value = element.Attribute(attributeName).Value;
-            return double.Parse(value, CultureInfo.InvariantCulture);
+            return (double)element.Attribute(attributeName);
         }
         //---------------------------------------------------------------------
         public static Guid ReadGuid(this XElement element, string attributeName)
         {
-            string value = element.Attribute(attributeName).Value;
-            return Guid.Parse(value);
+            return (Guid)element.Attribute(attributeName);
         }
         //---------------------------------------------------------------------
         public static bool Write<T>(this XElement element, string attributeName, T? nullable)

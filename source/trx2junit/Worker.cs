@@ -78,7 +78,7 @@ namespace trx2junit
         {
             string? directory = Path.GetDirectoryName(outputFile);
 
-            if (!string.IsNullOrWhiteSpace(directory))
+            if (!string.IsNullOrWhiteSpace(directory) && !Directory.Exists(directory))
                 _fileSystem.CreateDirectory(directory);
         }
     }

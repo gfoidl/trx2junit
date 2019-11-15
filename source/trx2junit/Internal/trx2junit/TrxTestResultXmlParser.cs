@@ -43,7 +43,7 @@ namespace trx2junit
 
             _test.ResultSummary = new TrxResultSummary
             {
-                Outcome  = Enum.Parse<TrxOutcome>(xResultSummary.Attribute("outcome").Value),
+                Outcome  = ReadOutcome(xResultSummary.Attribute("outcome").Value),
                 Errors   = xCounters.ReadInt("error"),
                 Executed = xCounters.ReadInt("executed"),
                 Failed   = xCounters.ReadInt("failed"),
@@ -125,7 +125,7 @@ namespace trx2junit
                 Duration     = xResult.ReadTimeSpan("duration"),
                 EndTime      = xResult.ReadDateTime("endTime"),
                 ExecutionId  = xResult.ReadGuid("executionId"),
-                Outcome      = Enum.Parse<TrxOutcome>(xResult.Attribute("outcome").Value),
+                Outcome      = ReadOutcome(xResult.Attribute("outcome").Value),
                 StartTime    = xResult.ReadDateTime("startTime"),
                 TestId       = xResult.ReadGuid("testId"),
                 TestName     = xResult.Attribute("testName").Value,
@@ -157,5 +157,16 @@ namespace trx2junit
 
             return unitTestResult;
         }
+        //---------------------------------------------------------------------
+        // internal for testing
+        internal static TrxOutcome ReadOutcome(string value)
+            => value switch
+            {
+                nameof(TrxOutcome.Passed)    => TrxOutcome.Passed,
+                nameof(TrxOutcome.Failed)    => TrxOutcome.Failed,
+                nameof(TrxOutcome.Completed) => TrxOutcome.Completed,
+                nameof(TrxOutcome.Warning)   => TrxOutcome.Warning,
+                _                            => TrxOutcome.NotExecuted,
+            };
     }
 }

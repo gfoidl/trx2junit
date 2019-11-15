@@ -5,10 +5,7 @@ namespace trx2junit
 {
     internal static class TimeExtensions
     {
-        public static string ToJUnitDateTime(this DateTime dt)
-        {
-            return $"{dt.Year}-{dt.Month:00}-{dt.Day:00}T{dt.Hour:00}:{dt.Minute:00}:{dt.Second:00}";
-        }
+        public static string ToJUnitDateTime(this DateTime dt) => dt.ToString("s");
         //---------------------------------------------------------------------
         public static string ToTrxDateTime(this DateTime dt)
         {
