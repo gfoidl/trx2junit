@@ -131,6 +131,8 @@ namespace trx2junit
             out int minute,
             out int second)
         {
+            Debug.Assert(value.Length >= 19);
+
             year   = value[ 0.. 2].Parse2DigitIntFast() * 100 + value[2..4].Parse2DigitIntFast();
             month  = value[ 5.. 7].Parse2DigitIntFast();
             day    = value[ 8..10].Parse2DigitIntFast();
@@ -146,6 +148,8 @@ namespace trx2junit
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void FormatDateTimeSse41(Span<char> buffer, DateTime value)
         {
+            Debug.Assert(buffer.Length >= 19);
+
             int year   = value.Year;
             int month  = value.Month;
             int day    = value.Day;
@@ -221,6 +225,8 @@ namespace trx2junit
             out int minute,
             out int second)
         {
+            Debug.Assert(value.Length >= 19);
+
             Vector128<short> ascii0     = Vector128.Create((short)'0');
             Vector128<byte> shuffleMask = s_parsingShuffleMask;
             Vector128<short> ten        = Vector128.Create((short)10);
@@ -241,6 +247,8 @@ namespace trx2junit
             out int b,
             out int c)
         {
+            Debug.Assert(value.Length >= Vector128<short>.Count);
+
             ref char valueRef    = ref MemoryMarshal.GetReference(value);
             Vector128<short> vec = Unsafe.As<char, Vector128<short>>(ref valueRef);
             Vector128<short> res = Sse2.SubtractSaturate(vec, ascii0);

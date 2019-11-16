@@ -28,6 +28,8 @@ namespace trx2junit
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Parse2DigitIntFast(this ReadOnlySpan<char> value)
         {
+            Debug.Assert(value.Length >= 2);
+
             char high = value[0];
             char low  = value[1];
 
@@ -40,6 +42,8 @@ namespace trx2junit
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Parse3DigitIntFast(this ReadOnlySpan<char> value)
         {
+            Debug.Assert(value.Length >= 3);
+
             char hundred = value[0];
             char ten     = value[1];
             char single  = value[2];
