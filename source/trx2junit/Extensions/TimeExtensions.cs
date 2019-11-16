@@ -13,39 +13,50 @@ namespace trx2junit
 {
     internal static class TimeExtensions
     {
-        private static readonly char[] s_template = "0000-00-00T00:00:00".ToCharArray();
+        private static readonly char[] s_junitTimeTemplate   = "0000-00-00T00:00:00".ToCharArray();
+        private static readonly char[] s_trxDateTimeTemplate = "0000-00-00T00:00:00.000+00:00".ToCharArray();
         //---------------------------------------------------------------------
         public static string ToJUnitDateTime(this DateTime dt)
         {
-            return string.Create(19, dt, (buffer, value) =>
-            {
-#if NETCOREAPP2_1
-                FormatDateTimeScalar(buffer, value);
-#else
-                if (Sse41.IsSupported)
-                {
-                    FormatDateTimeSse41(buffer, value);
-                }
-                else
-                {
-                    FormatDateTimeScalar(buffer, value);
-                }
-#endif
-            });
+            return string.Create(19, dt, (buffer, value) => FormatDateTime(buffer, value));
         }
         //---------------------------------------------------------------------
         public static string ToTrxDateTime(this DateTime dt)
         {
             dt = dt.ToUniversalTime();
-            return $"{dt.ToJUnitDateTime()}.{dt.Millisecond:000}+00:00";
+
+            return string.Create(19 + 1 + 3 + 6, dt, (buffer, value) =>
+            {
+                s_trxDateTimeTemplate.CopyTo(buffer);
+
+                FormatDateTime(buffer[0..19], value);
+                dt.Millisecond.TryFormat(buffer.Slice(20), out int written, "000");
+                Debug.Assert(written == 3);
+            });
         }
         //---------------------------------------------------------------------
         public static string ToJUnitTime(this double value) => value.ToString("0.000", CultureInfo.InvariantCulture);
         //---------------------------------------------------------------------
+        private static void FormatDateTime(Span<char> buffer, DateTime value)
+        {
+#if NETCOREAPP2_1
+                FormatDateTimeScalar(buffer, value);
+#else
+            if (Sse41.IsSupported)
+            {
+                FormatDateTimeSse41(buffer, value);
+            }
+            else
+            {
+                FormatDateTimeScalar(buffer, value);
+            }
+#endif
+        }
+        //---------------------------------------------------------------------
         private static void FormatDateTimeScalar(Span<char> buffer, DateTime value)
         {
-            Debug.Assert(s_template.Length == buffer.Length);
-            s_template.CopyTo(buffer);
+            Debug.Assert(s_junitTimeTemplate.Length == buffer.Length);
+            s_junitTimeTemplate.CopyTo(buffer);
 
             value.Year  .TryFormat(buffer, out int _);
             value.Month .Format2DigitIntFast(buffer.Slice(5));
