@@ -13,7 +13,7 @@ namespace trx2junit
 {
     internal static class TimeExtensions
     {
-        private static readonly char[] s_junitTimeTemplate   = "0000-00-00T00:00:00".ToCharArray();
+        private static readonly char[] s_junitTimeTemplate   = "0000-00-00T00:00:00"          .ToCharArray();
         private static readonly char[] s_trxDateTimeTemplate = "0000-00-00T00:00:00.000+00:00".ToCharArray();
         //---------------------------------------------------------------------
         public static string ToJUnitDateTime(this DateTime dt)
@@ -37,6 +37,60 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public static string ToJUnitTime(this double value) => value.ToString("0.000", CultureInfo.InvariantCulture);
         //---------------------------------------------------------------------
+        public static DateTime? ParseDateTime(this string value)
+        {
+            ReadOnlySpan<char> span = value;
+
+            if (span.Length != 19 && span.Length != 29)
+            {
+                return SlowPath(value);
+            }
+
+            try
+            {
+                int year;
+                int month;
+                int day;
+                int hour;
+                int minute;
+                int second;
+#if NETCOREAPP2_1
+                ParseDateTimeScalar(span, out year, out month, out day, out hour, out minute, out second);
+#else
+                if (Sse41.IsSupported)
+                {
+                    ParseDateTimeSse41(span, out year, out month, out day, out hour, out minute, out second);
+                }
+                else
+                {
+                    ParseDateTimeScalar(span, out year, out month, out day, out hour, out minute, out second);
+                }
+#endif
+                int millisecond           = 0;
+                DateTimeKind dateTimeKind = DateTimeKind.Local;
+
+                if (value.Length == 29)
+                {
+                    millisecond  = span[20..24].Parse3DigitIntFast();
+                    dateTimeKind = DateTimeKind.Utc;
+                }
+
+                return new DateTime(year, month, day, hour, minute, second, millisecond, dateTimeKind);
+            }
+            catch
+            {
+                return SlowPath(value);
+            }
+            //-----------------------------------------------------------------
+            static DateTime? SlowPath(string value)
+            {
+                if (!DateTime.TryParse(value, out DateTime dt))
+                    return null;
+
+                return dt;
+            }
+        }
+        //---------------------------------------------------------------------
         private static void FormatDateTime(Span<char> buffer, DateTime value)
         {
 #if NETCOREAPP2_1
@@ -53,6 +107,7 @@ namespace trx2junit
 #endif
         }
         //---------------------------------------------------------------------
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void FormatDateTimeScalar(Span<char> buffer, DateTime value)
         {
             Debug.Assert(s_junitTimeTemplate.Length == buffer.Length);
@@ -66,8 +121,27 @@ namespace trx2junit
             value.Second.Format2DigitIntFast(buffer.Slice(17));
         }
         //---------------------------------------------------------------------
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void ParseDateTimeScalar(
+            ReadOnlySpan<char> value,
+            out int year,
+            out int month,
+            out int day,
+            out int hour,
+            out int minute,
+            out int second)
+        {
+            year   = value[ 0.. 2].Parse2DigitIntFast() * 100 + value[2..4].Parse2DigitIntFast();
+            month  = value[ 5.. 7].Parse2DigitIntFast();
+            day    = value[ 8..10].Parse2DigitIntFast();
+            hour   = value[11..13].Parse2DigitIntFast();
+            minute = value[14..16].Parse2DigitIntFast();
+            second = value[17..19].Parse2DigitIntFast();
+        }
+        //---------------------------------------------------------------------
 #if !NETCOREAPP2_1
-        private static readonly Vector128<short> s_timeTemplateVec = Vector128.Create(0, 0, (short)':', 0, 0, (short)':', 0, 0);
+        private static readonly Vector128<short> s_timeTemplateVec    = Vector128.Create(0, 0, (short)':', 0, 0, (short)':', 0, 0);
+        private static readonly Vector128<byte>  s_parsingShuffleMask = Vector128.Create((byte)0, 1, 2, 3, 6, 7, 8, 9, 12, 13, 14, 15, 4, 5, 10, 11);
         //---------------------------------------------------------------------
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void FormatDateTimeSse41(Span<char> buffer, DateTime value)
@@ -101,8 +175,8 @@ namespace trx2junit
 
             Vector128<short> formattedDate = FormatDateTimeComponents(year2LowerDigits, month, day, ten, template, ascii0);
             Unsafe.As<char, Vector128<short>>(ref Unsafe.Add(ref bufferRef, 2)) = formattedDate;
-            Unsafe.Add(ref bufferRef, 4) = '-';
-            Unsafe.Add(ref bufferRef, 7) = '-';
+            Unsafe.Add(ref bufferRef, 4)  = '-';
+            Unsafe.Add(ref bufferRef, 7)  = '-';
             Unsafe.Add(ref bufferRef, 10) = 'T';
 
             Vector128<short> formattedTime = FormatDateTimeComponents(hour, minute, second, ten, template, ascii0);
@@ -135,6 +209,50 @@ namespace trx2junit
             res                  = Sse2.Or(res, template);  // '0' | ':' = ':' -- 48 | 58 = 58
 
             return res;
+        }
+        //---------------------------------------------------------------------
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void ParseDateTimeSse41(
+            ReadOnlySpan<char> value,
+            out int year,
+            out int month,
+            out int day,
+            out int hour,
+            out int minute,
+            out int second)
+        {
+            Vector128<short> ascii0     = Vector128.Create((short)'0');
+            Vector128<byte> shuffleMask = s_parsingShuffleMask;
+            Vector128<short> ten        = Vector128.Create((short)10);
+
+            ParseDateTimeComponents(value.Slice(2) , ascii0, shuffleMask, ten, out year, out month , out day);
+            ParseDateTimeComponents(value.Slice(11), ascii0, shuffleMask, ten, out hour, out minute, out second);
+
+            year += value[0..2].Parse2DigitIntFast() * 100;
+        }
+        //---------------------------------------------------------------------
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void ParseDateTimeComponents(
+            ReadOnlySpan<char> value,
+            Vector128<short> ascii0,
+            Vector128<byte> shuffleMask,
+            Vector128<short> ten,
+            out int a,
+            out int b,
+            out int c)
+        {
+            ref char valueRef    = ref MemoryMarshal.GetReference(value);
+            Vector128<short> vec = Unsafe.As<char, Vector128<short>>(ref valueRef);
+            Vector128<short> res = Sse2.SubtractSaturate(vec, ascii0);
+
+            res                 = Ssse3.Shuffle(res.AsByte(), shuffleMask).AsInt16();
+            Vector128<short> lo = Sse2.ShiftRightLogical128BitLane(res, 2);
+            Vector128<short> hi = Sse2.MultiplyLow(res, ten);
+            res                 = Sse2.Add(lo, hi);
+
+            a = res.GetElement(0);
+            b = res.GetElement(2);
+            c = res.GetElement(4);
         }
 #endif
     }

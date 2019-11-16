@@ -8,11 +8,7 @@ namespace trx2junit
         public static DateTime? ReadDateTime(this XElement element, string attributeName)
         {
             string value = (string)element.Attribute(attributeName);
-
-            if (!DateTime.TryParse(value, out DateTime dt))
-                return null;
-
-            return dt;
+            return value.ParseDateTime();
         }
         //---------------------------------------------------------------------
         public static TimeSpan? ReadTimeSpan(this XElement element, string attributeName)

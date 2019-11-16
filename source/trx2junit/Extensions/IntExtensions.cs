@@ -24,5 +24,31 @@ namespace trx2junit
                 buffer[0] = (char)('0' + high);
             }
         }
+        //---------------------------------------------------------------------
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int Parse2DigitIntFast(this ReadOnlySpan<char> value)
+        {
+            char high = value[0];
+            char low  = value[1];
+
+            int h = high - '0';
+            int l = low  - '0';
+
+            return h * 10 + l;
+        }
+        //---------------------------------------------------------------------
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int Parse3DigitIntFast(this ReadOnlySpan<char> value)
+        {
+            char hundred = value[0];
+            char ten     = value[1];
+            char single  = value[2];
+
+            int h = hundred - '0';
+            int t = ten     - '0';
+            int s = single  - '0';
+
+            return h * 100 + t * 10 + s;
+        }
     }
 }
