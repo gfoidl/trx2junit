@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace trx2junit.Tests.Extensions.IntExtensionsTests
 {
     [TestFixture]
-    public class Parse3DigitIntFast
+    public class TryParse3DigitIntFast
     {
         [Test]
         [TestCase("000")]
@@ -17,9 +17,13 @@ namespace trx2junit.Tests.Extensions.IntExtensionsTests
         public void Three_digit_string___OK(string value)
         {
             int expected = int.Parse(value);
-            int actual   = value.AsSpan().Parse3DigitIntFast();
+            bool actual  = value.AsSpan().TryParse3DigitIntFast(out int res);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(actual);
+                Assert.AreEqual(expected, res);
+            });
         }
         //---------------------------------------------------------------------
         [Test]
@@ -34,7 +38,9 @@ namespace trx2junit.Tests.Extensions.IntExtensionsTests
         [TestCase(":00")]
         public void Non_digit_chars___throws_ArgumentOutOfRange(string value)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => value.AsSpan().Parse3DigitIntFast());
+            bool actual = value.AsSpan().TryParse3DigitIntFast(out int _);
+
+            Assert.IsFalse(actual);
         }
     }
 }

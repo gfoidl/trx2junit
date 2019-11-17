@@ -27,24 +27,28 @@ namespace trx2junit
         }
         //---------------------------------------------------------------------
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Parse2DigitIntFast(this ReadOnlySpan<char> value)
+        public static bool TryParse2DigitIntFast(this ReadOnlySpan<char> value, out int res)
         {
             Debug.Assert(value.Length >= 2);
 
             char low  = value[1];
             char high = value[0];
 
-            ValidateCharIsDigit(high);
-            ValidateCharIsDigit(low);
+            if (IsCharDigit(low) && IsCharDigit(high))
+            {
+                int h = high - '0';
+                int l = low  - '0';
 
-            int h = high - '0';
-            int l = low  - '0';
+                res = h * 10 + l;
+                return true;
+            }
 
-            return h * 10 + l;
+            res = default;
+            return false;
         }
         //---------------------------------------------------------------------
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Parse3DigitIntFast(this ReadOnlySpan<char> value)
+        public static bool TryParse3DigitIntFast(this ReadOnlySpan<char> value, out int res)
         {
             Debug.Assert(value.Length >= 3);
 
@@ -52,23 +56,20 @@ namespace trx2junit
             char ten     = value[1];
             char hundred = value[0];
 
-            ValidateCharIsDigit(hundred);
-            ValidateCharIsDigit(ten);
-            ValidateCharIsDigit(single);
+            if (IsCharDigit(single) && (IsCharDigit(ten) && IsCharDigit(hundred)))
+            {
+                int h = hundred - '0';
+                int t = ten     - '0';
+                int s = single  - '0';
 
-            int h = hundred - '0';
-            int t = ten     - '0';
-            int s = single  - '0';
+                res = h * 100 + t * 10 + s;
+                return true;
+            }
 
-            return h * 100 + t * 10 + s;
+            res = default;
+            return false;
         }
         //---------------------------------------------------------------------
-        private static void ValidateCharIsDigit(char c)
-        {
-            if ((uint)(c - '0') > '9' - '0')
-                ThrowArgumentOutOfRange();
-            //-----------------------------------------------------------------
-            static void ThrowArgumentOutOfRange() => throw new ArgumentOutOfRangeException();
-        }
+        private static bool IsCharDigit(char c) => (uint)(c - '0') <= '9' - '0';
     }
 }

@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace trx2junit.Tests.Extensions.IntExtensionsTests
 {
     [TestFixture]
-    public class Parse2DigitIntFast
+    public class TryParse2DigitIntFast
     {
         [Test]
         [TestCase("00")]
@@ -15,9 +15,13 @@ namespace trx2junit.Tests.Extensions.IntExtensionsTests
         public void Two_digit_string___OK(string value)
         {
             int expected = int.Parse(value);
-            int actual   = value.AsSpan().Parse2DigitIntFast();
+            bool actual  = value.AsSpan().TryParse2DigitIntFast(out int res);
 
-            Assert.AreEqual(expected, actual);
+            Assert.Multiple(() =>
+            {
+                Assert.IsTrue(actual);
+                Assert.AreEqual(expected, res);
+            });
         }
         //---------------------------------------------------------------------
         [Test]
@@ -27,9 +31,11 @@ namespace trx2junit.Tests.Extensions.IntExtensionsTests
         [TestCase("/0")]
         [TestCase("0:")]    // '9' + 1 = ':'
         [TestCase(":0")]
-        public void Non_digit_chars___throws_ArgumentOutOfRange(string value)
+        public void Non_digit_chars___false(string value)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => value.AsSpan().Parse2DigitIntFast());
+            bool actual = value.AsSpan().TryParse2DigitIntFast(out int _);
+
+            Assert.IsFalse(actual);
         }
     }
 }

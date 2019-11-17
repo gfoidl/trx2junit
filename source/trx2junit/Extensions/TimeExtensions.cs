@@ -55,15 +55,18 @@ namespace trx2junit
                 int minute;
                 int second;
 #if NETCOREAPP2_1
-                ParseDateTimeScalar(span, out year, out month, out day, out hour, out minute, out second);
+                if (!TryParseDateTimeScalar(span, out year, out month, out day, out hour, out minute, out second))
+                    return null;
 #else
                 if (Sse41.IsSupported)
                 {
-                    ParseDateTimeSse41(span, out year, out month, out day, out hour, out minute, out second);
+                    if (!TryParseDateTimeSse41(span, out year, out month, out day, out hour, out minute, out second))
+                        return null;
                 }
                 else
                 {
-                    ParseDateTimeScalar(span, out year, out month, out day, out hour, out minute, out second);
+                    if (!TryParseDateTimeScalar(span, out year, out month, out day, out hour, out minute, out second))
+                        return null;
                 }
 #endif
                 int millisecond           = 0;
@@ -71,15 +74,13 @@ namespace trx2junit
 
                 if (value.Length == 29)
                 {
-                    millisecond  = span[20..24].Parse3DigitIntFast();
+                    if (!span[20..24].TryParse3DigitIntFast(out millisecond))
+                        return null;
+
                     dateTimeKind = DateTimeKind.Utc;
                 }
 
                 return new DateTime(year, month, day, hour, minute, second, millisecond, dateTimeKind);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                return null;
             }
             catch
             {
@@ -126,7 +127,7 @@ namespace trx2junit
         }
         //---------------------------------------------------------------------
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void ParseDateTimeScalar(
+        private static bool TryParseDateTimeScalar(
             ReadOnlySpan<char> value,
             out int year,
             out int month,
@@ -137,12 +138,25 @@ namespace trx2junit
         {
             Debug.Assert(value.Length >= 19);
 
-            year   = value[ 0.. 2].Parse2DigitIntFast() * 100 + value[2..4].Parse2DigitIntFast();
-            month  = value[ 5.. 7].Parse2DigitIntFast();
-            day    = value[ 8..10].Parse2DigitIntFast();
-            hour   = value[11..13].Parse2DigitIntFast();
-            minute = value[14..16].Parse2DigitIntFast();
-            second = value[17..19].Parse2DigitIntFast();
+            if (value[ 0.. 2].TryParse2DigitIntFast(out int tmp)
+             && value[ 2.. 4].TryParse2DigitIntFast(out year)
+             && value[ 5.. 7].TryParse2DigitIntFast(out month)
+             && value[ 8..10].TryParse2DigitIntFast(out day)
+             && value[11..13].TryParse2DigitIntFast(out hour)
+             && value[14..16].TryParse2DigitIntFast(out minute)
+             && value[17..19].TryParse2DigitIntFast(out second))
+            {
+                year += tmp * 100;
+                return true;
+            }
+
+            year   = 0;
+            month  = 0;
+            day    = 0;
+            hour   = 0;
+            minute = 0;
+            second = 0;
+            return false;
         }
         //---------------------------------------------------------------------
 #if !NETCOREAPP2_1
@@ -221,7 +235,7 @@ namespace trx2junit
         }
         //---------------------------------------------------------------------
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void ParseDateTimeSse41(
+        private static bool TryParseDateTimeSse41(
             ReadOnlySpan<char> value,
             out int year,
             out int month,
@@ -238,14 +252,25 @@ namespace trx2junit
             Vector128<byte> shuffleMask  = s_parsingShuffleMaskVec;
             Vector128<short> ten         = Vector128.Create((short)10);
 
-            ParseDateTimeComponents(value.Slice(2) , ascii0, ascii9, outsideMask, shuffleMask, ten, out year, out month , out day);
-            ParseDateTimeComponents(value.Slice(11), ascii0, ascii9, outsideMask, shuffleMask, ten, out hour, out minute, out second);
+            if (TryParseDateTimeComponents(value.Slice(2) , ascii0, ascii9, outsideMask, shuffleMask, ten, out year, out month , out day)
+             && TryParseDateTimeComponents(value.Slice(11), ascii0, ascii9, outsideMask, shuffleMask, ten, out hour, out minute, out second)
+             && value[0..2].TryParse2DigitIntFast(out int tmp))
+            {
+                year += tmp * 100;
+                return true;
+            }
 
-            year += value[0..2].Parse2DigitIntFast() * 100;
+            year   = 0;
+            month  = 0;
+            day    = 0;
+            hour   = 0;
+            minute = 0;
+            second = 0;
+            return false;
         }
         //---------------------------------------------------------------------
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void ParseDateTimeComponents(
+        private static bool TryParseDateTimeComponents(
             ReadOnlySpan<char> value,
             Vector128<short>   ascii0,
             Vector128<short>   ascii9,
@@ -267,7 +292,12 @@ namespace trx2junit
             outside                      = Sse2.And(outside, outsideMask);
 
             if (Sse2.MoveMask(outside.AsByte()) != 0)
-                ThrowArgumentOutOfRange();
+            {
+                a = 0;
+                b = 0;
+                c = 0;
+                return false;
+            }
 
             Vector128<short> res = Sse2.Subtract(vec, ascii0);
 
@@ -279,8 +309,8 @@ namespace trx2junit
             a = res.GetElement(0);
             b = res.GetElement(2);
             c = res.GetElement(4);
-            //-----------------------------------------------------------------
-            static void ThrowArgumentOutOfRange() => throw new ArgumentOutOfRangeException();
+
+            return true;
         }
 #endif
     }
