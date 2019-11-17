@@ -29,7 +29,7 @@ namespace trx2junit
             {
                 s_trxDateTimeTemplate.CopyTo(buffer);
 
-                FormatDateTime(buffer[0..19], value);
+                FormatDateTime(buffer, value);
                 dt.Millisecond.TryFormat(buffer.Slice(20), out int written, "000");
                 Debug.Assert(written == 3);
             });
@@ -77,6 +77,10 @@ namespace trx2junit
 
                 return new DateTime(year, month, day, hour, minute, second, millisecond, dateTimeKind);
             }
+            catch (ArgumentOutOfRangeException)
+            {
+                return null;
+            }
             catch
             {
                 return SlowPath(value);
@@ -94,7 +98,7 @@ namespace trx2junit
         private static void FormatDateTime(Span<char> buffer, DateTime value)
         {
 #if NETCOREAPP2_1
-                FormatDateTimeScalar(buffer, value);
+            FormatDateTimeScalar(buffer, value);
 #else
             if (Sse41.IsSupported)
             {
@@ -110,7 +114,7 @@ namespace trx2junit
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void FormatDateTimeScalar(Span<char> buffer, DateTime value)
         {
-            Debug.Assert(s_junitTimeTemplate.Length == buffer.Length);
+            Debug.Assert(s_junitTimeTemplate.Length <= buffer.Length);
             s_junitTimeTemplate.CopyTo(buffer);
 
             value.Year  .TryFormat(buffer, out int _);
@@ -142,8 +146,9 @@ namespace trx2junit
         }
         //---------------------------------------------------------------------
 #if !NETCOREAPP2_1
-        private static readonly Vector128<short> s_timeTemplateVec    = Vector128.Create(0, 0, (short)':', 0, 0, (short)':', 0, 0);
-        private static readonly Vector128<byte>  s_parsingShuffleMask = Vector128.Create((byte)0, 1, 2, 3, 6, 7, 8, 9, 12, 13, 14, 15, 4, 5, 10, 11);
+        private static readonly Vector128<short> s_timeTemplateVec       = Vector128.Create(0, 0, (short)':', 0, 0, (short)':', 0, 0);
+        private static readonly Vector128<short> s_timeOutsideMaskVec    = Vector128.Create(0xFF_FF, 0xFF_FF, 0, 0xFF_FF, 0xFF_FF, 0, 0xFF_FF, 0xFF_FF).AsInt16();
+        private static readonly Vector128<byte>  s_parsingShuffleMaskVec = Vector128.Create((byte)0, 1, 2, 3, 6, 7, 8, 9, 12, 13, 14, 15, 4, 5, 10, 11);
         //---------------------------------------------------------------------
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void FormatDateTimeSse41(Span<char> buffer, DateTime value)
@@ -227,12 +232,14 @@ namespace trx2junit
         {
             Debug.Assert(value.Length >= 19);
 
-            Vector128<short> ascii0     = Vector128.Create((short)'0');
-            Vector128<byte> shuffleMask = s_parsingShuffleMask;
-            Vector128<short> ten        = Vector128.Create((short)10);
+            Vector128<short> ascii0      = Vector128.Create((short)'0');
+            Vector128<short> ascii9      = Vector128.Create((short)'9');
+            Vector128<short> outsideMask = s_timeOutsideMaskVec;
+            Vector128<byte> shuffleMask  = s_parsingShuffleMaskVec;
+            Vector128<short> ten         = Vector128.Create((short)10);
 
-            ParseDateTimeComponents(value.Slice(2) , ascii0, shuffleMask, ten, out year, out month , out day);
-            ParseDateTimeComponents(value.Slice(11), ascii0, shuffleMask, ten, out hour, out minute, out second);
+            ParseDateTimeComponents(value.Slice(2) , ascii0, ascii9, outsideMask, shuffleMask, ten, out year, out month , out day);
+            ParseDateTimeComponents(value.Slice(11), ascii0, ascii9, outsideMask, shuffleMask, ten, out hour, out minute, out second);
 
             year += value[0..2].Parse2DigitIntFast() * 100;
         }
@@ -240,9 +247,11 @@ namespace trx2junit
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void ParseDateTimeComponents(
             ReadOnlySpan<char> value,
-            Vector128<short> ascii0,
-            Vector128<byte> shuffleMask,
-            Vector128<short> ten,
+            Vector128<short>   ascii0,
+            Vector128<short>   ascii9,
+            Vector128<short>   outsideMask,
+            Vector128<byte>    shuffleMask,
+            Vector128<short>   ten,
             out int a,
             out int b,
             out int c)
@@ -251,7 +260,16 @@ namespace trx2junit
 
             ref char valueRef    = ref MemoryMarshal.GetReference(value);
             Vector128<short> vec = Unsafe.As<char, Vector128<short>>(ref valueRef);
-            Vector128<short> res = Sse2.SubtractSaturate(vec, ascii0);
+
+            Vector128<short> belowAscii0 = Sse2.CompareLessThan(vec, ascii0);
+            Vector128<short> aboveAscii9 = Sse2.CompareGreaterThan(vec, ascii9);
+            Vector128<short> outside     = Sse2.Or(belowAscii0, aboveAscii9);
+            outside                      = Sse2.And(outside, outsideMask);
+
+            if (Sse2.MoveMask(outside.AsByte()) != 0)
+                ThrowArgumentOutOfRange();
+
+            Vector128<short> res = Sse2.Subtract(vec, ascii0);
 
             res                 = Ssse3.Shuffle(res.AsByte(), shuffleMask).AsInt16();
             Vector128<short> lo = Sse2.ShiftRightLogical128BitLane(res, 2);
@@ -261,6 +279,8 @@ namespace trx2junit
             a = res.GetElement(0);
             b = res.GetElement(2);
             c = res.GetElement(4);
+            //-----------------------------------------------------------------
+            static void ThrowArgumentOutOfRange() => throw new ArgumentOutOfRangeException();
         }
 #endif
     }

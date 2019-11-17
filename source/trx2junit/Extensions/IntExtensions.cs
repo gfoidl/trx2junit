@@ -10,6 +10,7 @@ namespace trx2junit
         public static void Format2DigitIntFast(this int value, Span<char> buffer)
         {
             Debug.Assert(0 <= value && value < 100);
+            Debug.Assert(buffer.Length >= 2);
 
             if (value < 10)
             {
@@ -30,8 +31,11 @@ namespace trx2junit
         {
             Debug.Assert(value.Length >= 2);
 
-            char high = value[0];
             char low  = value[1];
+            char high = value[0];
+
+            ValidateCharIsDigit(high);
+            ValidateCharIsDigit(low);
 
             int h = high - '0';
             int l = low  - '0';
@@ -44,15 +48,27 @@ namespace trx2junit
         {
             Debug.Assert(value.Length >= 3);
 
-            char hundred = value[0];
-            char ten     = value[1];
             char single  = value[2];
+            char ten     = value[1];
+            char hundred = value[0];
+
+            ValidateCharIsDigit(hundred);
+            ValidateCharIsDigit(ten);
+            ValidateCharIsDigit(single);
 
             int h = hundred - '0';
             int t = ten     - '0';
             int s = single  - '0';
 
             return h * 100 + t * 10 + s;
+        }
+        //---------------------------------------------------------------------
+        private static void ValidateCharIsDigit(char c)
+        {
+            if ((uint)(c - '0') > '9' - '0')
+                ThrowArgumentOutOfRange();
+            //-----------------------------------------------------------------
+            static void ThrowArgumentOutOfRange() => throw new ArgumentOutOfRangeException();
         }
     }
 }

@@ -66,13 +66,16 @@ namespace trx2junit.Tests.Extensions.TimeExtensionsTests
         }
         //---------------------------------------------------------------------
         [Test]
-        public void Invalid_DateTime_string___null()
+        [TestCase("123")]
+        [TestCase("0000-00-00T00:00:00")]
+        [TestCase("0000-00-00T00:00:60")]
+        [TestCase("2019-11-17T12:26:0a")]
+        [TestCase("201a-11-17T12:26:07")]
+        public void Invalid_DateTime_string___null(string value)
         {
-            string value = "123";
-
             DateTime? actual = value.ParseDateTime();
 
-            Assert.IsFalse(actual.HasValue);
+            Assert.IsFalse(actual.HasValue, "actual = {0}", actual);
         }
     }
 }
