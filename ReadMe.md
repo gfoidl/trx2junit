@@ -1,6 +1,6 @@
-| CircleCI | Code Coverage | NuGet | MyGet |
-| -- | -- | -- | -- |
-| [![CircleCI](https://circleci.com/gh/gfoidl/trx2junit/tree/master.svg?style=svg)](https://circleci.com/gh/gfoidl/trx2junit/tree/master)| [![codecov](https://codecov.io/gh/gfoidl/trx2junit/branch/master/graph/badge.svg)](https://codecov.io/gh/gfoidl/trx2junit) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) | [![MyGet Pre Release](https://img.shields.io/myget/gfoidl/vpre/trx2junit.svg?style=flat-square)](https://www.myget.org/feed/gfoidl/package/nuget/trx2junit) |
+| CircleCI | Code Coverage | NuGet |
+| -- | -- | -- |
+| [![CircleCI](https://circleci.com/gh/gfoidl/trx2junit/tree/master.svg?style=svg)](https://circleci.com/gh/gfoidl/trx2junit/tree/master)| [![codecov](https://codecov.io/gh/gfoidl/trx2junit/branch/master/graph/badge.svg)](https://codecov.io/gh/gfoidl/trx2junit) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) |
 
 # trx2junit (.NET Core global tool)
 
@@ -69,3 +69,16 @@ echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
 ### Prequisites
 
 [.NET Core SDK](https://dotnet.microsoft.com/download) 2.1 onwards.
+
+
+## Development channel
+
+To get packages from the development channel use a `nuget.config` similar to this one:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <packageSources>
+        <add key="gfoidl-public" value="https://pkgs.dev.azure.com/gh-gfoidl/github-Projects/_packaging/gfoidl-public/nuget/v3/index.json" />
+    </packageSources>
+</configuration>
+```
