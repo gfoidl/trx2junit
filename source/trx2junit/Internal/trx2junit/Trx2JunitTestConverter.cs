@@ -27,6 +27,8 @@ namespace trx2junit
 
             foreach (var testSuite in testSuites)
             {
+                if (testSuite.Key is null) throw new InvalidOperationException("TestSuite.Key is null");
+
                 this.AddTestSuite(testSuite.Key, testSuite);
             }
         }
@@ -115,7 +117,9 @@ namespace trx2junit
         {
             public int       TestCount;
             public int       Failures;
+#pragma warning disable CS0649
             public int       Errors;
+#pragma warning restore CS0649
             public int       Skipped;
             public TimeSpan  Time;
             public DateTime? TimeStamp;
