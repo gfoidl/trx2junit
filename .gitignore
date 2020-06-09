@@ -220,3 +220,5 @@ _Pvt_Extensions
 /source/packages
 /NuGet-Packed
 /tests/*.playlist
+/tests/Coverage
+/tests/trx2junit.Tests/coverage.*.cobertura.xml

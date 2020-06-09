@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace trx2junit
 {
+    [ExcludeFromCodeCoverage]
     static class Program
     {
         static async Task Main(string[] args)
