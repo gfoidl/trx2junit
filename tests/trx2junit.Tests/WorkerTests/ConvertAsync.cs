@@ -158,7 +158,7 @@ namespace trx2junit.Tests.WorkerTests
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual("Given trx file is not a valid trx file" + Environment.NewLine, consoleOutput);
+                StringAssert.StartsWith("Given xml file is not a valid trx file", consoleOutput);
                 Assert.AreEqual(1, Environment.ExitCode);
             });
         }
@@ -182,7 +182,7 @@ namespace trx2junit.Tests.WorkerTests
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual("Given xml file is not a valid junit file" + Environment.NewLine, consoleOutput);
+                StringAssert.StartsWith("Given xml file is not a valid junit file", consoleOutput);
                 Assert.AreEqual(1, Environment.ExitCode);
             });
         }

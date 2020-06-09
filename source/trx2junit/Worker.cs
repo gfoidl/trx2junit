@@ -52,16 +52,18 @@ namespace trx2junit
         // internal for testing
         internal async Task ConvertAsync(ITestResultXmlConverter converter, string inputFile, string? outputPath = null)
         {
-            string outputFile = converter.GetOutputFile(inputFile, outputPath);
-            this.EnsureOutputDirectoryExists(outputFile);
-
-            Console.WriteLine($"Converting '{inputFile}' to '{outputFile}'");
-
-            using Stream input      = _fileSystem.OpenRead(inputFile);
-            using TextWriter output = new StreamWriter(outputFile, false, s_utf8);
-
             try
             {
+                converter.ValidateAgainstSchema(inputFile);
+
+                string outputFile = converter.GetOutputFile(inputFile, outputPath);
+                this.EnsureOutputDirectoryExists(outputFile);
+
+                Console.WriteLine($"Converting '{inputFile}' to '{outputFile}'");
+
+                using Stream input      = _fileSystem.OpenRead(inputFile);
+                using TextWriter output = new StreamWriter(outputFile, false, s_utf8);
+
                 await converter.ConvertAsync(input, output);
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,10 +11,27 @@ namespace trx2junit
         where TIn  : Models.Test
         where TOut : Models.Test
     {
+        protected abstract bool InputIsTrx                                         { get; }
         protected abstract Func<XElement, ITestResultXmlParser<TIn>> ParserFactory { get; }
         protected abstract Func<TIn, ITestConverter<TIn, TOut>> ConverterFactory   { get; }
         protected abstract Func<TOut, ITestResultXmlBuilder<TOut>> BuilderFactory  { get; }
         protected abstract string Extension                                        { get; }
+        //---------------------------------------------------------------------
+        public void ValidateAgainstSchema(string? inputFile)
+        {
+            Debug.Assert(inputFile != null);
+
+            if (ValidationHelper.TryValidateXml(inputFile, validateJunit: !this.InputIsTrx, out string? msg))
+            {
+                return;
+            }
+
+            string exMsg = this.InputIsTrx
+                ? "Given xml file is not a valid trx file"
+                : "Given xml file is not a valid junit file";
+
+            throw new Exception(exMsg + "\n" + msg);
+        }
         //---------------------------------------------------------------------
         public virtual async Task ConvertAsync(Stream? input, TextWriter? output)
         {

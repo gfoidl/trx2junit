@@ -38,6 +38,7 @@ namespace trx2junit.Tests.Internal.TestResultXmlConverterTests
         {
             protected override string Extension => "foo";
             //-----------------------------------------------------------------
+            protected override bool InputIsTrx                                                    => throw new NotImplementedException();
             protected override Func<XElement, ITestResultXmlParser<TrxTest>> ParserFactory        => throw new NotImplementedException();
             protected override Func<TrxTest, ITestConverter<TrxTest, JUnitTest>> ConverterFactory => throw new NotImplementedException();
             protected override Func<JUnitTest, ITestResultXmlBuilder<JUnitTest>> BuilderFactory   => throw new NotImplementedException();
