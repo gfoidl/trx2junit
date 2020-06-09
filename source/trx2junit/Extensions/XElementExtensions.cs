@@ -43,7 +43,11 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public static Guid ReadGuid(this XElement element, string attributeName)
         {
-            return (Guid)element.Attribute(attributeName);
+            string? value = (string)element.Attribute(attributeName);
+
+            return Guid.TryParse(value, out Guid guid)
+                ? guid
+                : Guid.Empty;
         }
         //---------------------------------------------------------------------
         public static bool Write<T>(this XElement element, string attributeName, T? nullable)

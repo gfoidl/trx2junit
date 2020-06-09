@@ -20,7 +20,7 @@ namespace trx2junit.Tests.Internal.JUnitTestResultXmlBuilderTests
         [TestCase("./data/trx/xunit-datadriven.trx" , 3, 1)]
         [TestCase("./data/trx/xunit-ignore.trx"     , 4, 1)]
         [TestCase("./data/trx/xunit-memberdata.trx" , 5, 2)]
-        [TestCase("./data/trx/jsingh-qualitrol.trx" , 1, 1)]
+        [TestCase("./data/trx/jsingh-qualitrol.trx" , 0, 0)]
         public void File_given___correct_counts(string trxFile, int expectedTestCount, int expectedFailureCount)
         {
             XElement trx = XElement.Load(trxFile);

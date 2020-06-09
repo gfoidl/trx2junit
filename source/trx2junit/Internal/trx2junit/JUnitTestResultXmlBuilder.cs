@@ -30,7 +30,7 @@ namespace trx2junit
             var xTestSuite = new XElement("testsuite");
 
             xTestSuite.Add(new XAttribute("name"    , testSuite.Name));
-            xTestSuite.Add(new XAttribute("hostname", testSuite.HostName));
+            xTestSuite.Add(new XAttribute("hostname", testSuite.HostName ?? "-"));
             xTestSuite.Add(new XAttribute("package" , "not available"));
             xTestSuite.Add(new XAttribute("id"      , testSuite.Id));
 
