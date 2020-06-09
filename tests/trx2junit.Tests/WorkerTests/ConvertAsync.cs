@@ -48,7 +48,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/trx/xunit-memberdata.trx")]
         public async Task Trx_file_given___converted(string trxFile)
         {
-            Assume.That(() => ValidationHelper.IsXmlValidJunit(trxFile, validateJunit: false), Throws.Nothing);
+            Assume.That(() => ValidationHelper.IsXmlValidJunit(trxFile, validateJunit: false, TestContext.Out), Throws.Nothing);
 
             string junitFile = Path.ChangeExtension(trxFile, "xml");
             var sut          = new Worker();
@@ -75,14 +75,14 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/trx/xunit-memberdata.trx")]
         public async Task Trx_file_given___generated_xml_is_valid_against_schema(string trxFile)
         {
-            Assume.That(() => ValidationHelper.IsXmlValidJunit(trxFile, validateJunit: false), Throws.Nothing);
+            Assume.That(() => ValidationHelper.IsXmlValidJunit(trxFile, validateJunit: false, TestContext.Out), Throws.Nothing);
 
             string junitFile = Path.ChangeExtension(trxFile, "xml");
             var sut          = new Worker();
 
             await sut.ConvertAsync(new Trx2JunitTestResultXmlConverter(), trxFile);
 
-            ValidationHelper.IsXmlValidJunit(junitFile, validateJunit: true);
+            ValidationHelper.IsXmlValidJunit(junitFile, validateJunit: true, TestContext.Out);
         }
         //---------------------------------------------------------------------
         [Test]
@@ -101,7 +101,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/junit/jenkins-style.xml")]
         public async Task JUnit_file_given___converted(string junitFile)
         {
-            Assume.That(() => ValidationHelper.IsXmlValidJunit(junitFile, validateJunit: true), Throws.Nothing);
+            Assume.That(() => ValidationHelper.IsXmlValidJunit(junitFile, validateJunit: true, TestContext.Out), Throws.Nothing);
 
             string trxFile = Path.ChangeExtension(junitFile, "trx");
             var sut        = new Worker();
@@ -128,7 +128,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/junit/jenkins-style.xml")]
         public async Task JUnit_file_given___generated_xml_is_valid_against_schema(string junitFile)
         {
-            Assume.That(() => ValidationHelper.IsXmlValidJunit(junitFile, validateJunit: true), Throws.Nothing);
+            Assume.That(() => ValidationHelper.IsXmlValidJunit(junitFile, validateJunit: true, TestContext.Out), Throws.Nothing);
 
             string trxFile = Path.ChangeExtension(junitFile, "trx");
             var sut        = new Worker();
@@ -136,7 +136,7 @@ namespace trx2junit.Tests.WorkerTests
             await sut.ConvertAsync(new Junit2TrxTestResultXmlConverter(), junitFile);
 
             Assume.That(junitFile, Is.Not.EqualTo("./data/junit/nunit-no-tests.xml"), "not valid, VS will open it. Conversion so far OK");
-            ValidationHelper.IsXmlValidJunit(trxFile, validateJunit: false);
+            ValidationHelper.IsXmlValidJunit(trxFile, validateJunit: false, TestContext.Out);
         }
         //---------------------------------------------------------------------
         [Test]

@@ -2,16 +2,15 @@
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using NUnit.Framework;
 
-namespace trx2junit.Tests
+namespace trx2junit
 {
     internal static class ValidationHelper
     {
-        private static readonly XmlSchemaSet s_schemaJunit = LoadSchema("./data/junit.xsd");
-        private static readonly XmlSchemaSet s_schemaTrx   = LoadSchema("./data/vstst.xsd", targetNamespace: "http://microsoft.com/schemas/VisualStudio/TeamTest/2010");
+        private static readonly XmlSchemaSet s_schemaJunit = LoadSchema("./schemas/junit.xsd");
+        private static readonly XmlSchemaSet s_schemaTrx   = LoadSchema("./schemas/vstst.xsd", targetNamespace: "http://microsoft.com/schemas/VisualStudio/TeamTest/2010");
         //---------------------------------------------------------------------
-        public static void IsXmlValidJunit(string fileName, bool validateJunit)
+        public static void IsXmlValidJunit(string fileName, bool validateJunit, TextWriter textWriter)
         {
             XDocument xml          = XDocument.Load(fileName);
             XmlSchemaSet xmlSchema = validateJunit
@@ -20,11 +19,11 @@ namespace trx2junit.Tests
 
             xml.Validate(xmlSchema, (o, e) =>
             {
-                TestContext.WriteLine($"Message: {e.Message}");
-                TestContext.WriteLine($"LineNo: {e.Exception.LineNumber}, LinePos: {e.Exception.LinePosition}");
-                TestContext.WriteLine("Object: {0}", o);
-                TestContext.WriteLine();
-                TestContext.WriteLine(xml);
+                textWriter.WriteLine($"Message: {e.Message}");
+                textWriter.WriteLine($"LineNo: {e.Exception.LineNumber}, LinePos: {e.Exception.LinePosition}");
+                textWriter.WriteLine("Object: {0}", o);
+                textWriter.WriteLine();
+                textWriter.WriteLine(xml);
                 throw new XmlSchemaException("See test output for further details", e.Exception);
             });
         }

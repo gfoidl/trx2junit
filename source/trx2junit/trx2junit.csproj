@@ -31,4 +31,8 @@
         </EmbeddedResource>
     </ItemGroup>
 
+    <ItemGroup>
+        <Content Include="..\..\schemas\*.xsd" Link="schemas\%(Filename).xsd" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
 </Project>
