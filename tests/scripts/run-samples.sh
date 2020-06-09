@@ -3,9 +3,9 @@
 # default is `set -e`, so override it on behalve that the test-failure is not reported
 set +e
 
-dotnet test --no-build -c Release --logger "trx;LogFileName=nunit.trx"  samples/NUnitSample
-dotnet test --no-build -c Release --logger "trx;LogFileName=mstest.trx" samples/MsTestSample
-dotnet test --no-build -c Release --logger "trx;LogFileName=xunit.trx"  samples/XUnitSample
+dotnet test --no-build -c Release --verbosity normal --logger "trx;LogFileName=nunit.trx"  samples/NUnitSample
+dotnet test --no-build -c Release --verbosity normal --logger "trx;LogFileName=mstest.trx" samples/MsTestSample
+dotnet test --no-build -c Release --verbosity normal --logger "trx;LogFileName=xunit.trx"  samples/XUnitSample
 
 set -e
 

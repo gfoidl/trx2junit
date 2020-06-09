@@ -4,14 +4,17 @@ root = true
 # all files
 [*]
 
+charset = utf-8
+
 # Indentation and spacing
-indent_size = 4
 indent_style = space
+indent_size = 4
 tab_width = 4
 
 # New line preferences
 end_of_line = lf
 insert_final_newline = true
+trim_trailing_whitespace = true
 
 # C# files
 [*.cs]
@@ -179,11 +182,19 @@ dotnet_naming_rule.private_or_internal_static_field_should_be_static_field.sever
 dotnet_naming_rule.private_or_internal_static_field_should_be_static_field.symbols = private_or_internal_static_field
 dotnet_naming_rule.private_or_internal_static_field_should_be_static_field.style = static_field
 
+dotnet_naming_rule.private_or_internal_field_should_be_instance_field.severity = suggestion
+dotnet_naming_rule.private_or_internal_field_should_be_instance_field.symbols = private_or_internal_field
+dotnet_naming_rule.private_or_internal_field_should_be_instance_field.style = instance_field
+
 # Symbol specifications
 
 dotnet_naming_symbols.interface.applicable_kinds = interface
 dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.interface.required_modifiers = 
+dotnet_naming_symbols.interface.required_modifiers =
+
+dotnet_naming_symbols.private_or_internal_field.applicable_kinds = field
+dotnet_naming_symbols.private_or_internal_field.applicable_accessibilities = internal, private, private_protected
+dotnet_naming_symbols.private_or_internal_field.required_modifiers =
 
 dotnet_naming_symbols.private_or_internal_static_field.applicable_kinds = field
 dotnet_naming_symbols.private_or_internal_static_field.applicable_accessibilities = internal, private, private_protected
@@ -191,11 +202,11 @@ dotnet_naming_symbols.private_or_internal_static_field.required_modifiers = stat
 
 dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum
 dotnet_naming_symbols.types.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.types.required_modifiers = 
+dotnet_naming_symbols.types.required_modifiers =
 
 dotnet_naming_symbols.non_field_members.applicable_kinds = property, event, method
 dotnet_naming_symbols.non_field_members.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
-dotnet_naming_symbols.non_field_members.required_modifiers = 
+dotnet_naming_symbols.non_field_members.required_modifiers =
 
 dotnet_naming_symbols.constant.applicable_kinds = field
 dotnet_naming_symbols.constant.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
@@ -203,17 +214,22 @@ dotnet_naming_symbols.constant.required_modifiers = const
 
 # Naming styles
 
-dotnet_naming_style.pascal_case.required_prefix = 
-dotnet_naming_style.pascal_case.required_suffix = 
-dotnet_naming_style.pascal_case.word_separator = 
+dotnet_naming_style.pascal_case.required_prefix =
+dotnet_naming_style.pascal_case.required_suffix =
+dotnet_naming_style.pascal_case.word_separator =
 dotnet_naming_style.pascal_case.capitalization = pascal_case
 
 dotnet_naming_style.begins_with_i.required_prefix = I
-dotnet_naming_style.begins_with_i.required_suffix = 
-dotnet_naming_style.begins_with_i.word_separator = 
+dotnet_naming_style.begins_with_i.required_suffix =
+dotnet_naming_style.begins_with_i.word_separator =
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
 dotnet_naming_style.static_field.required_prefix = s_
-dotnet_naming_style.static_field.required_suffix = 
-dotnet_naming_style.static_field.word_separator = 
+dotnet_naming_style.static_field.required_suffix =
+dotnet_naming_style.static_field.word_separator =
 dotnet_naming_style.static_field.capitalization = camel_case
+
+dotnet_naming_style.instance_field.required_prefix = _
+dotnet_naming_style.instance_field.required_suffix =
+dotnet_naming_style.instance_field.word_separator =
+dotnet_naming_style.instance_field.capitalization = camel_case

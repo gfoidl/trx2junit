@@ -1,6 +1,6 @@
-| CircleCI | Code Coverage | NuGet |
-| -- | -- | -- |
-| [![CircleCI](https://circleci.com/gh/gfoidl/trx2junit/tree/master.svg?style=svg)](https://circleci.com/gh/gfoidl/trx2junit/tree/master)| [![codecov](https://codecov.io/gh/gfoidl/trx2junit/branch/master/graph/badge.svg)](https://codecov.io/gh/gfoidl/trx2junit) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) |
+| CI | NuGet |  
+| -- | -- |  
+| [![Build Status](https://dev.azure.com/gh-gfoidl/github-Projects/_apis/build/status/.NET/trx2junit?branchName=master)](https://dev.azure.com/gh-gfoidl/github-Projects/_build/latest?definitionId=35&branchName=master) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) |  
 
 # trx2junit (.NET Core global tool)
 

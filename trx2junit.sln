@@ -25,11 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{292C2B9E
 		verify-xml.sh = verify-xml.sh
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".circleci", ".circleci", "{148DD984-1D1C-4A97-A5F5-907812DCA662}"
-	ProjectSection(SolutionItems) = preProject
-		.circleci\config.yml = .circleci\config.yml
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{15D1FCD7-8027-4DD0-BF1A-BFC295C99332}"
 	ProjectSection(SolutionItems) = preProject
 		samples\Directory.Build.props = samples\Directory.Build.props
@@ -66,6 +61,38 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{3531
 		tests\scripts\run-single-arg.sh = tests\scripts\run-single-arg.sh
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{BA2AD413-4251-4C08-9BE5-402DCA7CAA41}"
+	ProjectSection(SolutionItems) = preProject
+		.github\CODEOWNERS = .github\CODEOWNERS
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ISSUE_TEMPLATE", "ISSUE_TEMPLATE", "{9F873D32-DF04-4453-9604-716F5598AC7E}"
+	ProjectSection(SolutionItems) = preProject
+		.github\ISSUE_TEMPLATE\bug_report.md = .github\ISSUE_TEMPLATE\bug_report.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{8819C279-C1A2-420B-A1FD-28F4097EC41C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{A21A387B-90BB-45B0-AD48-240B86DA1FE9}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\automerge.yml = .github\workflows\automerge.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".azure", ".azure", "{5101A9AB-5CCE-4A20-AEA5-432BD2E4D9D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{8A80B7B0-F9B3-45C9-8796-C8049C43CD7E}"
+	ProjectSection(SolutionItems) = preProject
+		.azure\pipelines\ci.yml = .azure\pipelines\ci.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jobs", "jobs", "{BF2D34D4-5549-4098-994B-FACDBD730C56}"
+	ProjectSection(SolutionItems) = preProject
+		.azure\pipelines\jobs\build_and_test.yml = .azure\pipelines\jobs\build_and_test.yml
+		.azure\pipelines\jobs\coverage.yml = .azure\pipelines\jobs\coverage.yml
+		.azure\pipelines\jobs\deploy_nuget.yml = .azure\pipelines\jobs\deploy_nuget.yml
+		.azure\pipelines\jobs\e2e_tests.yml = .azure\pipelines\jobs\e2e_tests.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,12 +125,18 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FD8336E3-655B-430A-A72F-377E83D54C63} = {49823B21-7C47-43DF-B3C1-4F48E2237EAD}
-		{148DD984-1D1C-4A97-A5F5-907812DCA662} = {292C2B9E-E093-4476-AE17-A08F144AC27A}
 		{AB4EB02B-E16A-40B7-8524-A4F752FDFBBA} = {15D1FCD7-8027-4DD0-BF1A-BFC295C99332}
 		{BA191F72-A499-4D5B-972C-66EF3BD24B99} = {15D1FCD7-8027-4DD0-BF1A-BFC295C99332}
 		{27B8F9C6-B0D5-4E66-8AB7-12A23D4EEFB9} = {B42081F2-652A-46C6-8E10-D727A3C360A1}
 		{CE59E4DA-EB17-49A6-A6E8-1484A3413C46} = {15D1FCD7-8027-4DD0-BF1A-BFC295C99332}
 		{3531998A-0501-4259-A130-D982412978AC} = {B42081F2-652A-46C6-8E10-D727A3C360A1}
+		{BA2AD413-4251-4C08-9BE5-402DCA7CAA41} = {B5D05395-4D8B-40A2-A03E-BFF4E76D7F7B}
+		{9F873D32-DF04-4453-9604-716F5598AC7E} = {BA2AD413-4251-4C08-9BE5-402DCA7CAA41}
+		{8819C279-C1A2-420B-A1FD-28F4097EC41C} = {292C2B9E-E093-4476-AE17-A08F144AC27A}
+		{A21A387B-90BB-45B0-AD48-240B86DA1FE9} = {8819C279-C1A2-420B-A1FD-28F4097EC41C}
+		{5101A9AB-5CCE-4A20-AEA5-432BD2E4D9D2} = {292C2B9E-E093-4476-AE17-A08F144AC27A}
+		{8A80B7B0-F9B3-45C9-8796-C8049C43CD7E} = {5101A9AB-5CCE-4A20-AEA5-432BD2E4D9D2}
+		{BF2D34D4-5549-4098-994B-FACDBD730C56} = {8A80B7B0-F9B3-45C9-8796-C8049C43CD7E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A779269-CD77-4716-9E1A-DF4AE5817A41}
