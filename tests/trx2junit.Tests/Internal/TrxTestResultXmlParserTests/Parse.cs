@@ -18,7 +18,6 @@ namespace trx2junit.Tests.Internal.TrxTestResultXmlParserTests
         [TestCase("./data/trx/xunit-datadriven.trx" , 5, 5)]
         [TestCase("./data/trx/xunit-ignore.trx"     , 4, 4)]
         [TestCase("./data/trx/xunit-memberdata.trx" , 5, 3)]
-        [TestCase("./data/trx/jsingh-qualitrol.trx" , 1, 1)]
         public void File_given___correct_counts(string trxFile, int expectedUnitTestResultsCount, int expectedTestDefinitionsCount)
         {
             XElement trx = XElement.Load(trxFile);
@@ -47,7 +46,6 @@ namespace trx2junit.Tests.Internal.TrxTestResultXmlParserTests
         [TestCase("./data/trx/xunit-datadriven.trx"             , 5, 2)]
         [TestCase("./data/trx/xunit-ignore.trx"                 , 4, 1)]
         [TestCase("./data/trx/xunit-memberdata.trx"             , 5, 2)]
-        [TestCase("./data/trx/jsingh-qualitrol.trx"             , 1, 1)]
         public void File_given___correct_ResultSummary_total_failed(string trxFile, int expectedTotalCount, int expectedFailedCount)
         {
             XElement trx = XElement.Load(trxFile);
