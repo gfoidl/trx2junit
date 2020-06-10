@@ -90,5 +90,52 @@ namespace trx2junit.Tests.Internal.JUnitTestResultXmlBuilderTests
             Assert.IsNotNull(systemOut, nameof(systemOut));
             Assert.AreEqual("message written to stdout", systemOut.Value);
         }
+        //---------------------------------------------------------------------
+        [Test]
+        public void TrxUnitTestResult_with_stderr___system_err_set()
+        {
+            XElement trx = XElement.Load("./data/trx/nunit-with-stderr.trx");
+            var parser   = new TrxTestResultXmlParser(trx);
+
+            parser.Parse();
+            Models.TrxTest testData = parser.Result;
+
+            var converter = new Trx2JunitTestConverter(testData);
+            converter.Convert();
+
+            Models.JUnitTest junitTest = converter.Result;
+            var sut                    = new JUnitTestResultXmlBuilder(junitTest);
+            sut.Build();
+
+            XElement testsuite = sut.Result.Elements("testsuite").First();
+            XElement systemErr = testsuite.Element("system-err");
+
+            Assert.IsNotNull(systemErr, nameof(systemErr));
+            Assert.AreEqual("message written to stderr", systemErr.Value);
+        }
+        //---------------------------------------------------------------------
+        [Test]
+        public void TrxUnitTestResult_with_stderr___system_err_set_by_testcase()
+        {
+            XElement trx = XElement.Load("./data/trx/nunit-with-stderr.trx");
+            var parser   = new TrxTestResultXmlParser(trx);
+
+            parser.Parse();
+            Models.TrxTest testData = parser.Result;
+
+            var converter = new Trx2JunitTestConverter(testData);
+            converter.Convert();
+
+            Models.JUnitTest junitTest = converter.Result;
+            var sut                    = new JUnitTestResultXmlBuilder(junitTest);
+            sut.Build();
+
+            XElement testsuite = sut.Result.Elements("testsuite").First();
+            XElement testcase  = testsuite.Elements("testcase").First();
+            XElement systemErr = testcase.Element("system-err");
+
+            Assert.IsNotNull(systemErr, nameof(systemErr));
+            Assert.AreEqual("message written to stderr", systemErr.Value);
+        }
     }
 }
