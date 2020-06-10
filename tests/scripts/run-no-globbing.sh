@@ -11,7 +11,7 @@ set +f
 echo ""
 
 for junit in ./no-globbing/*.xml; do
-    ./verify-xml.sh "schemas/junit.xsd" "$junit"
+    ./verify-xml.sh "schemas/jenkins-junit.xsd" "$junit"
 done
 
 nTrx=$(ls -l ./no-globbing/*.trx | wc -l)

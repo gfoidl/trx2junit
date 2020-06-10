@@ -18,4 +18,4 @@ trx2junit nunit.trx
 
 echo ""
 cd -
-./verify-xml.sh "schemas/junit.xsd" "single-arg/nunit.xml"
+./verify-xml.sh "schemas/jenkins-junit.xsd" "single-arg/nunit.xml"

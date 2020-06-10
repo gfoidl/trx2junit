@@ -7,5 +7,5 @@ echo ""
 trx2junit --output ./tests/junit-out ./different-output-location/mstest.trx ./different-output-location/nunit.trx
 
 echo ""
-./verify-xml.sh "schemas/junit.xsd" "tests/junit-out/mstest.xml"
-./verify-xml.sh "schemas/junit.xsd" "tests/junit-out/nunit.xml"
+./verify-xml.sh "schemas/jenkins-junit.xsd" "tests/junit-out/mstest.xml"
+./verify-xml.sh "schemas/jenkins-junit.xsd" "tests/junit-out/nunit.xml"
