@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Xml.Linq;
 using trx2junit.Models;
@@ -95,12 +95,16 @@ namespace trx2junit
 
             if (testCase.SystemErr != null)
             {
+                xTestCase.Add(new XElement("system-err", testCase.SystemErr));
+
                 _junitTestSuiteSystemErrStringBuilder ??= new StringBuilder();
                 _junitTestSuiteSystemErrStringBuilder.AppendLine(testCase.SystemErr);
             }
 
             if (testCase.SystemOut != null)
             {
+                xTestCase.Add(new XElement("system-out", testCase.SystemOut));
+
                 _junitTestSuiteSystemOutStringBuilder ??= new StringBuilder();
                 _junitTestSuiteSystemOutStringBuilder.AppendLine(testCase.SystemOut);
             }

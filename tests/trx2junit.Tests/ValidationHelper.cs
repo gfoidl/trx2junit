@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
@@ -8,7 +8,7 @@ namespace trx2junit.Tests
 {
     internal static class ValidationHelper
     {
-        private static readonly XmlSchemaSet s_schemaJunit = LoadSchema("./data/junit.xsd");
+        private static readonly XmlSchemaSet s_schemaJunit = LoadSchema("./data/jenkins-junit.xsd");
         private static readonly XmlSchemaSet s_schemaTrx   = LoadSchema("./data/vstst.xsd", targetNamespace: "http://microsoft.com/schemas/VisualStudio/TeamTest/2010");
         //---------------------------------------------------------------------
         public static void IsXmlValidJunit(string fileName, bool validateJunit)

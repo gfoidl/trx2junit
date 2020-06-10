@@ -9,7 +9,7 @@ trx2junit ./globbing/*.trx
 echo ""
 
 for junit in ./globbing/*.xml; do
-    ./verify-xml.sh "schemas/junit.xsd" "$junit"
+    ./verify-xml.sh "schemas/jenkins-junit.xsd" "$junit"
 done
 
 nTrx=$(ls -l ./globbing/*.trx | wc -l)
