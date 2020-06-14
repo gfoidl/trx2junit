@@ -58,8 +58,6 @@ namespace trx2junit
             {
                 testSuite.TimeStamp = _counters.TimeStamp.Value;
             }
-
-            Debug.Assert(testSuite.HostName != null);
         }
         //---------------------------------------------------------------------
         private void AddTest(JUnitTestSuite junitTestSuite, TrxTestDefinition trxTestDefinition)
