@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -86,7 +87,13 @@ namespace trx2junit
 
             if (xResults == null) return;
 
-            foreach (XElement xResult in xResults.Elements(s_XN + "UnitTestResult"))
+            IEnumerable<XElement>? xResultItems = xResults.Elements(s_XN + "UnitTestResult");
+            if (!xResultItems.Any())
+            {
+                xResultItems = xResults.Elements(s_XN + "TestResultAggregation");
+            }
+
+            foreach (XElement xResult in xResultItems)
             {
                 XElement? xInnerResults = xResult.Element(s_XN + "InnerResults");
                 if (xInnerResults == null)
