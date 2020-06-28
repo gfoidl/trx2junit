@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -46,7 +46,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/trx/xunit-datadriven.trx")]
         [TestCase("./data/trx/xunit-ignore.trx")]
         [TestCase("./data/trx/xunit-memberdata.trx")]
-        [TestCase("./data/trx/jsingh-qualitrol.trx")]
+        [TestCase("./data/trx/nunit-testresultaggregation.trx")]
         public async Task Trx_file_given___converted(string trxFile)
         {
             string junitFile = Path.ChangeExtension(trxFile, "xml");
@@ -72,7 +72,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/trx/xunit-datadriven.trx")]
         [TestCase("./data/trx/xunit-ignore.trx")]
         [TestCase("./data/trx/xunit-memberdata.trx")]
-        [TestCase("./data/trx/jsingh-qualitrol.trx")]
+        [TestCase("./data/trx/nunit-testresultaggregation.trx")]
         public async Task Trx_file_given___generated_xml_is_valid_against_schema(string trxFile)
         {
             string junitFile = Path.ChangeExtension(trxFile, "xml");
