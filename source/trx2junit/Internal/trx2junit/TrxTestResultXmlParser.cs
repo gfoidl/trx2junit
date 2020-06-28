@@ -87,13 +87,7 @@ namespace trx2junit
 
             if (xResults == null) return;
 
-            IEnumerable<XElement>? xResultItems = xResults.Elements(s_XN + "UnitTestResult");
-            if (!xResultItems.Any())
-            {
-                xResultItems = xResults.Elements(s_XN + "TestResultAggregation");
-            }
-
-            foreach (XElement xResult in xResultItems)
+            foreach (XElement xResult in GetResultItems(xResults))
             {
                 XElement? xInnerResults = xResult.Element(s_XN + "InnerResults");
                 if (xInnerResults == null)
@@ -123,6 +117,29 @@ namespace trx2junit
                         _test.ResultSummary.Failed--;
                 }
             }
+        }
+        //---------------------------------------------------------------------
+        private static readonly string[] s_resultTypes =
+        {
+            "UnitTestResult",
+            "TestResultAggregation",
+            "GenericTestResult",
+            "TestResult",
+            "ManualTestResult"
+        };
+        //---------------------------------------------------------------------
+        private static IEnumerable<XElement> GetResultItems(XElement xResults)
+        {
+            foreach (string resultType in s_resultTypes)
+            {
+                IEnumerable<XElement> xResultItems = xResults.Elements(s_XN + resultType);
+                if (xResultItems.Any())
+                {
+                    return xResultItems;
+                }
+            }
+
+            throw new Exception("No supported resulttype found in <Results>");
         }
         //---------------------------------------------------------------------
         private static TrxUnitTestResult ParseUnitTestResults(XElement xResult)
