@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml.Linq;
 using trx2junit.Models;
+using trx2junit.Resources;
 
 namespace trx2junit
 {
@@ -139,7 +140,7 @@ namespace trx2junit
                 }
             }
 
-            throw new Exception("No supported resulttype found in <Results>");
+            throw new Exception(Strings.Trx_not_supported_result_type);
         }
         //---------------------------------------------------------------------
         private static TrxUnitTestResult ParseUnitTestResults(XElement xResult)
