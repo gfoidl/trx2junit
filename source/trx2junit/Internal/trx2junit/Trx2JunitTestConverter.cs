@@ -83,16 +83,16 @@ namespace trx2junit
 
                 if (trxUnitTestResult.Duration.HasValue)
                 {
-                    _counters.Time        += trxUnitTestResult.Duration.Value;
+                    _counters.Time             += trxUnitTestResult.Duration.Value;
                     junitTestCase.TimeInSeconds = trxUnitTestResult.Duration.Value.TotalSeconds;
                 }
 
-                if (trxUnitTestResult.Outcome == TrxOutcome.NotExecuted)
+                if (trxUnitTestResult.Outcome.IsSkipped())
                 {
                     _counters.Skipped++;
                     junitTestCase.Skipped = true;
                 }
-                else if (trxUnitTestResult.Outcome == TrxOutcome.Failed)
+                else if (trxUnitTestResult.Outcome.IsFailure())
                 {
                     _counters.Failures++;
 
