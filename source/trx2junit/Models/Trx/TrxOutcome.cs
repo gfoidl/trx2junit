@@ -1,11 +1,20 @@
-﻿namespace trx2junit
+namespace trx2junit
 {
     public enum TrxOutcome
     {
-        Passed,
-        Failed,
-        NotExecuted,
+        Aborted,
         Completed,
+        Disconnected,
+        Error,
+        Failed,
+        Inconclusive,
+        InProgress,
+        NotExecuted,
+        NotRunnable,
+        Passed,
+        PassedButRunAborted,
+        Pending,
+        Timeout,
         Warning
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml.Linq;
 using trx2junit.Models;
@@ -43,7 +44,7 @@ namespace trx2junit
 
             _test.ResultSummary = new TrxResultSummary
             {
-                Outcome  = ReadOutcome(xResultSummary.Attribute("outcome").Value),
+                Outcome  = ReadOutcome(xResultSummary.Attribute("outcome").Value).Value,
                 Errors   = xCounters.ReadInt("error"),
                 Executed = xCounters.ReadInt("executed"),
                 Failed   = xCounters.ReadInt("failed"),
@@ -124,11 +125,11 @@ namespace trx2junit
                 Duration     = xResult.ReadTimeSpan("duration"),
                 EndTime      = xResult.ReadDateTime("endTime"),
                 ExecutionId  = xResult.ReadGuid("executionId"),
-                Outcome      = ReadOutcome(xResult.Attribute("outcome").Value),
+                Outcome      = ReadOutcome(xResult.Attribute("outcome")?.Value, isRequired: false),
                 StartTime    = xResult.ReadDateTime("startTime"),
                 TestId       = xResult.ReadGuid("testId"),
-                TestName     = xResult.Attribute("testName").Value,
-                ComputerName = xResult.Attribute("computerName").Value
+                TestName     = xResult.Attribute("testName")?.Value,
+                ComputerName = xResult.Attribute("computerName")?.Value
             };
 
             XElement? xOutput = xResult.Element(s_XN + "Output");
@@ -158,14 +159,17 @@ namespace trx2junit
         }
         //---------------------------------------------------------------------
         // internal for testing
-        internal static TrxOutcome ReadOutcome(string value)
-            => value switch
+        internal static TrxOutcome? ReadOutcome(string? value, [DoesNotReturnIf(true)] bool isRequired = true)
+        {
+            if (Enum.TryParse<TrxOutcome>(value, ignoreCase: true, out TrxOutcome result))
+                return result;
+
+            if (isRequired)
             {
-                nameof(TrxOutcome.Passed)    => TrxOutcome.Passed,
-                nameof(TrxOutcome.Failed)    => TrxOutcome.Failed,
-                nameof(TrxOutcome.Completed) => TrxOutcome.Completed,
-                nameof(TrxOutcome.Warning)   => TrxOutcome.Warning,
-                _                            => TrxOutcome.NotExecuted,
-            };
+                throw new Exception("outcome is required according the xml-schema");
+            }
+
+            return null;
+        }
     }
 }
