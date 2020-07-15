@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Xml.Linq;
 
@@ -38,7 +38,12 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public static double ReadDouble(this XElement element, string attributeName)
         {
-            return (double)element.Attribute(attributeName);
+            string value = (string)element.Attribute(attributeName);
+
+            if (!double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out double res))
+                throw new Exception($"The required attribute '{attributeName}' does not exists");
+
+            return res;
         }
         //---------------------------------------------------------------------
         public static Guid ReadGuid(this XElement element, string attributeName)
