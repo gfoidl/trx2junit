@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using trx2junit.Models;
 using System.Collections.Generic;
 using System.Linq;
+using trx2junit.Resources;
 
 namespace trx2junit
 {
@@ -35,7 +36,7 @@ namespace trx2junit
             }
             else
             {
-                throw new Exception("Given xml file is not a valid junit file");
+                throw new Exception(Strings.Xml_not_valid_junit);
             }
         }
         //---------------------------------------------------------------------
@@ -60,7 +61,7 @@ namespace trx2junit
             }
             else
             {
-                throw new Exception("Given xml file is not a valid junit file, attribute 'tests' is missing on testsuite-element");
+                throw new Exception(Strings.Xml_not_valid_junit_missing_tests);
             }
 
             XElement? xStdErr = xTestSuite.Element("system-err");

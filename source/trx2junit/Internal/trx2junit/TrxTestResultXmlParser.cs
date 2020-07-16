@@ -1,9 +1,11 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml.Linq;
 using trx2junit.Models;
+using trx2junit.Resources;
 
 namespace trx2junit
 {
@@ -86,7 +88,7 @@ namespace trx2junit
 
             if (xResults == null) return;
 
-            foreach (XElement xResult in xResults.Elements(s_XN + "UnitTestResult"))
+            foreach (XElement xResult in GetResultItems(xResults))
             {
                 XElement? xInnerResults = xResult.Element(s_XN + "InnerResults");
                 if (xInnerResults == null)
@@ -116,6 +118,29 @@ namespace trx2junit
                         _test.ResultSummary.Failed--;
                 }
             }
+        }
+        //---------------------------------------------------------------------
+        private static readonly string[] s_resultTypes =
+        {
+            "UnitTestResult",
+            "TestResultAggregation",
+            "GenericTestResult",
+            "TestResult",
+            "ManualTestResult"
+        };
+        //---------------------------------------------------------------------
+        private static IEnumerable<XElement> GetResultItems(XElement xResults)
+        {
+            foreach (string resultType in s_resultTypes)
+            {
+                IEnumerable<XElement> xResultItems = xResults.Elements(s_XN + resultType);
+                if (xResultItems.Any())
+                {
+                    return xResultItems;
+                }
+            }
+
+            throw new Exception(Strings.Trx_not_supported_result_type);
         }
         //---------------------------------------------------------------------
         private static TrxUnitTestResult ParseUnitTestResults(XElement xResult)

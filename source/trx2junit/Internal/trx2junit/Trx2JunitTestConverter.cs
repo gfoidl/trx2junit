@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using trx2junit.Models;
+using trx2junit.Resources;
 
 namespace trx2junit
 {
@@ -27,7 +28,7 @@ namespace trx2junit
 
             foreach (var testSuite in testSuites)
             {
-                if (testSuite.Key is null) throw new InvalidOperationException("TestSuite.Key is null");
+                if (testSuite.Key is null) throw new InvalidOperationException(Strings.TestSuite_key_is_null);
 
                 this.AddTestSuite(testSuite.Key, testSuite);
             }

@@ -120,4 +120,16 @@
   <data name="Args_Output_no_Value" xml:space="preserve">
     <value>--output specified, but no value is given. An output-directory needs to specified in this case.</value>
   </data>
+  <data name="TestSuite_key_is_null" xml:space="preserve">
+    <value>TestSuite.Key is null</value>
+  </data>
+  <data name="Trx_not_supported_result_type" xml:space="preserve">
+    <value>No supported resulttype found in &lt;Results&gt;</value>
+  </data>
+  <data name="Xml_not_valid_junit" xml:space="preserve">
+    <value>Given xml file is not a valid junit file</value>
+  </data>
+  <data name="Xml_not_valid_junit_missing_tests" xml:space="preserve">
+    <value>Given xml file is not a valid junit file, attribute 'tests' is missing on testsuite-element</value>
+  </data>
 </root>
