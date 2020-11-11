@@ -16,7 +16,7 @@ namespace trx2junit
         public TrxTest SourceTest { get; }
         public JUnitTest Result   { get; } = new JUnitTest();
         //---------------------------------------------------------------------
-        public Trx2JunitTestConverter(TrxTest? trxTest)
+        public Trx2JunitTestConverter(TrxTest trxTest)
         {
             this.SourceTest = trxTest ?? throw new ArgumentNullException(nameof(trxTest));
         }

@@ -1,4 +1,4 @@
-﻿<Project>
+<Project>
 
     <PropertyGroup>
         <VersionMajor Condition="'$(VersionMajor)' == ''">1</VersionMajor>
@@ -15,7 +15,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <LangVersion>8.0</LangVersion>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup>

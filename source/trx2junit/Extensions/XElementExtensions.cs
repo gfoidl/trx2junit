@@ -8,7 +8,7 @@ namespace trx2junit
     {
         public static DateTime? ReadDateTime(this XElement element, string attributeName)
         {
-            string value = (string)element.Attribute(attributeName);
+            string? value = (string?)element.Attribute(attributeName);
 
             if (!DateTime.TryParse(value, out DateTime dt))
                 return null;
@@ -18,7 +18,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public static TimeSpan? ReadTimeSpan(this XElement element, string attributeName)
         {
-            string value = (string)element.Attribute(attributeName);
+            string? value = (string?)element.Attribute(attributeName);
 
             if (!TimeSpan.TryParse(value, out TimeSpan ts))
                 return null;
@@ -28,7 +28,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public static int? ReadInt(this XElement element, string attributeName)
         {
-            string value = (string)element.Attribute(attributeName);
+            string? value = (string?)element.Attribute(attributeName);
 
             if (!int.TryParse(value, out int res))
                 return null;
@@ -38,7 +38,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public static double ReadDouble(this XElement element, string attributeName)
         {
-            string value = (string)element.Attribute(attributeName);
+            string? value = (string?)element.Attribute(attributeName);
 
             if (!double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out double res))
                 throw new Exception($"The required attribute '{attributeName}' does not exists");
@@ -48,7 +48,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public static Guid ReadGuid(this XElement element, string attributeName)
         {
-            string? value = (string)element.Attribute(attributeName);
+            string? value = (string?)element.Attribute(attributeName);
 
             return Guid.TryParse(value, out Guid guid)
                 ? guid
@@ -65,7 +65,7 @@ namespace trx2junit
 
             if (!nullable.HasValue) return false;
 
-            element.Add(new XAttribute(attributeName, nullable.Value.ToString()));
+            element.Add(new XAttribute(attributeName, nullable.Value.ToString()!));
 
             return true;
         }

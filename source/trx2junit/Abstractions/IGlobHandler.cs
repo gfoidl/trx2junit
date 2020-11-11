@@ -1,7 +1,7 @@
-﻿namespace trx2junit
+namespace trx2junit
 {
     public interface IGlobHandler
     {
-        void ExpandWildcards(WorkerOptions? options);
+        void ExpandWildcards(WorkerOptions options);
     }
 }

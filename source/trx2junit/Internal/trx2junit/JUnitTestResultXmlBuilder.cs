@@ -12,7 +12,7 @@ namespace trx2junit
         private StringBuilder?     _junitTestSuiteSystemOutStringBuilder;
         private StringBuilder?     _junitTestSuiteSystemErrStringBuilder;
         //---------------------------------------------------------------------
-        public JUnitTestResultXmlBuilder(JUnitTest? test) => _test = test ?? throw new ArgumentNullException(nameof(test));
+        public JUnitTestResultXmlBuilder(JUnitTest test) => _test = test ?? throw new ArgumentNullException(nameof(test));
         //---------------------------------------------------------------------
         public JUnitTest Test  => _test;
         public XElement Result => _xJUnit;
@@ -29,10 +29,10 @@ namespace trx2junit
         {
             var xTestSuite = new XElement("testsuite");
 
-            xTestSuite.Add(new XAttribute("name"    , testSuite.Name));
+            xTestSuite.Add(new XAttribute("name"    , testSuite.Name!));
             xTestSuite.Add(new XAttribute("hostname", testSuite.HostName ?? "-"));
             xTestSuite.Add(new XAttribute("package" , "not available"));
-            xTestSuite.Add(new XAttribute("id"      , testSuite.Id));
+            xTestSuite.Add(new XAttribute("id"      , testSuite.Id!));
 
             xTestSuite.Add(new XElement("properties"));
 
@@ -42,9 +42,9 @@ namespace trx2junit
             }
 
             xTestSuite.Add(new XAttribute("tests"    , testSuite.TestCount));
-            xTestSuite.Add(new XAttribute("failures" , testSuite.FailureCount));
-            xTestSuite.Add(new XAttribute("errors"   , testSuite.ErrorCount));
-            xTestSuite.Add(new XAttribute("skipped"  , testSuite.SkippedCount));
+            xTestSuite.Add(new XAttribute("failures" , testSuite.FailureCount!));
+            xTestSuite.Add(new XAttribute("errors"   , testSuite.ErrorCount!));
+            xTestSuite.Add(new XAttribute("skipped"  , testSuite.SkippedCount!));
             xTestSuite.Add(new XAttribute("time"     , testSuite.TimeInSeconds.ToJUnitTime()));
             xTestSuite.Add(new XAttribute("timestamp", testSuite.TimeStamp.ToJUnitDateTime()));
 
@@ -76,8 +76,8 @@ namespace trx2junit
             var xTestCase = new XElement("testcase");
             xTestSuite.Add(xTestCase);
 
-            xTestCase.Add(new XAttribute("name"     , testCase.Name));
-            xTestCase.Add(new XAttribute("classname", testCase.ClassName));
+            xTestCase.Add(new XAttribute("name"     , testCase.Name!));
+            xTestCase.Add(new XAttribute("classname", testCase.ClassName!));
             xTestCase.Add(new XAttribute("time"     , testCase.TimeInSeconds.ToJUnitTime()));
 
             if (testCase.Skipped)
@@ -87,9 +87,9 @@ namespace trx2junit
             else if (testCase.Error != null)
             {
                 xTestCase.Add(new XElement("failure",
-                    testCase.Error.StackTrace,
-                    new XAttribute("message", testCase.Error.Message),
-                    new XAttribute("type"   , testCase.Error.Type)
+                    testCase.Error.StackTrace!,
+                    new XAttribute("message", testCase.Error.Message!),
+                    new XAttribute("type"   , testCase.Error.Type!)
                 ));
             }
 
