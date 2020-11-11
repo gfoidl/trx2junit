@@ -93,6 +93,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jobs", "jobs", "{BF2D34D4-5
 		.azure\pipelines\jobs\e2e_tests.yml = .azure\pipelines\jobs\e2e_tests.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "steps", "steps", "{947EBA33-4567-4F7D-AF42-6A986153577E}"
+	ProjectSection(SolutionItems) = preProject
+		.azure\pipelines\jobs\steps\dotnet-install.yml = .azure\pipelines\jobs\steps\dotnet-install.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +142,7 @@ Global
 		{5101A9AB-5CCE-4A20-AEA5-432BD2E4D9D2} = {292C2B9E-E093-4476-AE17-A08F144AC27A}
 		{8A80B7B0-F9B3-45C9-8796-C8049C43CD7E} = {5101A9AB-5CCE-4A20-AEA5-432BD2E4D9D2}
 		{BF2D34D4-5549-4098-994B-FACDBD730C56} = {8A80B7B0-F9B3-45C9-8796-C8049C43CD7E}
+		{947EBA33-4567-4F7D-AF42-6A986153577E} = {BF2D34D4-5549-4098-994B-FACDBD730C56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A779269-CD77-4716-9E1A-DF4AE5817A41}
