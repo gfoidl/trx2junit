@@ -17,6 +17,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <InternalsVisibleTo Include="trx2junit.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
         <Compile Update="Resources\Strings.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>

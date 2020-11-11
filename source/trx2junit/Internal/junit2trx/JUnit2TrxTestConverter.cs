@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -11,7 +11,7 @@ namespace trx2junit
         public JUnitTest SourceTest { get; }
         public TrxTest Result       { get; } = new TrxTest();
         //---------------------------------------------------------------------
-        public JUnit2TrxTestConverter(JUnitTest? junitTest)
+        public JUnit2TrxTestConverter(JUnitTest junitTest)
         {
             this.SourceTest = junitTest ?? throw new ArgumentNullException(nameof(junitTest));
         }

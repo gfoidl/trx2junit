@@ -14,7 +14,7 @@ namespace trx2junit
         private readonly XElement _trx;
         private readonly TrxTest  _test = new TrxTest();
         //---------------------------------------------------------------------
-        public TrxTestResultXmlParser(XElement? trx) => _trx = trx ?? throw new ArgumentNullException(nameof(trx));
+        public TrxTestResultXmlParser(XElement trx) => _trx = trx ?? throw new ArgumentNullException(nameof(trx));
         //---------------------------------------------------------------------
         public TrxTest Result => _test;
         //---------------------------------------------------------------------
@@ -28,7 +28,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void ReadTimes()
         {
-            XElement xTimes = _trx.Element(s_XN + "Times");
+            XElement xTimes = _trx.Element(s_XN + "Times")!;
 
             _test.Times = new TrxTimes
             {
@@ -41,12 +41,12 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void ReadResultSummary()
         {
-            XElement xResultSummary = _trx.Element(s_XN + "ResultSummary");
-            XElement xCounters      = xResultSummary.Element(s_XN + "Counters");
+            XElement xResultSummary = _trx.Element(s_XN + "ResultSummary")!;
+            XElement xCounters      = xResultSummary.Element(s_XN + "Counters")!;
 
             _test.ResultSummary = new TrxResultSummary
             {
-                Outcome  = ReadOutcome(xResultSummary.Attribute("outcome").Value).Value,
+                Outcome  = ReadOutcome(xResultSummary.Attribute("outcome")!.Value).Value,
                 Errors   = xCounters.ReadInt("error"),
                 Executed = xCounters.ReadInt("executed"),
                 Failed   = xCounters.ReadInt("failed"),
@@ -65,7 +65,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void ReadTestDefinitions()
         {
-            XElement xTestDefinitions = _trx.Element(s_XN + "TestDefinitions");
+            XElement xTestDefinitions = _trx.Element(s_XN + "TestDefinitions")!;
 
             if (xTestDefinitions == null) return;
 
@@ -75,8 +75,8 @@ namespace trx2junit
 
                 testDefinition.Id          = xUnitTest.ReadGuid("id");
                 testDefinition.ExecutionId = xUnitTest.Element(s_XN + "Execution")?.ReadGuid("id");
-                testDefinition.TestClass   = xUnitTest.Element(s_XN + "TestMethod").Attribute("className").Value;
-                testDefinition.TestMethod  = xUnitTest.Element(s_XN + "TestMethod").Attribute("name").Value;
+                testDefinition.TestClass   = xUnitTest.Element(s_XN + "TestMethod")?.Attribute("className")!.Value;
+                testDefinition.TestMethod  = xUnitTest.Element(s_XN + "TestMethod")?.Attribute("name")!.Value;
 
                 _test.TestDefinitions.Add(testDefinition);
             }

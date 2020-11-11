@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Xml.Linq;
 using trx2junit.Models;
 
@@ -12,7 +12,7 @@ namespace trx2junit
         private readonly XElement _xTrx       = new XElement(s_XN + "TestRun");
         private readonly Guid     _testListId = Guid.NewGuid();
         //---------------------------------------------------------------------
-        public TrxTestResultXmlBuilder(TrxTest? test) => _test = test ?? throw new ArgumentNullException(nameof(test));
+        public TrxTestResultXmlBuilder(TrxTest test) => _test = test ?? throw new ArgumentNullException(nameof(test));
         //---------------------------------------------------------------------
         public TrxTest Test    => _test;
         public XElement Result => _xTrx;
@@ -80,10 +80,10 @@ namespace trx2junit
             {
                 xTestDefinitions.Add(new XElement(s_XN + "UnitTest",
                     new XAttribute("id"  , trxTestDefinition.Id),
-                    new XAttribute("name", trxTestDefinition.TestMethod),
-                    new XElement(s_XN + "Execution", new XAttribute("id", trxTestDefinition.ExecutionId)),
+                    new XAttribute("name", trxTestDefinition.TestMethod!),
+                    new XElement(s_XN + "Execution", new XAttribute("id", trxTestDefinition.ExecutionId!)),
                     new XElement(s_XN + "TestMethod",
-                        new XAttribute("className", trxTestDefinition.TestClass),
+                        new XAttribute("className", trxTestDefinition.TestClass!),
                         new XAttribute("name"     , trxTestDefinition.TestMethod),
                         new XAttribute("codeBase" , "not available")
                     )
@@ -106,9 +106,9 @@ namespace trx2junit
 
                 xUnitTestResult.Add(new XAttribute("executionId" , unitTestResult.ExecutionId));
                 xUnitTestResult.Add(new XAttribute("testId"      , unitTestResult.TestId));
-                xUnitTestResult.Add(new XAttribute("testName"    , unitTestResult.TestName));
-                xUnitTestResult.Add(new XAttribute("outcome"     , unitTestResult.Outcome));
-                xUnitTestResult.Add(new XAttribute("computerName", unitTestResult.ComputerName));
+                xUnitTestResult.Add(new XAttribute("testName"    , unitTestResult.TestName!));
+                xUnitTestResult.Add(new XAttribute("outcome"     , unitTestResult.Outcome!));
+                xUnitTestResult.Add(new XAttribute("computerName", unitTestResult.ComputerName!));
                 xUnitTestResult.Add(new XAttribute("testType"    , s_testTypeId));
                 xUnitTestResult.Add(new XAttribute("testListId"  , _testListId));
                 xUnitTestResult.WriteTrxDateTime("startTime"     , unitTestResult.StartTime);
