@@ -76,7 +76,7 @@ namespace trx2junit
                 testDefinition.Id          = xUnitTest.ReadGuid("id");
                 testDefinition.ExecutionId = xUnitTest.Element(s_XN + "Execution")?.ReadGuid("id");
                 testDefinition.TestClass   = xUnitTest.Element(s_XN + "TestMethod")?.Attribute("className")!.Value;
-                testDefinition.TestMethod  = xUnitTest.Element(s_XN + "TestMethod")?.Attribute("name")!.Value;
+                testDefinition.TestMethod  = xUnitTest.Element(s_XN + "TestMethod")?.Attribute("name")?.Value;
 
                 _test.TestDefinitions.Add(testDefinition);
             }
