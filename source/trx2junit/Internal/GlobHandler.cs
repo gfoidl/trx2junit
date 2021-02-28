@@ -36,9 +36,10 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void Expand(string input, List<string> expandedFiles)
         {
-            string? path   = Path.GetDirectoryName(input);
-            Debug.Assert(path is not null);
-            string pattern = Path.GetFileName(input);
+            string? path    = Path.GetDirectoryName(input);
+            string? pattern = Path.GetFileName(input);
+
+            Debug.Assert(path    is not null);
             Debug.Assert(pattern is not null);
 
             IEnumerable<string> files = _fileSystem.EnumerateFiles(path, pattern);
