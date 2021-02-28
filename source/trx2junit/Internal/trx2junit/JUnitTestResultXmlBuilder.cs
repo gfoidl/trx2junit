@@ -91,6 +91,12 @@ namespace trx2junit
                     new XAttribute("message", testCase.Error.Message!),
                     new XAttribute("type"   , testCase.Error.Type!)
                 ));
+
+                xTestCase.Add(new XAttribute("status", "0"));
+            }
+            else
+            {
+                xTestCase.Add(new XAttribute("status", "1"));
             }
 
             if (testCase.SystemErr != null)
