@@ -43,6 +43,17 @@ $ trx2junit a.trx --output ../results
 $ trx2junit --output results a.trx ../tests/b.trx
 ```
 
+#### Jenkins JUnit
+
+For Jenkins JUnit on the testcase the status-attribute is set. By default `1` is set for success, and `0` for failure.
+This can be configured via environment varialbes (note: if omitted, the default values will be used):
+
+| Status  | Variable                                    | default value |
+|---------|---------------------------------------------|---------------|
+| success | `TRX2JUNIT_JENKINS_TESTCASE_STATUS_SUCCESS` | `1`           |
+| failure | `TRX2JUNIT_JENKINS_TESTCASE_STATUS_FAILURE` | `0`           |
+| skipped | `TRX2JUNIT_JENKINS_TESTCASE_STATUS_SKIPPED` | not set       |
+
 ### junit to trx
 
 With option `--junit2trx` a conversion from _junit_ to _trx_ can be performed.

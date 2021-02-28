@@ -138,5 +138,32 @@ namespace trx2junit.Tests.Internal.JUnitTestResultXmlBuilderTests
             Assert.IsNotNull(systemErr, nameof(systemErr));
             Assert.AreEqual("message written to stderr", systemErr.Value);
         }
+        //---------------------------------------------------------------------
+        [Test]
+        public void Testcase_status_attribute_set()
+        {
+            XElement trx = XElement.Load("./data/trx/nunit.trx");
+            var parser   = new TrxTestResultXmlParser(trx);
+
+            parser.Parse();
+            Models.TrxTest testData = parser.Result;
+
+            var converter = new Trx2JunitTestConverter(testData);
+            converter.Convert();
+
+            Models.JUnitTest junitTest = converter.Result;
+            var sut                    = new JUnitTestResultXmlBuilder(junitTest);
+            sut.Build();
+
+            XElement[] testCases = sut.Result.Descendants("testcase").ToArray();
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(3, testCases.Length);
+                Assert.AreEqual("1", testCases[0].Attribute("status").Value);
+                Assert.AreEqual("0", testCases[1].Attribute("status").Value);
+                Assert.AreEqual("1", testCases[2].Attribute("status").Value);
+            });
+        }
     }
 }

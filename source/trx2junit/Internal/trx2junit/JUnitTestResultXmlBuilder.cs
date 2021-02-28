@@ -83,6 +83,11 @@ namespace trx2junit
             if (testCase.Skipped)
             {
                 xTestCase.Add(new XElement("skipped"));
+
+                if (Globals.JUnitTestCaseStatusSkipped is not null)
+                {
+                    xTestCase.Add(new XAttribute("status", Globals.JUnitTestCaseStatusSkipped));
+                }
             }
             else if (testCase.Error != null)
             {
@@ -91,6 +96,12 @@ namespace trx2junit
                     new XAttribute("message", testCase.Error.Message!),
                     new XAttribute("type"   , testCase.Error.Type!)
                 ));
+
+                xTestCase.Add(new XAttribute("status", Globals.JUnitTestCaseStatusFailure));
+            }
+            else
+            {
+                xTestCase.Add(new XAttribute("status", Globals.JUnitTestCaseStatusSuccess));
             }
 
             if (testCase.SystemErr != null)
