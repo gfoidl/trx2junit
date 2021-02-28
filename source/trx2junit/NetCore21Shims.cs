@@ -1,17 +1,6 @@
-﻿#if NETCOREAPP2_1
+#if NETCOREAPP2_1
 using System.Runtime.CompilerServices;
 
-namespace System.Diagnostics.CodeAnalysis
-{
-    [AttributeUsage(AttributeTargets.Parameter, Inherited = false)]
-    public sealed class NotNullWhenAttribute : Attribute
-    {
-        public NotNullWhenAttribute(bool returnValue) => this.ReturnValue = returnValue;
-        //---------------------------------------------------------------------
-        public bool ReturnValue { get; }
-    }
-}
-//-----------------------------------------------------------------------------
 namespace System
 {
     public readonly struct Index

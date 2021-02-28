@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using trx2junit.Models;
 using System.Collections.Generic;
 using System.Linq;
+using trx2junit.Resources;
+using System.Diagnostics;
 
 namespace trx2junit
 {
@@ -12,7 +14,7 @@ namespace trx2junit
         private readonly XElement  _junit;
         private readonly JUnitTest _test = new JUnitTest();
         //---------------------------------------------------------------------
-        public JUnitTestResultXmlParser(XElement? junit) => _junit = junit ?? throw new ArgumentNullException(nameof(junit));
+        public JUnitTestResultXmlParser(XElement junit) => _junit = junit ?? throw new ArgumentNullException(nameof(junit));
         //---------------------------------------------------------------------
         public JUnitTest Result => _test;
         //---------------------------------------------------------------------
@@ -35,7 +37,7 @@ namespace trx2junit
             }
             else
             {
-                throw new Exception("Given xml file is not a valid junit file");
+                throw new Exception(Strings.Xml_not_valid_junit);
             }
         }
         //---------------------------------------------------------------------
@@ -43,8 +45,8 @@ namespace trx2junit
         {
             var testSuite = new JUnitTestSuite
             {
-                Name          = xTestSuite.Attribute("name").Value,
-                HostName      = xTestSuite.Attribute("hostname").Value,
+                Name          = xTestSuite.Attribute("name")!.Value,
+                HostName      = xTestSuite.Attribute("hostname")!.Value,
                 Id            = xTestSuite.ReadInt("id"),
                 ErrorCount    = xTestSuite.ReadInt("errors"),
                 FailureCount  = xTestSuite.ReadInt("failures"),
@@ -60,7 +62,7 @@ namespace trx2junit
             }
             else
             {
-                throw new Exception("Given xml file is not a valid junit file, attribute 'tests' is missing on testsuite-element");
+                throw new Exception(Strings.Xml_not_valid_junit_missing_tests);
             }
 
             XElement? xStdErr = xTestSuite.Element("system-err");
@@ -102,8 +104,8 @@ namespace trx2junit
 
             property = new JUnitProperty
             {
-                Name  = xProperty.Attribute("name").Value,
-                Value = xProperty.Attribute("value").Value
+                Name  = xProperty.Attribute("name")!.Value,
+                Value = xProperty.Attribute("value")!.Value
             };
 
             return true;
@@ -113,8 +115,8 @@ namespace trx2junit
         {
             var testCase = new JUnitTestCase
             {
-                Name          = xTestCase.Attribute("name").Value,
-                ClassName     = xTestCase.Attribute("classname").Value,
+                Name          = xTestCase.Attribute("name")!.Value,
+                ClassName     = xTestCase.Attribute("classname")!.Value,
                 TimeInSeconds = xTestCase.ReadDouble("time"),
             };
 
@@ -129,8 +131,8 @@ namespace trx2junit
             {
                 testCase.Error = new JUnitError
                 {
-                    Type    = xFailure.Attribute("type").Value,
-                    Message = xFailure.Attribute("message").Value
+                    Type    = xFailure.Attribute("type")!.Value,
+                    Message = xFailure.Attribute("message")!.Value
                 };
             }
 

@@ -20,6 +20,6 @@ trx2junit ./TestResults/mstest.trx
 trx2junit ./TestResults/xunit.trx
 
 echo ""
-./verify-xml.sh "schemas/junit.xsd" "TestResults/nunit.xml"
-./verify-xml.sh "schemas/junit.xsd" "TestResults/mstest.xml"
-./verify-xml.sh "schemas/junit.xsd" "TestResults/xunit.xml"
+./verify-xml.sh "schemas/jenkins-junit.xsd" "TestResults/nunit.xml"
+./verify-xml.sh "schemas/jenkins-junit.xsd" "TestResults/mstest.xml"
+./verify-xml.sh "schemas/jenkins-junit.xsd" "TestResults/xunit.xml"

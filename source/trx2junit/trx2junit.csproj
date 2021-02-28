@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>netcoreapp3.0;netcoreapp2.1</TargetFrameworks>
+        <TargetFrameworks>net5.0;netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
         <PackAsTool>true</PackAsTool>
         <Nullable>enable</Nullable>
     </PropertyGroup>
@@ -15,6 +15,10 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>trx;junit;unit-tests;ci</PackageTags>
     </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="trx2junit.Tests" />
+    </ItemGroup>
 
     <ItemGroup>
         <Compile Update="Resources\Strings.Designer.cs">

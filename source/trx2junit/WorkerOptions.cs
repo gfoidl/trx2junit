@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace trx2junit
@@ -9,7 +9,7 @@ namespace trx2junit
         public string? OutputDirectory  { get; }
         public bool ConvertToJunit      { get; }
         //---------------------------------------------------------------------
-        public WorkerOptions(IList<string>? inputFiles, string? outputDirectory = null, bool convertToJunit = true)
+        public WorkerOptions(IList<string> inputFiles, string? outputDirectory = null, bool convertToJunit = true)
         {
             this.InputFiles      = inputFiles ?? throw new ArgumentNullException(nameof(inputFiles));
             this.OutputDirectory = outputDirectory;

@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using trx2junit.Models;
+using trx2junit.Resources;
 
 namespace trx2junit
 {
@@ -15,7 +16,7 @@ namespace trx2junit
         public TrxTest SourceTest { get; }
         public JUnitTest Result   { get; } = new JUnitTest();
         //---------------------------------------------------------------------
-        public Trx2JunitTestConverter(TrxTest? trxTest)
+        public Trx2JunitTestConverter(TrxTest trxTest)
         {
             this.SourceTest = trxTest ?? throw new ArgumentNullException(nameof(trxTest));
         }
@@ -27,7 +28,7 @@ namespace trx2junit
 
             foreach (var testSuite in testSuites)
             {
-                if (testSuite.Key is null) throw new InvalidOperationException("TestSuite.Key is null");
+                if (testSuite.Key is null) throw new InvalidOperationException(Strings.TestSuite_key_is_null);
 
                 this.AddTestSuite(testSuite.Key, testSuite);
             }
@@ -58,8 +59,6 @@ namespace trx2junit
             {
                 testSuite.TimeStamp = _counters.TimeStamp.Value;
             }
-
-            Debug.Assert(testSuite.HostName != null);
         }
         //---------------------------------------------------------------------
         private void AddTest(JUnitTestSuite junitTestSuite, TrxTestDefinition trxTestDefinition)
@@ -85,16 +84,16 @@ namespace trx2junit
 
                 if (trxUnitTestResult.Duration.HasValue)
                 {
-                    _counters.Time        += trxUnitTestResult.Duration.Value;
+                    _counters.Time             += trxUnitTestResult.Duration.Value;
                     junitTestCase.TimeInSeconds = trxUnitTestResult.Duration.Value.TotalSeconds;
                 }
 
-                if (trxUnitTestResult.Outcome == TrxOutcome.NotExecuted)
+                if (trxUnitTestResult.Outcome.IsSkipped())
                 {
                     _counters.Skipped++;
                     junitTestCase.Skipped = true;
                 }
-                else if (trxUnitTestResult.Outcome == TrxOutcome.Failed)
+                else if (trxUnitTestResult.Outcome.IsFailure())
                 {
                     _counters.Failures++;
 

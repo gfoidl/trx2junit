@@ -1,8 +1,11 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Xml.Linq;
 using trx2junit.Models;
+using trx2junit.Resources;
 
 namespace trx2junit
 {
@@ -11,7 +14,7 @@ namespace trx2junit
         private readonly XElement _trx;
         private readonly TrxTest  _test = new TrxTest();
         //---------------------------------------------------------------------
-        public TrxTestResultXmlParser(XElement? trx) => _trx = trx ?? throw new ArgumentNullException(nameof(trx));
+        public TrxTestResultXmlParser(XElement trx) => _trx = trx ?? throw new ArgumentNullException(nameof(trx));
         //---------------------------------------------------------------------
         public TrxTest Result => _test;
         //---------------------------------------------------------------------
@@ -25,7 +28,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void ReadTimes()
         {
-            XElement xTimes = _trx.Element(s_XN + "Times");
+            XElement xTimes = _trx.Element(s_XN + "Times")!;
 
             _test.Times = new TrxTimes
             {
@@ -38,12 +41,12 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void ReadResultSummary()
         {
-            XElement xResultSummary = _trx.Element(s_XN + "ResultSummary");
-            XElement xCounters      = xResultSummary.Element(s_XN + "Counters");
+            XElement xResultSummary = _trx.Element(s_XN + "ResultSummary")!;
+            XElement xCounters      = xResultSummary.Element(s_XN + "Counters")!;
 
             _test.ResultSummary = new TrxResultSummary
             {
-                Outcome  = ReadOutcome(xResultSummary.Attribute("outcome").Value),
+                Outcome  = ReadOutcome(xResultSummary.Attribute("outcome")!.Value).Value,
                 Errors   = xCounters.ReadInt("error"),
                 Executed = xCounters.ReadInt("executed"),
                 Failed   = xCounters.ReadInt("failed"),
@@ -62,19 +65,18 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void ReadTestDefinitions()
         {
-            XElement xTestDefinitions = _trx.Element(s_XN + "TestDefinitions");
+            XElement xTestDefinitions = _trx.Element(s_XN + "TestDefinitions")!;
 
             if (xTestDefinitions == null) return;
 
             foreach (XElement xUnitTest in xTestDefinitions.Elements(s_XN + "UnitTest"))
             {
-                var testDefinition = new TrxTestDefinition
-                {
-                    Id          = xUnitTest.ReadGuid("id"),
-                    ExecutionId = xUnitTest.Element(s_XN + "Execution") .ReadGuid("id"),
-                    TestClass   = xUnitTest.Element(s_XN + "TestMethod").Attribute("className").Value,
-                    TestMethod  = xUnitTest.Element(s_XN + "TestMethod").Attribute("name").Value
-                };
+                var testDefinition = new TrxTestDefinition();
+
+                testDefinition.Id          = xUnitTest.ReadGuid("id");
+                testDefinition.ExecutionId = xUnitTest.Element(s_XN + "Execution")?.ReadGuid("id");
+                testDefinition.TestClass   = xUnitTest.Element(s_XN + "TestMethod")?.Attribute("className")!.Value;
+                testDefinition.TestMethod  = xUnitTest.Element(s_XN + "TestMethod")?.Attribute("name")?.Value;
 
                 _test.TestDefinitions.Add(testDefinition);
             }
@@ -86,7 +88,7 @@ namespace trx2junit
 
             if (xResults == null) return;
 
-            foreach (XElement xResult in xResults.Elements(s_XN + "UnitTestResult"))
+            foreach (XElement xResult in GetResultItems(xResults))
             {
                 XElement? xInnerResults = xResult.Element(s_XN + "InnerResults");
                 if (xInnerResults == null)
@@ -118,6 +120,29 @@ namespace trx2junit
             }
         }
         //---------------------------------------------------------------------
+        private static readonly string[] s_resultTypes =
+        {
+            "UnitTestResult",
+            "TestResultAggregation",
+            "GenericTestResult",
+            "TestResult",
+            "ManualTestResult"
+        };
+        //---------------------------------------------------------------------
+        private static IEnumerable<XElement> GetResultItems(XElement xResults)
+        {
+            foreach (string resultType in s_resultTypes)
+            {
+                IEnumerable<XElement> xResultItems = xResults.Elements(s_XN + resultType);
+                if (xResultItems.Any())
+                {
+                    return xResultItems;
+                }
+            }
+
+            throw new Exception(Strings.Trx_not_supported_result_type);
+        }
+        //---------------------------------------------------------------------
         private static TrxUnitTestResult ParseUnitTestResults(XElement xResult)
         {
             var unitTestResult = new TrxUnitTestResult
@@ -125,11 +150,11 @@ namespace trx2junit
                 Duration     = xResult.ReadTimeSpan("duration"),
                 EndTime      = xResult.ReadDateTime("endTime"),
                 ExecutionId  = xResult.ReadGuid("executionId"),
-                Outcome      = ReadOutcome(xResult.Attribute("outcome").Value),
+                Outcome      = ReadOutcome(xResult.Attribute("outcome")?.Value, isRequired: false),
                 StartTime    = xResult.ReadDateTime("startTime"),
                 TestId       = xResult.ReadGuid("testId"),
-                TestName     = xResult.Attribute("testName").Value,
-                ComputerName = xResult.Attribute("computerName").Value
+                TestName     = xResult.Attribute("testName")?.Value,
+                ComputerName = xResult.Attribute("computerName")?.Value
             };
 
             XElement? xOutput = xResult.Element(s_XN + "Output");
@@ -159,14 +184,17 @@ namespace trx2junit
         }
         //---------------------------------------------------------------------
         // internal for testing
-        internal static TrxOutcome ReadOutcome(string value)
-            => value switch
+        internal static TrxOutcome? ReadOutcome(string? value, [DoesNotReturnIf(true)] bool isRequired = true)
+        {
+            if (Enum.TryParse<TrxOutcome>(value, ignoreCase: true, out TrxOutcome result))
+                return result;
+
+            if (isRequired)
             {
-                nameof(TrxOutcome.Passed)    => TrxOutcome.Passed,
-                nameof(TrxOutcome.Failed)    => TrxOutcome.Failed,
-                nameof(TrxOutcome.Completed) => TrxOutcome.Completed,
-                nameof(TrxOutcome.Warning)   => TrxOutcome.Warning,
-                _                            => TrxOutcome.NotExecuted,
-            };
+                throw new Exception("outcome is required according the xml-schema");
+            }
+
+            return null;
+        }
     }
 }

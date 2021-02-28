@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace trx2junit
             _globHandler = globHandler ?? new GlobHandler(_fileSystem);
         }
         //---------------------------------------------------------------------
-        public async Task RunAsync(WorkerOptions? options)
+        public async Task RunAsync(WorkerOptions options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 

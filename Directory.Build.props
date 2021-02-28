@@ -1,21 +1,21 @@
-﻿<Project>
+<Project>
 
     <PropertyGroup>
         <VersionMajor Condition="'$(VersionMajor)' == ''">1</VersionMajor>
-        <VersionMinor Condition="'$(VersionMinor)' == ''">3</VersionMinor>
-        <VersionPatch Condition="'$(VersionPatch)' == ''">0</VersionPatch>
-        <BuildNumber Condition="'$(BuildNumber)' == ''">88</BuildNumber>
+        <VersionMinor Condition="'$(VersionMinor)' == ''">4</VersionMinor>
+        <VersionPatch Condition="'$(VersionPatch)' == ''">2</VersionPatch>
+        <BuildNumber Condition="'$(BuildNumber)' == ''">102</BuildNumber>
         <VersionSuffix Condition="'$(Configuration)' == 'Debug' and '$(VersionSuffix)' == ''">dev</VersionSuffix>
         <Authors>gfoidl</Authors>
         <Company>Foidl Günther</Company>
         <Product>trx2junit</Product>
-        <Copyright>Copyright © Foidl Günther 2017-2019</Copyright>
+        <Copyright>Copyright © Foidl Günther 2017-2021</Copyright>
         <VersionPrefix>$(VersionMajor).$(VersionMinor).$(VersionPatch)</VersionPrefix>
         <AssemblyVersion>$(VersionMajor).$(VersionMinor).$(BuildNumber).$(VersionPatch)</AssemblyVersion>
     </PropertyGroup>
 
     <PropertyGroup>
-        <LangVersion>8.0</LangVersion>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup>

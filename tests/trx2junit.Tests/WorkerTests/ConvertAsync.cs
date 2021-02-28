@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -46,6 +46,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/trx/xunit-datadriven.trx")]
         [TestCase("./data/trx/xunit-ignore.trx")]
         [TestCase("./data/trx/xunit-memberdata.trx")]
+        [TestCase("./data/trx/nunit-testresultaggregation.trx")]
         public async Task Trx_file_given___converted(string trxFile)
         {
             string junitFile = Path.ChangeExtension(trxFile, "xml");
@@ -71,6 +72,7 @@ namespace trx2junit.Tests.WorkerTests
         [TestCase("./data/trx/xunit-datadriven.trx")]
         [TestCase("./data/trx/xunit-ignore.trx")]
         [TestCase("./data/trx/xunit-memberdata.trx")]
+        [TestCase("./data/trx/nunit-testresultaggregation.trx")]
         public async Task Trx_file_given___generated_xml_is_valid_against_schema(string trxFile)
         {
             string junitFile = Path.ChangeExtension(trxFile, "xml");
@@ -148,8 +150,11 @@ namespace trx2junit.Tests.WorkerTests
             TestContext.WriteLine(consoleOutput);
             Console.SetError(origConsoleErr);
 
-            Assert.AreEqual("Given xml file is not a valid junit file" + Environment.NewLine, consoleOutput);
-            Assert.AreEqual(1, Environment.ExitCode);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual("Given xml file is not a valid junit file" + Environment.NewLine, consoleOutput);
+                Assert.AreEqual(1, Environment.ExitCode);
+            });
         }
     }
 }

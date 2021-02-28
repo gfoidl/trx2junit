@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Globalization;
 using System.Xml.Linq;
 
 namespace trx2junit
@@ -7,13 +8,13 @@ namespace trx2junit
     {
         public static DateTime? ReadDateTime(this XElement element, string attributeName)
         {
-            string value = (string)element.Attribute(attributeName);
-            return value.ParseDateTime();
+            string? value = (string?)element.Attribute(attributeName);
+            return value!.ParseDateTime();
         }
         //---------------------------------------------------------------------
         public static TimeSpan? ReadTimeSpan(this XElement element, string attributeName)
         {
-            string value = (string)element.Attribute(attributeName);
+            string? value = (string?)element.Attribute(attributeName);
 
             if (!TimeSpan.TryParse(value, out TimeSpan ts))
                 return null;
@@ -23,7 +24,7 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public static int? ReadInt(this XElement element, string attributeName)
         {
-            string value = (string)element.Attribute(attributeName);
+            string? value = (string?)element.Attribute(attributeName);
 
             if (!int.TryParse(value, out int res))
                 return null;
@@ -33,12 +34,21 @@ namespace trx2junit
         //---------------------------------------------------------------------
         public static double ReadDouble(this XElement element, string attributeName)
         {
-            return (double)element.Attribute(attributeName);
+            string? value = (string?)element.Attribute(attributeName);
+
+            if (!double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out double res))
+                throw new Exception($"The required attribute '{attributeName}' does not exists");
+
+            return res;
         }
         //---------------------------------------------------------------------
         public static Guid ReadGuid(this XElement element, string attributeName)
         {
-            return (Guid)element.Attribute(attributeName);
+            string? value = (string?)element.Attribute(attributeName);
+
+            return Guid.TryParse(value, out Guid guid)
+                ? guid
+                : Guid.Empty;
         }
         //---------------------------------------------------------------------
         public static bool Write<T>(this XElement element, string attributeName, T? nullable)
@@ -51,7 +61,7 @@ namespace trx2junit
 
             if (!nullable.HasValue) return false;
 
-            element.Add(new XAttribute(attributeName, nullable.Value.ToString()));
+            element.Add(new XAttribute(attributeName, nullable.Value.ToString()!));
 
             return true;
         }

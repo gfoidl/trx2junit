@@ -1,8 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 
 namespace trx2junit
 {
@@ -15,7 +14,7 @@ namespace trx2junit
             _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
         }
         //---------------------------------------------------------------------
-        public void ExpandWildcards(WorkerOptions? options)
+        public void ExpandWildcards(WorkerOptions options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
 
@@ -37,9 +36,11 @@ namespace trx2junit
         //---------------------------------------------------------------------
         private void Expand(string input, List<string> expandedFiles)
         {
-            string? path   = Path.GetDirectoryName(input);
-            Debug.Assert(path != null);
-            string pattern = Path.GetFileName(input);
+            string? path    = Path.GetDirectoryName(input);
+            string? pattern = Path.GetFileName(input);
+
+            Debug.Assert(path    is not null);
+            Debug.Assert(pattern is not null);
 
             IEnumerable<string> files = _fileSystem.EnumerateFiles(path, pattern);
 

@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 
 namespace trx2junit
 {
     public class FileSystem : IFileSystem
     {
-        public Stream OpenRead(string? path)
+        public Stream OpenRead(string path)
             => File.OpenRead(path);
         //---------------------------------------------------------------------
-        public void CreateDirectory(string? directory)
+        public void CreateDirectory(string directory)
             => Directory.CreateDirectory(directory);
         //---------------------------------------------------------------------
-        public IEnumerable<string> EnumerateFiles(string? path, string? pattern)
+        public IEnumerable<string> EnumerateFiles(string path, string pattern)
             => Directory.EnumerateFiles(path, pattern, SearchOption.TopDirectoryOnly);
     }
 }
