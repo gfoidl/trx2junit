@@ -3,7 +3,7 @@
     <Import Project="../Directory.Build.props" />
 
     <PropertyGroup>
-        <SampleTfm>net5.0</SampleTfm>
+        <SampleTfm>net6.0</SampleTfm>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
