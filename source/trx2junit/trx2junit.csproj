@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net5.0;netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
+        <TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
         <PackAsTool>true</PackAsTool>
         <Nullable>enable</Nullable>
     </PropertyGroup>
@@ -14,6 +14,14 @@
         <RepositoryUrl>https://github.com/gfoidl/trx2junit</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>trx;junit;unit-tests;ci</PackageTags>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+      <WarningLevel>5</WarningLevel>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+      <WarningLevel>5</WarningLevel>
     </PropertyGroup>
 
     <ItemGroup>
