@@ -3,12 +3,12 @@
     <Import Project="../Directory.Build.props" />
 
     <PropertyGroup>
-        <SampleTfm>net5.0</SampleTfm>
+        <SampleTfm>net6.0</SampleTfm>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     </ItemGroup>
 
 </Project>
