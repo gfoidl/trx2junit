@@ -84,7 +84,7 @@ namespace trx2junit
                     new XElement(s_XN + "Execution", new XAttribute("id", trxTestDefinition.ExecutionId!)),
                     new XElement(s_XN + "TestMethod",
                         new XAttribute("className", trxTestDefinition.TestClass!),
-                        new XAttribute("name"     , trxTestDefinition.TestMethod),
+                        new XAttribute("name"     , trxTestDefinition.TestMethod!),
                         new XAttribute("codeBase" , "not available")
                     )
                 ));

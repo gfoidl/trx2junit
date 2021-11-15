@@ -74,9 +74,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{8819C279-C1A2-420B-A1FD-28F4097EC41C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{A21A387B-90BB-45B0-AD48-240B86DA1FE9}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\automerge.yml = .github\workflows\automerge.yml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".azure", ".azure", "{5101A9AB-5CCE-4A20-AEA5-432BD2E4D9D2}"
 EndProject
