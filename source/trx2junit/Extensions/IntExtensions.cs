@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -19,7 +19,11 @@ namespace trx2junit
             }
             else
             {
+#if NET6_0_OR_GREATER
+                (int high, int low) = Math.DivRem(value, 10);
+#else
                 int high = Math.DivRem(value, 10, out int low);
+#endif
 
                 buffer[1] = (char)('0' + low);
                 buffer[0] = (char)('0' + high);

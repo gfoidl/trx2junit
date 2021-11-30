@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 
 namespace trx2junit.Tests.Extensions.IntExtensionsTests
 {
@@ -19,6 +19,7 @@ namespace trx2junit.Tests.Extensions.IntExtensionsTests
         //---------------------------------------------------------------------
         [Test]
         [TestCase(10)]
+        [TestCase(98)]
         [TestCase(99)]
         public void Ge_10___OK(int value)
         {

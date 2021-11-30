@@ -1,4 +1,4 @@
-﻿using System.Runtime.CompilerServices;
+using System.Runtime.CompilerServices;
 
 #if !NETCOREAPP2_1
 using System.Runtime.Intrinsics;
@@ -10,9 +10,6 @@ namespace trx2junit
 #if !NETCOREAPP2_1
     internal static class Vector128Extensions
     {
-        private static readonly Vector128<float> s_two     = Vector128.Create(2.00000051757f);
-        private static readonly Vector128<short> s_lo_mask = Vector128.Create((ushort)0xFFFF).AsInt16();
-        //---------------------------------------------------------------------
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector128<short> Divide(this Vector128<short> dividend, Vector128<short> divisor)
         {
@@ -40,7 +37,7 @@ namespace trx2junit
             // Calculate the inverse
             Vector128<float> b_hi_inv_1;
             Vector128<float> b_lo_inv_1;
-            Vector128<float> two = s_two;
+            Vector128<float> two = Vector128.Create(2.00000051757f);
             if (Fma.IsSupported)
             {
                 b_hi_inv_1 = Fma.MultiplyAddNegated(b_hi_rcp, b_hi, two);
@@ -76,7 +73,7 @@ namespace trx2junit
             }
             else
             {
-                Vector128<int> lo_epi32_mask = Sse2.And(lo_epi32, s_lo_mask.AsInt32());
+                Vector128<int> lo_epi32_mask = Sse2.And(lo_epi32, Vector128.Create((ushort)0xFFFF).AsInt16().AsInt32());
                 return Sse2.Or(hi_epi32_shift, lo_epi32_mask).AsInt16();
             }
         }

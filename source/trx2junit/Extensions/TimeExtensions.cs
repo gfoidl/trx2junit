@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -160,10 +160,6 @@ namespace trx2junit
         }
         //---------------------------------------------------------------------
 #if !NETCOREAPP2_1
-        private static readonly Vector128<short> s_timeTemplateVec       = Vector128.Create(0, 0, (short)':', 0, 0, (short)':', 0, 0);
-        private static readonly Vector128<short> s_timeOutsideMaskVec    = Vector128.Create(0xFF_FF, 0xFF_FF, 0, 0xFF_FF, 0xFF_FF, 0, 0xFF_FF, 0xFF_FF).AsInt16();
-        private static readonly Vector128<byte>  s_parsingShuffleMaskVec = Vector128.Create((byte)0, 1, 2, 3, 6, 7, 8, 9, 12, 13, 14, 15, 4, 5, 10, 11);
-        //---------------------------------------------------------------------
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void FormatDateTimeSse41(Span<char> buffer, DateTime value)
         {
@@ -181,7 +177,11 @@ namespace trx2junit
             int year2LowerDigits;
             if (year >= 2100)
             {
+#if NET6_0_OR_GREATER
+                (int yearHigh, year2LowerDigits) = Math.DivRem(year, 100);
+#else
                 int yearHigh = Math.DivRem(year, 100, out year2LowerDigits);
+#endif
                 yearHigh.Format2DigitIntFast(buffer);
             }
             else
@@ -193,7 +193,7 @@ namespace trx2junit
             }
 
             Vector128<short> ten      = Vector128.Create((short)10);
-            Vector128<short> template = s_timeTemplateVec;
+            Vector128<short> template = Vector128.Create(0, 0, (short)':', 0, 0, (short)':', 0, 0);
             Vector128<short> ascii0   = Vector128.Create((short)'0');
 
             Vector128<short> formattedDate = FormatDateTimeComponents(year2LowerDigits, month, day, ten, template, ascii0);
@@ -246,10 +246,12 @@ namespace trx2junit
         {
             Debug.Assert(value.Length >= 19);
 
+            const ushort _ = 0xFF_FF;
+
+            Vector128<short> outsideMask = Vector128.Create(_, _, 0, _, _, 0, _, _).AsInt16();
             Vector128<short> ascii0      = Vector128.Create((short)'0');
             Vector128<short> ascii9      = Vector128.Create((short)'9');
-            Vector128<short> outsideMask = s_timeOutsideMaskVec;
-            Vector128<byte> shuffleMask  = s_parsingShuffleMaskVec;
+            Vector128<byte> shuffleMask  = Vector128.Create((byte)0, 1, 2, 3, 6, 7, 8, 9, 12, 13, 14, 15, 4, 5, 10, 11);
             Vector128<short> ten         = Vector128.Create((short)10);
 
             if (TryParseDateTimeComponents(value.Slice(2) , ascii0, ascii9, outsideMask, shuffleMask, ten, out year, out month , out day)
