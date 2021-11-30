@@ -1,11 +1,12 @@
+// (c) gfoidl, all rights reserved
+
 using System.IO;
 using System.Threading.Tasks;
 
-namespace trx2junit
+namespace gfoidl.Trx2Junit.Core.Abstractions;
+
+internal interface ITestResultXmlConverter
 {
-    public interface ITestResultXmlConverter
-    {
-        Task ConvertAsync(Stream input, TextWriter output);
-        string GetOutputFile(string inputFile, string? outputPath = null);
-    }
+    Task ConvertAsync(Stream input, TextWriter output);
+    string GetOutputFile(string inputFile, string? outputPath = null);
 }

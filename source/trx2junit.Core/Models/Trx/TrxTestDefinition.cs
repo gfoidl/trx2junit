@@ -1,12 +1,13 @@
-﻿using System;
+// (c) gfoidl, all rights reserved
 
-namespace trx2junit
+using System;
+
+namespace gfoidl.Trx2Junit.Core.Models.Trx;
+
+internal class TrxTestDefinition
 {
-    public class TrxTestDefinition
-    {
-        public Guid    Id          { get; set; }
-        public Guid?   ExecutionId { get; set; }
-        public string? TestClass   { get; set; }
-        public string? TestMethod  { get; set; }
-    }
+    public Guid    Id          { get; set; }
+    public Guid?   ExecutionId { get; set; }
+    public string? TestClass   { get; set; }
+    public string? TestMethod  { get; set; }
 }

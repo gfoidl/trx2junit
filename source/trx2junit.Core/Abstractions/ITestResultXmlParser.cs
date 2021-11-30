@@ -1,11 +1,12 @@
-﻿using trx2junit.Models;
+// (c) gfoidl, all rights reserved
 
-namespace trx2junit
+using gfoidl.Trx2Junit.Core.Models;
+
+namespace gfoidl.Trx2Junit.Core.Abstractions;
+
+internal interface ITestResultXmlParser<TTest> where TTest : Test
 {
-    public interface ITestResultXmlParser<TTest> where TTest : Test
-    {
-        TTest Result { get; }
-
-        void Parse();
-    }
+    TTest Result { get; }
+    //-------------------------------------------------------------------------
+    void Parse();
 }

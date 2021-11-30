@@ -1,7 +1,8 @@
-namespace trx2junit
+// (c) gfoidl, all rights reserved
+
+namespace gfoidl.Trx2Junit.Core.Abstractions;
+
+public interface IGlobHandler
 {
-    public interface IGlobHandler
-    {
-        void ExpandWildcards(WorkerOptions options);
-    }
+    void ExpandWildcards(WorkerOptions options);
 }

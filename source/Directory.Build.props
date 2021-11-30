@@ -36,6 +36,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
         <None Include="$(MSBuildThisFileDirectory)..\ReadMe.md" Pack="true" PackagePath="\" Visible="false" />
     </ItemGroup>
 

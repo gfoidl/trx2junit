@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+// (c) gfoidl, all rights reserved
 
-namespace trx2junit.Models
+using System.Collections.Generic;
+
+namespace gfoidl.Trx2Junit.Core.Models.JUnit;
+
+internal sealed class JUnitTest : Test
 {
-    public class JUnitTest : Test
-    {
-        public IList<JUnitTestSuite> TestSuites { get; set; } = new List<JUnitTestSuite>();
-    }
+    public List<JUnitTestSuite> TestSuites { get; set; } = new();
 }

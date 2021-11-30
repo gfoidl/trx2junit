@@ -1,12 +1,13 @@
-﻿using System.Xml.Linq;
+// (c) gfoidl, all rights reserved
 
-namespace trx2junit
+using System.Xml.Linq;
+
+namespace gfoidl.Trx2Junit.Core.Abstractions;
+
+internal interface ITestResultXmlBuilder<TTest> where TTest : Models.Test
 {
-    public interface ITestResultXmlBuilder<TTest> where TTest : Models.Test
-    {
-        TTest Test      { get; }
-        XElement Result { get; }
-
-        void Build();
-    }
+    TTest Test      { get; }
+    XElement Result { get; }
+    //-------------------------------------------------------------------------
+    void Build();
 }

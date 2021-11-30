@@ -1,20 +1,21 @@
-namespace trx2junit
+// (c) gfoidl, all rights reserved
+
+namespace gfoidl.Trx2Junit.Core.Models.Trx;
+
+internal enum TrxOutcome
 {
-    public enum TrxOutcome
-    {
-        Aborted,
-        Completed,
-        Disconnected,
-        Error,
-        Failed,
-        Inconclusive,
-        InProgress,
-        NotExecuted,
-        NotRunnable,
-        Passed,
-        PassedButRunAborted,
-        Pending,
-        Timeout,
-        Warning
-    }
+    Aborted,
+    Completed,
+    Disconnected,
+    Error,
+    Failed,
+    Inconclusive,
+    InProgress,
+    NotExecuted,
+    NotRunnable,
+    Passed,
+    PassedButRunAborted,
+    Pending,
+    Timeout,
+    Warning
 }
