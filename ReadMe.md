@@ -83,7 +83,19 @@ In order to install this tool a [.NET SDK](https://dotnet.microsoft.com/download
 * .NET 6.0
 * .NET 5.0
 * .NET Core 3.1
-* .NET Core 2.1
+
+# Core functionality as standalone package trx2junit.Core
+
+Starting with v2.0.0 it's possible to use the core functionality as standalone package `trx2junit.Core`.  
+The tool (see above) itself is a consumer of that package.
+
+After adding a reference to `trx2junit.Core` one can use it in "commandline-mode" like
+```c#
+Worker worker         = new();
+WorkerOptions options = WorkerOptions.Parse(args);
+await worker.RunAsync(options);
+```
+or create the `WorkerOptions` via the constructor, and pass that instance into `RunAsync` of the worker.
 
 ## Development channel
 
