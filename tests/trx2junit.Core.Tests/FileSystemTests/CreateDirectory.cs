@@ -2,10 +2,9 @@
 
 using System;
 using System.IO;
-using gfoidl.Trx2Junit.Core.Internal;
 using NUnit.Framework;
 
-namespace gfoidl.Trx2Junit.Core.Tests.Internal.FileSystemTests;
+namespace gfoidl.Trx2Junit.Core.Tests.FileSystemTests;
 
 [TestFixture]
 public class CreateDirectory

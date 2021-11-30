@@ -37,4 +37,4 @@ static void PrintInfo()
 }
 //-----------------------------------------------------------------------------
 [ExcludeFromCodeCoverage]
-public partial class Program { }
+internal partial class Program { }

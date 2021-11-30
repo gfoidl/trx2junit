@@ -3,11 +3,10 @@
 using System.IO;
 using System.Linq;
 using gfoidl.Trx2Junit.Core.Abstractions;
-using gfoidl.Trx2Junit.Core.Internal;
 using Moq;
 using NUnit.Framework;
 
-namespace gfoidl.Trx2Junit.Core.Tests.Internal.GlobHandlerTests;
+namespace gfoidl.Trx2Junit.Core.Tests.GlobHandlerTests;
 
 [TestFixture]
 public class ExpandWildcards
@@ -20,7 +19,7 @@ public class ExpandWildcards
         _fileSystemMock = new Mock<IFileSystem>();
     }
     //---------------------------------------------------------------------
-    private GlobHandler CreateSut() => new GlobHandler(_fileSystemMock.Object);
+    private GlobHandler CreateSut() => new(_fileSystemMock.Object);
     //-------------------------------------------------------------------------
     [Test]
     public void WorkerOptions_without_wildcards___nothing_changed()

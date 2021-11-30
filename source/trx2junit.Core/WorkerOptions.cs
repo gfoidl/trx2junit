@@ -5,21 +5,67 @@ using System.Collections.Generic;
 
 namespace gfoidl.Trx2Junit.Core;
 
+/// <summary>
+/// The settings / configuration for the <see cref="Worker"/>.
+/// </summary>
 public class WorkerOptions
 {
-    public IList<string> InputFiles { get; set; }
-    public string? OutputDirectory  { get; }
-    public bool ConvertToJunit      { get; }
+    /// <summary>
+    /// The list of input files that should be converted.
+    /// </summary>
+    public IList<string> InputFiles { get; internal set; }
+
+    /// <summary>
+    /// The directory where the converted files are stored.
+    /// </summary>
+    public string? OutputDirectory { get; }
+
+    /// <summary>
+    /// Indicates the direction of conversion. When <c>true</c> the conversion is
+    /// trx to junit. When <c>false</c> the conversion is junit to trx.
+    /// </summary>
+    public bool ConvertToJunit { get; }
     //-------------------------------------------------------------------------
+    /// <summary>
+    /// Creates a new instance of <see cref="WorkerOptions"/>.
+    /// </summary>
+    /// <param name="inputFiles">See <see cref="InputFiles"/>.</param>
+    /// <param name="outputDirectory">See <see cref="OutputDirectory"/>.</param>
+    /// <param name="convertToJunit">See <see cref="ConvertToJunit"/>.</param>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown when <paramref name="inputFiles"/> is <c>null</c>.
+    /// </exception>
     public WorkerOptions(IList<string> inputFiles, string? outputDirectory = null, bool convertToJunit = true)
     {
+#if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(inputFiles);
+        this.InputFiles = inputFiles;
+#else
         this.InputFiles      = inputFiles ?? throw new ArgumentNullException(nameof(inputFiles));
+#endif
         this.OutputDirectory = outputDirectory;
         this.ConvertToJunit  = convertToJunit;
     }
     //-------------------------------------------------------------------------
+    /// <summary>
+    /// Parses the given arguments into a <see cref="WorkerOptions"/>.
+    /// </summary>
+    /// <param name="args">The args (as given by the command line) to parse.</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown when <paramref name="args"/> is <c>null</c>.
+    /// </exception>
+    /// <exception cref="ArgumentException">
+    /// Thrown when <c>--output</c> is given as argument, but no value following.
+    /// </exception>
     public static WorkerOptions Parse(string[] args)
     {
+#if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(args);
+#else
+        if (args is null) throw new ArgumentNullException(nameof(args));
+#endif
+
         var inputFiles          = new List<string>();
         string? outputDirectory = null;
         bool convertToJunit     = true;

@@ -6,20 +6,38 @@ using System.Diagnostics;
 using System.IO;
 using gfoidl.Trx2Junit.Core.Abstractions;
 
-namespace gfoidl.Trx2Junit.Core.Internal;
+namespace gfoidl.Trx2Junit.Core;
 
-internal class GlobHandler : IGlobHandler
+/// <inheritdoc/>
+public class GlobHandler : IGlobHandler
 {
     private readonly IFileSystem _fileSystem;
     //-------------------------------------------------------------------------
+    /// <summary>
+    /// Creates a new instance of the <see cref="GlobHandler"/>.
+    /// </summary>
+    /// <param name="fileSystem">The implementation of the filesystem.</param>
+    /// <exception cref="ArgumentNullException">
+    /// Thrown when <paramref name="fileSystem"/> is <c>null</c>.
+    /// </exception>
     public GlobHandler(IFileSystem fileSystem)
     {
+#if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(fileSystem);
+        _fileSystem = fileSystem;
+#else
         _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
+#endif
     }
     //-------------------------------------------------------------------------
+    /// <inheritdoc/>
     public void ExpandWildcards(WorkerOptions options)
     {
-        if (options == null) throw new ArgumentNullException(nameof(options));
+#if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(options);
+#else
+        if (options is null) throw new ArgumentNullException(nameof(options));
+#endif
 
         var expandedFiles = new List<string>();
 
