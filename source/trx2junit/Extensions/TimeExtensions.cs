@@ -58,7 +58,7 @@ namespace trx2junit
                 if (!TryParseDateTimeScalar(span, out year, out month, out day, out hour, out minute, out second))
                     return null;
 #else
-                if (Sse41.IsSupported)
+                if (Sse41.IsSupported && Globals.VectorsEnabled)
                 {
                     if (!TryParseDateTimeSse41(span, out year, out month, out day, out hour, out minute, out second))
                         return null;
@@ -101,7 +101,7 @@ namespace trx2junit
 #if NETCOREAPP2_1
             FormatDateTimeScalar(buffer, value);
 #else
-            if (Sse41.IsSupported)
+            if (Sse41.IsSupported && Globals.VectorsEnabled)
             {
                 FormatDateTimeSse41(buffer, value);
             }
