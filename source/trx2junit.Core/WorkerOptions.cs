@@ -18,7 +18,7 @@ public class WorkerOptions
         this.ConvertToJunit  = convertToJunit;
     }
     //-------------------------------------------------------------------------
-    internal static WorkerOptions Parse(string[] args)
+    public static WorkerOptions Parse(string[] args)
     {
         var inputFiles          = new List<string>();
         string? outputDirectory = null;
