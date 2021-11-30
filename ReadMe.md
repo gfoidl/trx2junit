@@ -77,10 +77,13 @@ E.g. in CircleCI you need to run
 echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
 ```
 
-### Prequisites
+### Prequisites / Supported SDKs
 
-[.NET Core SDK](https://dotnet.microsoft.com/download) 2.1 onwards.
-
+In order to install this tool a [.NET SDK](https://dotnet.microsoft.com/download/dotnet) must be present. Supported SDKs are:
+* .NET 6.0
+* .NET 5.0
+* .NET Core 3.1
+* .NET Core 2.1
 
 ## Development channel
 

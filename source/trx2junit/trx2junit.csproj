@@ -2,9 +2,10 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net5.0;netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
+        <TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
         <PackAsTool>true</PackAsTool>
         <Nullable>enable</Nullable>
+        <RollForward>Major</RollForward>
     </PropertyGroup>
 
     <PropertyGroup>
