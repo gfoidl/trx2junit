@@ -4,21 +4,19 @@
         <OutputType>Exe</OutputType>
         <TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
         <PackAsTool>true</PackAsTool>
-        <Nullable>enable</Nullable>
         <RollForward>Major</RollForward>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <Description>Transforms XML from trx-Testresults to JUnit-Testresults / trx to JUnit XML</Description>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/gfoidl/trx2junit</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/gfoidl/trx2junit</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <PackageTags>trx;junit;unit-tests;ci</PackageTags>
+    <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.1'">
+        <NoWarn>$(NoWarn);CS8604</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
         <InternalsVisibleTo Include="trx2junit.Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\trx2junit.Core\trx2junit.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
