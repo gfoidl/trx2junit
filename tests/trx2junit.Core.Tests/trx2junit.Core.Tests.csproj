@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\source\trx2junit\trx2junit.csproj" />
+        <ProjectReference Include="..\..\source\trx2junit.Core\trx2junit.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
