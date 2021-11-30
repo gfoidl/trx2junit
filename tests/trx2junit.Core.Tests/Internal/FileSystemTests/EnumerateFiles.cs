@@ -1,22 +1,24 @@
-﻿using System.IO;
+// (c) gfoidl, all rights reserved
+
+using System.IO;
+using gfoidl.Trx2Junit.Core.Internal;
 using NUnit.Framework;
 
-namespace trx2junit.Tests.Internal.FileSystemTests
+namespace gfoidl.Trx2Junit.Core.Tests.Internal.FileSystemTests;
+
+[TestFixture]
+public class EnumerateFiles
 {
-    [TestFixture]
-    public class EnumerateFiles
+    [Test]
+    public void Path_and_pattern_given___OK()
     {
-        [Test]
-        public void Path_and_pattern_given___OK()
-        {
-            string path    = "./data/trx";
-            string pattern = "*.trx";
-            var sut        = new FileSystem();
+        string path    = "./data/trx";
+        string pattern = "*.trx";
+        var sut        = new FileSystem();
 
-            var actual   = sut.EnumerateFiles(path, pattern);
-            var expected = Directory.EnumerateFiles("./data/trx", "*.trx", SearchOption.TopDirectoryOnly);
+        var actual   = sut.EnumerateFiles(path, pattern);
+        var expected = Directory.EnumerateFiles("./data/trx", "*.trx", SearchOption.TopDirectoryOnly);
 
-            CollectionAssert.AreEqual(expected, actual);
-        }
+        CollectionAssert.AreEqual(expected, actual);
     }
 }

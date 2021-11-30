@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFrameworks>$(TestTfm)</TargetFrameworks>
+        <RootNamespace>gfoidl.Trx2Junit.Core.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

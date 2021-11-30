@@ -1,27 +1,29 @@
-﻿using System;
+// (c) gfoidl, all rights reserved
+
+using System;
 using System.IO;
+using gfoidl.Trx2Junit.Core.Internal;
 using NUnit.Framework;
 
-namespace trx2junit.Tests.Internal.FileSystemTests
+namespace gfoidl.Trx2Junit.Core.Tests.Internal.FileSystemTests;
+
+[TestFixture]
+public class CreateDirectory
 {
-    [TestFixture]
-    public class CreateDirectory
+    [Test]
+    public void Path_given___OK()
     {
-        [Test]
-        public void Path_given___OK()
+        string path = $"./{Guid.NewGuid()}";
+        var sut     = new FileSystem();
+
+        sut.CreateDirectory(path);
+
+        DirectoryAssert.Exists(path);
+
+        try
         {
-            string path = $"./{Guid.NewGuid()}";
-            var sut     = new FileSystem();
-
-            sut.CreateDirectory(path);
-
-            DirectoryAssert.Exists(path);
-
-            try
-            {
-                Directory.Delete(path);
-            }
-            catch { }
+            Directory.Delete(path);
         }
+        catch { }
     }
 }

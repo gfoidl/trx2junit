@@ -1,21 +1,21 @@
-﻿using System.IO;
+// (c) gfoidl, all rights reserved
+
+using System.IO;
+using gfoidl.Trx2Junit.Core.Internal;
 using NUnit.Framework;
 
-namespace trx2junit.Tests.Internal.FileSystemTests
-{
-    [TestFixture]
-    public class OpenRead
-    {
-        [Test]
-        public void Path_given___OK()
-        {
-            string path = "./data/trx/nunit.trx";
-            var sut     = new FileSystem();
+namespace gfoidl.Trx2Junit.Core.Tests.Internal.FileSystemTests;
 
-            using (Stream actual = sut.OpenRead(path))
-            {
-                Assert.IsNotNull(actual);
-            }
-        }
+[TestFixture]
+public class OpenRead
+{
+    [Test]
+    public void Path_given___OK()
+    {
+        string path = "./data/trx/nunit.trx";
+        var sut     = new FileSystem();
+
+        using Stream actual = sut.OpenRead(path);
+        Assert.IsNotNull(actual);
     }
 }
