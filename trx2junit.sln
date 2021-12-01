@@ -82,6 +82,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".azure", ".azure", "{5101A9
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{8A80B7B0-F9B3-45C9-8796-C8049C43CD7E}"
 	ProjectSection(SolutionItems) = preProject
+		.azure\pipelines\ci-outer-loop.yml = .azure\pipelines\ci-outer-loop.yml
 		.azure\pipelines\ci-vectors.yml = .azure\pipelines\ci-vectors.yml
 		.azure\pipelines\ci.yml = .azure\pipelines\ci.yml
 	EndProjectSection
@@ -93,6 +94,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jobs", "jobs", "{BF2D34D4-5
 		.azure\pipelines\jobs\coverage.yml = .azure\pipelines\jobs\coverage.yml
 		.azure\pipelines\jobs\deploy_nuget.yml = .azure\pipelines\jobs\deploy_nuget.yml
 		.azure\pipelines\jobs\e2e_tests.yml = .azure\pipelines\jobs\e2e_tests.yml
+		.azure\pipelines\jobs\e2e_tests_all.yml = .azure\pipelines\jobs\e2e_tests_all.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "steps", "steps", "{947EBA33-4567-4F7D-AF42-6A986153577E}"
@@ -102,7 +104,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "steps", "steps", "{947EBA33
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trx2junit.Core", "source\trx2junit.Core\trx2junit.Core.csproj", "{C83D7D6F-0E77-4F79-8942-6BB9FCA822AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "trx2junit.Core.Tests", "tests\trx2junit.Core.Tests\trx2junit.Core.Tests.csproj", "{C4EF7F3D-1923-4A3F-B780-96F6A62EDB82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trx2junit.Core.Tests", "tests\trx2junit.Core.Tests\trx2junit.Core.Tests.csproj", "{C4EF7F3D-1923-4A3F-B780-96F6A62EDB82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
