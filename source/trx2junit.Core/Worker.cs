@@ -21,6 +21,9 @@ public class Worker
 
     private readonly IFileSystem  _fileSystem;
     private readonly IGlobHandler _globHandler;
+
+    public event EventHandler<WorkerNotificationEventArgs>? WorkerNotification;
+    public event EventHandler<WorkerNotificationEventArgs>? WorkerErrorNotification;
     //-------------------------------------------------------------------------
     /// <summary>
     /// Creates a new instance of <see cref="Worker"/>.
@@ -65,27 +68,26 @@ public class Worker
         if (options.ConvertToJunit)
         {
             converter = new Trx2JunitTestResultXmlConverter();
-            Console.WriteLine($"Converting {options.InputFiles.Count} trx file(s) to JUnit-xml...");
+            this.OnNotification($"Converting {options.InputFiles.Count} trx file(s) to JUnit-xml...");
         }
         else
         {
             converter = new Junit2TrxTestResultXmlConverter();
-            Console.WriteLine($"Converting {options.InputFiles.Count} junit file(s) to trx-xml...");
+            this.OnNotification($"Converting {options.InputFiles.Count} junit file(s) to trx-xml...");
         }
         DateTime start = DateTime.Now;
 
         await Task.WhenAll(options.InputFiles.Select(input => this.ConvertAsync(converter, input, options.OutputDirectory)));
-
-        Console.WriteLine($"done in {(DateTime.Now - start).TotalSeconds} seconds. bye.");
+        this.OnNotification($"done in {(DateTime.Now - start).TotalSeconds} seconds. bye.");
     }
     //-------------------------------------------------------------------------
     // internal for testing
     internal async Task ConvertAsync(ITestResultXmlConverter converter, string inputFile, string? outputPath = null)
     {
         string outputFile = converter.GetOutputFile(inputFile, outputPath);
-        this.EnsureOutputDirectoryExists(outputFile);
 
-        Console.WriteLine($"Converting '{inputFile}' to '{outputFile}'");
+        this.EnsureOutputDirectoryExists(outputFile);
+        this.OnNotification($"Converting '{inputFile}' to '{outputFile}'");
 
         using Stream input      = _fileSystem.OpenRead(inputFile);
         using TextWriter output = new StreamWriter(outputFile, false, s_utf8);
@@ -96,11 +98,7 @@ public class Worker
         }
         catch (Exception ex)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Error.WriteLine(ex.Message);
-            Console.ResetColor();
-
-            Environment.ExitCode = 1;
+            this.OnErrorNotification(ex.Message);
         }
     }
     //-------------------------------------------------------------------------
@@ -110,5 +108,15 @@ public class Worker
 
         if (!string.IsNullOrWhiteSpace(directory) && !Directory.Exists(directory))
             _fileSystem.CreateDirectory(directory);
+    }
+    //-------------------------------------------------------------------------
+    private void OnNotification(string message)
+    {
+        this.WorkerNotification?.Invoke(this, new WorkerNotificationEventArgs(message));
+    }
+    //-------------------------------------------------------------------------
+    private void OnErrorNotification(string message)
+    {
+        this.WorkerErrorNotification?.Invoke(this, new WorkerNotificationEventArgs(message));
     }
 }

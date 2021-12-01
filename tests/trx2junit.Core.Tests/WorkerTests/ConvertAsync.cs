@@ -136,6 +136,7 @@ public class ConvertAsync
         ValidationHelper.IsXmlValidJunit(trxFile, validateJunit: false);
     }
     //-------------------------------------------------------------------------
+#if HAS_CONSOLE_OUTPUT
     [Test]
     [TestCase("./data/junit/no-junit.xml")]
     public async Task Junit_is_not_valid___logs_to_stderr_no_junit_file_and_exit_code_set_to_1(string junitFile)
@@ -159,4 +160,15 @@ public class ConvertAsync
             Assert.AreEqual(1, Environment.ExitCode);
         });
     }
+#else
+    [Test]
+    [TestCase("./data/junit/no-junit.xml")]
+    public void Junit_is_not_valid___throws_Exception(string junitFile)
+    {
+        string trxFile = Path.ChangeExtension(junitFile, "trx");
+        var sut        = new Worker();
+
+        Assert.ThrowsAsync<Exception>(() => sut.ConvertAsync(new Junit2TrxTestResultXmlConverter(), junitFile));
+    }
+#endif
 }
