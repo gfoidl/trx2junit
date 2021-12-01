@@ -14,6 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{49823B21-7C47-43DF-B3C1-4F48E2237EAD}"
+	ProjectSection(SolutionItems) = preProject
+		source\Directory.Build.props = source\Directory.Build.props
+		source\Directory.Build.targets = source\Directory.Build.targets
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trx2junit", "source\trx2junit\trx2junit.csproj", "{FD8336E3-655B-430A-A72F-377E83D54C63}"
 EndProject
@@ -22,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{292C2B9E
 		build.sh = build.sh
 		ci-nuget.config = ci-nuget.config
 		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
 		verify-xml.sh = verify-xml.sh
 	EndProjectSection
 EndProject
@@ -45,8 +50,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B42081F2
 	ProjectSection(SolutionItems) = preProject
 		tests\Directory.Build.props = tests\Directory.Build.props
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trx2junit.Tests", "tests\trx2junit.Tests\trx2junit.Tests.csproj", "{27B8F9C6-B0D5-4E66-8AB7-12A23D4EEFB9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitSample", "samples\XUnitSample\XUnitSample.csproj", "{CE59E4DA-EB17-49A6-A6E8-1484A3413C46}"
 EndProject
@@ -97,6 +100,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "steps", "steps", "{947EBA33
 		.azure\pipelines\jobs\steps\dotnet-install.yml = .azure\pipelines\jobs\steps\dotnet-install.yml
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "trx2junit.Core", "source\trx2junit.Core\trx2junit.Core.csproj", "{C83D7D6F-0E77-4F79-8942-6BB9FCA822AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "trx2junit.Core.Tests", "tests\trx2junit.Core.Tests\trx2junit.Core.Tests.csproj", "{C4EF7F3D-1923-4A3F-B780-96F6A62EDB82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,14 +122,18 @@ Global
 		{BA191F72-A499-4D5B-972C-66EF3BD24B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA191F72-A499-4D5B-972C-66EF3BD24B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA191F72-A499-4D5B-972C-66EF3BD24B99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27B8F9C6-B0D5-4E66-8AB7-12A23D4EEFB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27B8F9C6-B0D5-4E66-8AB7-12A23D4EEFB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27B8F9C6-B0D5-4E66-8AB7-12A23D4EEFB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27B8F9C6-B0D5-4E66-8AB7-12A23D4EEFB9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CE59E4DA-EB17-49A6-A6E8-1484A3413C46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CE59E4DA-EB17-49A6-A6E8-1484A3413C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE59E4DA-EB17-49A6-A6E8-1484A3413C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE59E4DA-EB17-49A6-A6E8-1484A3413C46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C83D7D6F-0E77-4F79-8942-6BB9FCA822AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C83D7D6F-0E77-4F79-8942-6BB9FCA822AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C83D7D6F-0E77-4F79-8942-6BB9FCA822AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C83D7D6F-0E77-4F79-8942-6BB9FCA822AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4EF7F3D-1923-4A3F-B780-96F6A62EDB82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4EF7F3D-1923-4A3F-B780-96F6A62EDB82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4EF7F3D-1923-4A3F-B780-96F6A62EDB82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4EF7F3D-1923-4A3F-B780-96F6A62EDB82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -131,7 +142,6 @@ Global
 		{FD8336E3-655B-430A-A72F-377E83D54C63} = {49823B21-7C47-43DF-B3C1-4F48E2237EAD}
 		{AB4EB02B-E16A-40B7-8524-A4F752FDFBBA} = {15D1FCD7-8027-4DD0-BF1A-BFC295C99332}
 		{BA191F72-A499-4D5B-972C-66EF3BD24B99} = {15D1FCD7-8027-4DD0-BF1A-BFC295C99332}
-		{27B8F9C6-B0D5-4E66-8AB7-12A23D4EEFB9} = {B42081F2-652A-46C6-8E10-D727A3C360A1}
 		{CE59E4DA-EB17-49A6-A6E8-1484A3413C46} = {15D1FCD7-8027-4DD0-BF1A-BFC295C99332}
 		{3531998A-0501-4259-A130-D982412978AC} = {B42081F2-652A-46C6-8E10-D727A3C360A1}
 		{BA2AD413-4251-4C08-9BE5-402DCA7CAA41} = {B5D05395-4D8B-40A2-A03E-BFF4E76D7F7B}
@@ -142,6 +152,8 @@ Global
 		{8A80B7B0-F9B3-45C9-8796-C8049C43CD7E} = {5101A9AB-5CCE-4A20-AEA5-432BD2E4D9D2}
 		{BF2D34D4-5549-4098-994B-FACDBD730C56} = {8A80B7B0-F9B3-45C9-8796-C8049C43CD7E}
 		{947EBA33-4567-4F7D-AF42-6A986153577E} = {BF2D34D4-5549-4098-994B-FACDBD730C56}
+		{C83D7D6F-0E77-4F79-8942-6BB9FCA822AD} = {49823B21-7C47-43DF-B3C1-4F48E2237EAD}
+		{C4EF7F3D-1923-4A3F-B780-96F6A62EDB82} = {B42081F2-652A-46C6-8E10-D727A3C360A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A779269-CD77-4716-9E1A-DF4AE5817A41}

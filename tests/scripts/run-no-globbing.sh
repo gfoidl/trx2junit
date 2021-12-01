@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir ./no-globbing
-cp tests/trx2junit.Tests/data/trx/* ./no-globbing
+cp tests/trx2junit.Core.Tests/data/trx/* ./no-globbing
 
 echo ""
 # -f disables filename expansion

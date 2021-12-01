@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir ./globbing
-cp tests/trx2junit.Tests/data/trx/* ./globbing
+cp tests/trx2junit.Core.Tests/data/trx/* ./globbing
 
 echo ""
 trx2junit ./globbing/*.trx

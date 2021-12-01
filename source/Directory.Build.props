@@ -1,0 +1,52 @@
+<Project>
+
+    <Import Project="../Directory.Build.props" />
+
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+        <!-- XML doc comments -->
+        <WarningsNotAsErrors>CS1591</WarningsNotAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Description>Transforms XML from trx-Testresults to JUnit-Testresults / trx to JUnit XML</Description>
+        <PackageProjectUrl>https://github.com/gfoidl/trx2junit</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/gfoidl/trx2junit</RepositoryUrl>
+        <PackageTags>trx;junit;unit-tests;ci</PackageTags>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(TF_BUILD)' == 'true'">
+        <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(ContinuousIntegrationBuild)' == ''">
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(ContinuousIntegrationBuild)' == 'true'">
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="$(MSBuildThisFileDirectory)..\ReadMe.md" Pack="true" PackagePath="\" Visible="false" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(ContinuousIntegrationBuild)' == 'true'">
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="all" />
+    </ItemGroup>
+
+</Project>

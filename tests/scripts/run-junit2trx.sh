@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir ./junit2trx
-cp tests/trx2junit.Tests/data/junit/nunit.xml ./junit2trx
+cp tests/trx2junit.Core.Tests/data/junit/nunit.xml ./junit2trx
 
 echo "-----------------------------------------------"
 echo "junit2trx: file in different location than pwd"
@@ -23,7 +23,7 @@ cd -
 echo ""
 echo "-----------------------------------------------"
 echo "junit2trx: jenkins-junit style xml"
-cp tests/trx2junit.Tests/data/junit/jenkins-style.xml ./junit2trx
+cp tests/trx2junit.Core.Tests/data/junit/jenkins-style.xml ./junit2trx
 trx2junit ./junit2trx/jenkins-style.xml --junit2trx
 
 echo ""

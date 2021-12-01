@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>$(TestTfm)</TargetFrameworks>
+        <RootNamespace>gfoidl.Trx2Junit.Core.Tests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\source\trx2junit.Core\trx2junit.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Moq" Version="4.16.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="data\trx\*.trx" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="data\junit\*.xml" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="..\..\schemas\*.xsd" Link="data\%(Filename).xsd" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+</Project>

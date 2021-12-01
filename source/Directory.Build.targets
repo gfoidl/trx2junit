@@ -1,0 +1,10 @@
+<Project>
+
+    <Import Project="../Directory.Build.targets" />
+
+    <Target Name="CI Info" BeforeTargets="BeforeBuild" Condition="'$(ContinuousIntegrationBuild)' != ''">
+        <Message Importance="high" Text="Build is done by CI -- SourceLink will be enabled" />
+        <Message Importance="high" Text=" " Condition="'$(Configuration)' == 'Debug'" />
+    </Target>
+
+</Project>
