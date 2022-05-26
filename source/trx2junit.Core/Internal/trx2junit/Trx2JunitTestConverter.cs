@@ -11,7 +11,7 @@ using gfoidl.Trx2Junit.Core.Resources;
 
 namespace gfoidl.Trx2Junit.Core.Internal;
 
-internal class Trx2JunitTestConverter : ITestConverter<TrxTest, JUnitTest>
+internal sealed class Trx2JunitTestConverter : ITestConverter<TrxTest, JUnitTest>
 {
     private int                               _testId;
     private Counters                          _counters;

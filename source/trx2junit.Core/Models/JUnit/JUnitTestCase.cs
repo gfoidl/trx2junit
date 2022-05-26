@@ -4,7 +4,7 @@ using gfoidl.Trx2Junit.Core.Models.JUnit;
 
 namespace gfoidl.Trx2Junit.Core.Models.JUnit;
 
-internal class JUnitTestCase
+internal sealed class JUnitTestCase
 {
     public string?     ClassName     { get; set; }
     public string?     Name          { get; set; }

@@ -8,7 +8,7 @@ using gfoidl.Trx2Junit.Core.Models.Trx;
 
 namespace gfoidl.Trx2Junit.Core.Internal;
 
-internal class Junit2TrxTestResultXmlConverter : TestResultXmlConverter<JUnitTest, TrxTest>
+internal sealed class Junit2TrxTestResultXmlConverter : TestResultXmlConverter<JUnitTest, TrxTest>
 {
     protected override Func<XElement, ITestResultXmlParser<JUnitTest>> ParserFactory        => testXml => new JUnitTestResultXmlParser(testXml);
     protected override Func<JUnitTest, ITestConverter<JUnitTest, TrxTest>> ConverterFactory => test    => new JUnit2TrxTestConverter(test);

@@ -4,7 +4,7 @@ using System;
 
 namespace gfoidl.Trx2Junit.Core.Models.Trx;
 
-internal class TrxTestDefinition
+internal sealed class TrxTestDefinition
 {
     public Guid    Id          { get; set; }
     public Guid?   ExecutionId { get; set; }

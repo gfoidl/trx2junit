@@ -9,7 +9,7 @@ using gfoidl.Trx2Junit.Core.Resources;
 
 namespace gfoidl.Trx2Junit.Core.Internal;
 
-internal class JUnitTestResultXmlParser : ITestResultXmlParser<JUnitTest>
+internal sealed class JUnitTestResultXmlParser : ITestResultXmlParser<JUnitTest>
 {
     private readonly XElement  _junit;
     private readonly JUnitTest _test = new();
