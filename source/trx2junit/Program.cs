@@ -16,7 +16,7 @@ if (args.Length < 1)
 try
 {
     Worker worker                   = new();
-    worker.WorkerNotification      += static (s, e) => Console.WriteLine(e.Message);
+    worker.WorkerNotification      += OnNotification;
     worker.WorkerErrorNotification += OnErrorNotification;
     WorkerOptions options           = WorkerOptions.Parse(args);
 
@@ -37,6 +37,15 @@ static void PrintInfo()
     Console.WriteLine($"trx2junit (c) gfoidl -- v{version.Major}.{version.Minor}.{version.Revision}");
     Console.WriteLine("https://github.com/gfoidl/trx2junit");
     Console.WriteLine();
+}
+//-----------------------------------------------------------------------------
+static void OnNotification(object? sender, WorkerNotificationEventArgs e)
+{
+    Debug.Assert(sender is not null);
+    lock (sender)
+    {
+        Console.WriteLine(e.Message);
+    }
 }
 //-----------------------------------------------------------------------------
 static void OnErrorNotification(object? sender, WorkerNotificationEventArgs e)
