@@ -54,6 +54,8 @@ This can be configured via environment varialbes (note: if omitted, the default 
 | failure | `TRX2JUNIT_JENKINS_TESTCASE_STATUS_FAILURE` | `0`           |
 | skipped | `TRX2JUNIT_JENKINS_TESTCASE_STATUS_SKIPPED` | not set       |
 
+With the command-line switch `--junit-messages-to-system-out` given the _message attributes_ will be emitted to _system-out_ too.
+
 ### junit to trx
 
 With option `--junit2trx` a conversion from _junit_ to _trx_ can be performed.

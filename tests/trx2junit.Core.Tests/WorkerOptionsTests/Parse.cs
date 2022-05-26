@@ -21,6 +21,7 @@ public class Parse
             CollectionAssert.AreEqual(expected, actual.InputFiles);
             Assert.IsNull(actual.OutputDirectory);
             Assert.IsTrue(actual.ConvertToJunit);
+            Assert.IsFalse(actual.JUnitMessagesToSystemOut);
         });
     }
     //-------------------------------------------------------------------------
@@ -149,6 +150,20 @@ public class Parse
         Assert.Multiple(() =>
         {
             Assert.IsFalse(actual.ConvertToJunit);
+            CollectionAssert.AreEqual(new string[] { "a.trx" }, actual.InputFiles);
+        });
+    }
+    //-------------------------------------------------------------------------
+    [Test]
+    public void JUnitMessagesToSystemOut___option_true()
+    {
+        string[] args = { "a.trx", "--junit-messages-to-system-out" };
+
+        var actual = WorkerOptions.Parse(args);
+
+        Assert.Multiple(() =>
+        {
+            Assert.IsTrue(actual.JUnitMessagesToSystemOut);
             CollectionAssert.AreEqual(new string[] { "a.trx" }, actual.InputFiles);
         });
     }

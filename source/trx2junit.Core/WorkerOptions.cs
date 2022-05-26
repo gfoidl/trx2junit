@@ -25,6 +25,12 @@ public class WorkerOptions
     /// trx to junit. When <c>false</c> the conversion is junit to trx.
     /// </summary>
     public bool ConvertToJunit { get; }
+
+    /// <summary>
+    /// If set to <c>true</c>, then the JUnit message attributes will be emitted
+    /// to system-out too.
+    /// </summary>
+    public bool JUnitMessagesToSystemOut { get; }
     //-------------------------------------------------------------------------
     /// <summary>
     /// Creates a new instance of <see cref="WorkerOptions"/>.
@@ -35,7 +41,11 @@ public class WorkerOptions
     /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="inputFiles"/> is <c>null</c>.
     /// </exception>
-    public WorkerOptions(IList<string> inputFiles, string? outputDirectory = null, bool convertToJunit = true)
+    public WorkerOptions(
+        IList<string> inputFiles,
+        string?       outputDirectory          = null,
+        bool          convertToJunit           = true,
+        bool          junitMessagesToSystemOut = false)
     {
 #if NET6_0_OR_GREATER
         ArgumentNullException.ThrowIfNull(inputFiles);
@@ -43,8 +53,9 @@ public class WorkerOptions
 #else
         this.InputFiles      = inputFiles ?? throw new ArgumentNullException(nameof(inputFiles));
 #endif
-        this.OutputDirectory = outputDirectory;
-        this.ConvertToJunit  = convertToJunit;
+        this.OutputDirectory          = outputDirectory;
+        this.ConvertToJunit           = convertToJunit;
+        this.JUnitMessagesToSystemOut = junitMessagesToSystemOut;
     }
     //-------------------------------------------------------------------------
     /// <summary>
@@ -65,10 +76,10 @@ public class WorkerOptions
 #else
         if (args is null) throw new ArgumentNullException(nameof(args));
 #endif
-
-        var inputFiles          = new List<string>();
-        string? outputDirectory = null;
-        bool convertToJunit     = true;
+        List<string> inputFiles       = new();
+        string? outputDirectory       = null;
+        bool convertToJunit           = true;
+        bool junitMessagesToSystemOut = false;
 
         for (int i = 0; i < args.Length; ++i)
         {
@@ -88,12 +99,16 @@ public class WorkerOptions
             {
                 convertToJunit = false;
             }
+            else if (args[i] == "--junit-messages-to-system-out")
+            {
+                junitMessagesToSystemOut = true;
+            }
             else
             {
                 inputFiles.Add(args[i]);
             }
         }
 
-        return new WorkerOptions(inputFiles, outputDirectory, convertToJunit);
+        return new WorkerOptions(inputFiles, outputDirectory, convertToJunit, junitMessagesToSystemOut);
     }
 }
