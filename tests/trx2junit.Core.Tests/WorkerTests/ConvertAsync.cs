@@ -163,12 +163,17 @@ public class ConvertAsync
 #else
     [Test]
     [TestCase("./data/junit/no-junit.xml")]
-    public void Junit_is_not_valid___throws_Exception(string junitFile)
+    public async Task Junit_is_not_valid___throws_Exception(string junitFile)
     {
         string trxFile = Path.ChangeExtension(junitFile, "trx");
         var sut        = new Worker();
 
-        Assert.ThrowsAsync<Exception>(() => sut.ConvertAsync(new Junit2TrxTestResultXmlConverter(), junitFile));
+        string actualMessage = null;
+        sut.WorkerErrorNotification += (s, e) => actualMessage = e.Message;
+
+        await sut.ConvertAsync(new Junit2TrxTestResultXmlConverter(), junitFile);
+
+        Assert.AreEqual("Given xml file is not a valid junit file", actualMessage);
     }
 #endif
 }
