@@ -30,7 +30,7 @@ public class WorkerOptions
     /// If set to <c>true</c>, then the JUnit message attributes will be emitted
     /// to system-out too.
     /// </summary>
-    public bool JUnitMessagesToSystemErr { get; }
+    public bool JUnitMessagesToSystemErr { get; internal set; }
     //-------------------------------------------------------------------------
     /// <summary>
     /// Creates a new instance of <see cref="WorkerOptions"/>.
@@ -38,25 +38,19 @@ public class WorkerOptions
     /// <param name="inputFiles">See <see cref="InputFiles"/>.</param>
     /// <param name="outputDirectory">See <see cref="OutputDirectory"/>.</param>
     /// <param name="convertToJunit">See <see cref="ConvertToJunit"/>.</param>
-    /// <param name="junitMessagesToSystemErr">See <see cref="JUnitMessagesToSystemErr"/>.</param>
     /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="inputFiles"/> is <c>null</c>.
     /// </exception>
-    public WorkerOptions(
-        IList<string> inputFiles,
-        string?       outputDirectory          = null,
-        bool          convertToJunit           = true,
-        bool          junitMessagesToSystemErr = false)
+    public WorkerOptions(IList<string> inputFiles, string? outputDirectory = null, bool convertToJunit = true)
     {
 #if NET6_0_OR_GREATER
         ArgumentNullException.ThrowIfNull(inputFiles);
         this.InputFiles = inputFiles;
 #else
-        this.InputFiles      = inputFiles ?? throw new ArgumentNullException(nameof(inputFiles));
+        this.InputFiles = inputFiles ?? throw new ArgumentNullException(nameof(inputFiles));
 #endif
-        this.OutputDirectory          = outputDirectory;
-        this.ConvertToJunit           = convertToJunit;
-        this.JUnitMessagesToSystemErr = junitMessagesToSystemErr;
+        this.OutputDirectory = outputDirectory;
+        this.ConvertToJunit  = convertToJunit;
     }
     //-------------------------------------------------------------------------
     /// <summary>
@@ -110,6 +104,9 @@ public class WorkerOptions
             }
         }
 
-        return new WorkerOptions(inputFiles, outputDirectory, convertToJunit, junitMessagesToSystemErr);
+        return new WorkerOptions(inputFiles, outputDirectory, convertToJunit)
+        {
+            JUnitMessagesToSystemErr = junitMessagesToSystemErr
+        };
     }
 }

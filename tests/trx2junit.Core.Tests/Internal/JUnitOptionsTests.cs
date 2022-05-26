@@ -13,7 +13,10 @@ public class JUnitOptionsTests
     [TestCase(false)]
     public void Create___parsed_from_WorkerOptions(bool jUnitMessagesToSystemOut)
     {
-        WorkerOptions workerOptions = new(new[] { "a.trx" }, junitMessagesToSystemErr: jUnitMessagesToSystemOut);
+        WorkerOptions workerOptions = new(new[] { "a.trx" })
+        {
+            JUnitMessagesToSystemErr = jUnitMessagesToSystemOut
+        };
 
         JUnitOptions sut = JUnitOptions.Create(workerOptions);
 
