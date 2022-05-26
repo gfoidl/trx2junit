@@ -39,7 +39,7 @@ public class GlobHandler : IGlobHandler
         if (options is null) throw new ArgumentNullException(nameof(options));
 #endif
 
-        var expandedFiles = new List<string>();
+        List<string> expandedFiles = new();
 
         foreach (string inpupt in options.InputFiles)
         {

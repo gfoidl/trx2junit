@@ -38,7 +38,11 @@ internal abstract class TestResultXmlConverter<TIn, TOut> : ITestResultXmlConver
     //-------------------------------------------------------------------------
     public string GetOutputFile(string inputFile, string? outputPath = null)
     {
+#if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(inputFile);
+#else
         if (inputFile == null) throw new ArgumentNullException(nameof(inputFile));
+#endif
 
         string outputFile = Path.ChangeExtension(inputFile, this.Extension);
 
