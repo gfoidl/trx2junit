@@ -67,7 +67,7 @@ public class Worker
 
         if (options.ConvertToJunit)
         {
-            converter = new Trx2JunitTestResultXmlConverter();
+            converter = new Trx2JunitTestResultXmlConverter(JUnitOptions.Create(options));
             this.OnNotification($"Converting {options.InputFiles.Count} trx file(s) to JUnit-xml...");
         }
         else

@@ -55,7 +55,7 @@ public class ConvertAsync
         string junitFile = Path.ChangeExtension(trxFile, "xml");
         var sut          = new Worker();
 
-        await sut.ConvertAsync(new Trx2JunitTestResultXmlConverter(), trxFile);
+        await sut.ConvertAsync(new Trx2JunitTestResultXmlConverter(new JUnitOptions()), trxFile);
 
         bool actual = File.Exists(junitFile);
         Assert.IsTrue(actual);
@@ -81,7 +81,7 @@ public class ConvertAsync
         string junitFile = Path.ChangeExtension(trxFile, "xml");
         var sut          = new Worker();
 
-        await sut.ConvertAsync(new Trx2JunitTestResultXmlConverter(), trxFile);
+        await sut.ConvertAsync(new Trx2JunitTestResultXmlConverter(new JUnitOptions()), trxFile);
 
         ValidationHelper.IsXmlValidJunit(junitFile, validateJunit: true);
     }

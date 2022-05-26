@@ -12,6 +12,8 @@ namespace gfoidl.Trx2Junit.Core.Tests.Internal.JUnitTestResultXmlBuilderTests;
 [TestFixture]
 public class Integration
 {
+    private static readonly JUnitOptions s_jUnitOptions = new();
+    //-------------------------------------------------------------------------
     [Test]
     [TestCase("./data/trx/mstest.trx"           , 3, 1)]
     [TestCase("./data/trx/mstest-datadriven.trx", 5, 2)]
@@ -38,7 +40,7 @@ public class Integration
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
         sut.Build();
 
         XElement testsuite = sut.Result.Elements("testsuite").First();
@@ -63,7 +65,7 @@ public class Integration
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
         sut.Build();
 
         XElement testsuite = sut.Result.Elements("testsuite").First();
@@ -86,7 +88,7 @@ public class Integration
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
         sut.Build();
 
         XElement testsuite = sut.Result.Elements("testsuite").First();
@@ -110,7 +112,7 @@ public class Integration
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
         sut.Build();
 
         XElement testsuite = sut.Result.Elements("testsuite").First();
@@ -133,7 +135,7 @@ public class Integration
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
         sut.Build();
 
         XElement testsuite = sut.Result.Elements("testsuite").First();
@@ -157,7 +159,7 @@ public class Integration
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
         sut.Build();
 
         XElement[] testCases = sut.Result.Descendants("testcase").ToArray();
@@ -169,5 +171,32 @@ public class Integration
             Assert.AreEqual("0", testCases[1].Attribute("status").Value);
             Assert.AreEqual("1", testCases[2].Attribute("status").Value);
         });
+    }
+    //-------------------------------------------------------------------------
+    [Test]
+    public void JUnit_message_to_system_out_set___messages_written_to_system_out([Values(true, false)] bool value)
+    {
+        XElement trx = XElement.Load("./data/trx/nunit-ignore.trx");
+        var parser   = new TrxTestResultXmlParser(trx);
+
+        parser.Parse();
+        TrxTest testData = parser.Result;
+
+        var converter = new Trx2JunitTestConverter(testData);
+        converter.Convert();
+
+        JUnitTest junitTest = converter.Result;
+        var sut             = new JUnitTestResultXmlBuilder(junitTest, new JUnitOptions { JUnitMessagesToSystemOut = value });
+        sut.Build();
+
+        XElement systemOut = sut.Result.Descendants("system-out").SingleOrDefault();
+        if (value)
+        {
+            StringAssert.Contains("Failing for demo purposes", systemOut.Value);
+        }
+        else
+        {
+            StringAssert.DoesNotContain("Failing for demo purposes", systemOut.Value);
+        }
     }
 }

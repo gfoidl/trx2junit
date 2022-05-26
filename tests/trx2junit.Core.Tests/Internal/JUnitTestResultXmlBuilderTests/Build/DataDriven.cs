@@ -55,7 +55,7 @@ public class DataDriven : Base
     [Test]
     public void Builds___OK()
     {
-        var sut = new JUnitTestResultXmlBuilder(_junitTest);
+        var sut = new JUnitTestResultXmlBuilder(_junitTest, new JUnitOptions());
 
         sut.Build();
     }
