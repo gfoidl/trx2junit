@@ -38,6 +38,7 @@ public class WorkerOptions
     /// <param name="inputFiles">See <see cref="InputFiles"/>.</param>
     /// <param name="outputDirectory">See <see cref="OutputDirectory"/>.</param>
     /// <param name="convertToJunit">See <see cref="ConvertToJunit"/>.</param>
+    /// <param name="junitMessagesToSystemErr">See <see cref="JUnitMessagesToSystemErr"/>.</param>
     /// <exception cref="ArgumentNullException">
     /// Thrown when <paramref name="inputFiles"/> is <c>null</c>.
     /// </exception>
