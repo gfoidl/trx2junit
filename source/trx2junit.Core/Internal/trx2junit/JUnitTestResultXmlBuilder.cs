@@ -10,16 +10,14 @@ namespace gfoidl.Trx2Junit.Core.Internal;
 
 internal sealed class JUnitTestResultXmlBuilder : ITestResultXmlBuilder<JUnitTest>
 {
-    private readonly JUnitTest    _test;
-    private readonly JUnitOptions _jUnitOptions;
-    private readonly XElement     _xJUnit = new("testsuites");
-    private StringBuilder?        _junitTestSuiteSystemOutStringBuilder;
-    private StringBuilder?        _junitTestSuiteSystemErrStringBuilder;
+    private readonly JUnitTest _test;
+    private readonly XElement  _xJUnit = new("testsuites");
+    private StringBuilder?     _junitTestSuiteSystemOutStringBuilder;
+    private StringBuilder?     _junitTestSuiteSystemErrStringBuilder;
     //-------------------------------------------------------------------------
-    public JUnitTestResultXmlBuilder(JUnitTest test, JUnitOptions options)
+    public JUnitTestResultXmlBuilder(JUnitTest test)
     {
-        _test         = test ?? throw new ArgumentNullException(nameof(test));
-        _jUnitOptions = options;
+        _test = test ?? throw new ArgumentNullException(nameof(test));
     }
     //-------------------------------------------------------------------------
     public JUnitTest Test  => _test;

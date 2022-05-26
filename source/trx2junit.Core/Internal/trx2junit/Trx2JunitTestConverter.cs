@@ -13,6 +13,7 @@ namespace gfoidl.Trx2Junit.Core.Internal;
 
 internal sealed class Trx2JunitTestConverter : ITestConverter<TrxTest, JUnitTest>
 {
+    private readonly JUnitOptions             _jUnitOptions;
     private int                               _testId;
     private Counters                          _counters;
     private ILookup<Guid, TrxUnitTestResult>? _trxTestDefinitionLookup;
@@ -20,9 +21,10 @@ internal sealed class Trx2JunitTestConverter : ITestConverter<TrxTest, JUnitTest
     public TrxTest SourceTest { get; }
     public JUnitTest Result   { get; } = new JUnitTest();
     //-------------------------------------------------------------------------
-    public Trx2JunitTestConverter(TrxTest trxTest)
+    public Trx2JunitTestConverter(TrxTest trxTest, JUnitOptions jUnitOptions)
     {
         this.SourceTest = trxTest ?? throw new ArgumentNullException(nameof(trxTest));
+        _jUnitOptions   = jUnitOptions;
     }
     //-------------------------------------------------------------------------
     public void Convert()
@@ -107,10 +109,23 @@ internal sealed class Trx2JunitTestConverter : ITestConverter<TrxTest, JUnitTest
                     Type       = "not specified",
                     StackTrace = trxUnitTestResult.StackTrace,
                 };
+
+                if (_jUnitOptions.JUnitMessagesToSystemErr)
+                {
+                    junitTestCase.SystemErr = junitTestCase.Error.Message;
+                }
             }
 
-            junitTestCase.SystemErr = trxUnitTestResult.StdErr;
             junitTestCase.SystemOut = trxUnitTestResult.StdOut;
+
+            if (junitTestCase.SystemErr is null)
+            {
+                junitTestCase.SystemErr = trxUnitTestResult.StdErr;
+            }
+            else
+            {
+                junitTestCase.SystemErr = $"{junitTestCase.SystemErr}\n{trxUnitTestResult.StdErr}";
+            }
         }
     }
     //-------------------------------------------------------------------------

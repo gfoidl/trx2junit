@@ -4,13 +4,13 @@ namespace gfoidl.Trx2Junit.Core.Internal;
 
 internal sealed class JUnitOptions
 {
-    public bool JUnitMessagesToSystemOut { get; set; }
+    public bool JUnitMessagesToSystemErr { get; set; }
     //-------------------------------------------------------------------------
     public static JUnitOptions Create(WorkerOptions workerOptions)
     {
         return new JUnitOptions
         {
-            JUnitMessagesToSystemOut = workerOptions.JUnitMessagesToSystemOut
+            JUnitMessagesToSystemErr = workerOptions.JUnitMessagesToSystemErr
         };
     }
 }

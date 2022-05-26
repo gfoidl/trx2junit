@@ -23,7 +23,7 @@ public class Default : Base
         AddTestResult("Class4", "Method1", TrxOutcome.Completed  , new TimeSpan(0, 0,  1));
         AddTestResult("Class4", "Method2", TrxOutcome.Warning    , new TimeSpan(0, 0,  1));
 
-        var converter = new Trx2JunitTestConverter(_trxTest);
+        var converter = new Trx2JunitTestConverter(_trxTest, new JUnitOptions());
         converter.Convert();
         _junitTest = converter.Result;
         //---------------------------------------------------------------------
@@ -60,7 +60,7 @@ public class Default : Base
     [Test]
     public void Builds___OK()
     {
-        var sut = new JUnitTestResultXmlBuilder(_junitTest, new JUnitOptions());
+        var sut = new JUnitTestResultXmlBuilder(_junitTest);
 
         sut.Build();
     }

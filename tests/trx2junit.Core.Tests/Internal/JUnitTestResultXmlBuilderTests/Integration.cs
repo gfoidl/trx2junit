@@ -36,11 +36,11 @@ public class Integration
         parser.Parse();
         TrxTest testData = parser.Result;
 
-        var converter = new Trx2JunitTestConverter(testData);
+        var converter = new Trx2JunitTestConverter(testData, s_jUnitOptions);
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest);
         sut.Build();
 
         XElement testsuite = sut.Result.Elements("testsuite").First();
@@ -61,11 +61,11 @@ public class Integration
         parser.Parse();
         TrxTest testData = parser.Result;
 
-        var converter = new Trx2JunitTestConverter(testData);
+        var converter = new Trx2JunitTestConverter(testData, s_jUnitOptions);
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest);
         sut.Build();
 
         XElement testsuite = sut.Result.Elements("testsuite").First();
@@ -84,11 +84,11 @@ public class Integration
         parser.Parse();
         TrxTest testData = parser.Result;
 
-        var converter = new Trx2JunitTestConverter(testData);
+        var converter = new Trx2JunitTestConverter(testData, s_jUnitOptions);
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest);
         sut.Build();
 
         XElement testsuite = sut.Result.Elements("testsuite").First();
@@ -108,11 +108,11 @@ public class Integration
         parser.Parse();
         TrxTest testData = parser.Result;
 
-        var converter = new Trx2JunitTestConverter(testData);
+        var converter = new Trx2JunitTestConverter(testData, s_jUnitOptions);
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest);
         sut.Build();
 
         XElement testsuite = sut.Result.Elements("testsuite").First();
@@ -131,11 +131,11 @@ public class Integration
         parser.Parse();
         TrxTest testData = parser.Result;
 
-        var converter = new Trx2JunitTestConverter(testData);
+        var converter = new Trx2JunitTestConverter(testData, s_jUnitOptions);
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest);
         sut.Build();
 
         XElement testsuite = sut.Result.Elements("testsuite").First();
@@ -155,11 +155,11 @@ public class Integration
         parser.Parse();
         TrxTest testData = parser.Result;
 
-        var converter = new Trx2JunitTestConverter(testData);
+        var converter = new Trx2JunitTestConverter(testData, s_jUnitOptions);
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest, s_jUnitOptions);
+        var sut             = new JUnitTestResultXmlBuilder(junitTest);
         sut.Build();
 
         XElement[] testCases = sut.Result.Descendants("testcase").ToArray();
@@ -174,7 +174,7 @@ public class Integration
     }
     //-------------------------------------------------------------------------
     [Test]
-    public void JUnit_message_to_system_out_set___messages_written_to_system_out([Values(true, false)] bool value)
+    public void JUnit_message_to_system_err_set___messages_written_to_system_out([Values(true, false)] bool value)
     {
         XElement trx = XElement.Load("./data/trx/nunit-ignore.trx");
         var parser   = new TrxTestResultXmlParser(trx);
@@ -182,21 +182,29 @@ public class Integration
         parser.Parse();
         TrxTest testData = parser.Result;
 
-        var converter = new Trx2JunitTestConverter(testData);
+        var converter = new Trx2JunitTestConverter(testData, new JUnitOptions { JUnitMessagesToSystemErr = value });
         converter.Convert();
 
         JUnitTest junitTest = converter.Result;
-        var sut             = new JUnitTestResultXmlBuilder(junitTest, new JUnitOptions { JUnitMessagesToSystemOut = value });
+        var sut             = new JUnitTestResultXmlBuilder(junitTest);
         sut.Build();
 
-        XElement systemOut = sut.Result.Descendants("system-out").SingleOrDefault();
+        XElement testsuite = sut.Result.Elements("testsuite").First();
+        XElement testcase  = testsuite.Elements("testcase").Skip(1).First();
+        XElement systemErr = testcase.Element("system-err");
+
+
         if (value)
         {
-            StringAssert.Contains("Failing for demo purposes", systemOut.Value);
+            Assert.Multiple(() =>
+            {
+                Assert.IsNotNull(systemErr, nameof(systemErr));
+                StringAssert.Contains("Failing for demo purposes", systemErr.Value);
+            });
         }
         else
         {
-            StringAssert.DoesNotContain("Failing for demo purposes", systemOut.Value);
+            Assert.IsNull(systemErr, nameof(systemErr));
         }
     }
 }

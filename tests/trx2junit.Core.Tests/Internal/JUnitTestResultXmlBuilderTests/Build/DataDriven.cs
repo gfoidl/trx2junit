@@ -47,7 +47,7 @@ public class DataDriven : Base
                 });
         }
 
-        var converter = new Trx2JunitTestConverter(_trxTest);
+        var converter = new Trx2JunitTestConverter(_trxTest, new JUnitOptions());
         converter.Convert();
         _junitTest     = converter.Result;
     }
@@ -55,7 +55,7 @@ public class DataDriven : Base
     [Test]
     public void Builds___OK()
     {
-        var sut = new JUnitTestResultXmlBuilder(_junitTest, new JUnitOptions());
+        var sut = new JUnitTestResultXmlBuilder(_junitTest);
 
         sut.Build();
     }

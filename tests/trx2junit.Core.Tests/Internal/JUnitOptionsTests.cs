@@ -13,10 +13,10 @@ public class JUnitOptionsTests
     [TestCase(false)]
     public void Create___parsed_from_WorkerOptions(bool jUnitMessagesToSystemOut)
     {
-        WorkerOptions workerOptions = new(new[] { "a.trx" }, junitMessagesToSystemOut: jUnitMessagesToSystemOut);
+        WorkerOptions workerOptions = new(new[] { "a.trx" }, junitMessagesToSystemErr: jUnitMessagesToSystemOut);
 
         JUnitOptions sut = JUnitOptions.Create(workerOptions);
 
-        Assert.AreEqual(jUnitMessagesToSystemOut, sut.JUnitMessagesToSystemOut);
+        Assert.AreEqual(jUnitMessagesToSystemOut, sut.JUnitMessagesToSystemErr);
     }
 }

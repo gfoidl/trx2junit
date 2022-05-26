@@ -21,7 +21,7 @@ public class Parse
             CollectionAssert.AreEqual(expected, actual.InputFiles);
             Assert.IsNull(actual.OutputDirectory);
             Assert.IsTrue(actual.ConvertToJunit);
-            Assert.IsFalse(actual.JUnitMessagesToSystemOut);
+            Assert.IsFalse(actual.JUnitMessagesToSystemErr);
         });
     }
     //-------------------------------------------------------------------------
@@ -157,13 +157,13 @@ public class Parse
     [Test]
     public void JUnitMessagesToSystemOut___option_true()
     {
-        string[] args = { "a.trx", "--junit-messages-to-system-out" };
+        string[] args = { "a.trx", "--junit-messages-to-system-err" };
 
         var actual = WorkerOptions.Parse(args);
 
         Assert.Multiple(() =>
         {
-            Assert.IsTrue(actual.JUnitMessagesToSystemOut);
+            Assert.IsTrue(actual.JUnitMessagesToSystemErr);
             CollectionAssert.AreEqual(new string[] { "a.trx" }, actual.InputFiles);
         });
     }
