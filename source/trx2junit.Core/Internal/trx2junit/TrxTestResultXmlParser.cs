@@ -12,7 +12,7 @@ using gfoidl.Trx2Junit.Core.Resources;
 
 namespace gfoidl.Trx2Junit.Core.Internal;
 
-internal class TrxTestResultXmlParser : TrxBase, ITestResultXmlParser<TrxTest>
+internal sealed class TrxTestResultXmlParser : TrxBase, ITestResultXmlParser<TrxTest>
 {
     private readonly XElement _trx;
     private readonly TrxTest  _test = new();

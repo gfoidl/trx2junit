@@ -2,7 +2,7 @@
 
 namespace gfoidl.Trx2Junit.Core.Models.Trx;
 
-internal class TrxResultSummary
+internal sealed class TrxResultSummary
 {
     public TrxOutcome Outcome  { get; set; } = TrxOutcome.Passed;
     public string?    StdOut   { get; set; }

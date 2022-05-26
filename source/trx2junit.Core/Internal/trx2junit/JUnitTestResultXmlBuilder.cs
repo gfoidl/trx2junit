@@ -8,7 +8,7 @@ using gfoidl.Trx2Junit.Core.Models.JUnit;
 
 namespace gfoidl.Trx2Junit.Core.Internal;
 
-internal class JUnitTestResultXmlBuilder : ITestResultXmlBuilder<JUnitTest>
+internal sealed class JUnitTestResultXmlBuilder : ITestResultXmlBuilder<JUnitTest>
 {
     private readonly JUnitTest _test;
     private readonly XElement  _xJUnit = new("testsuites");

@@ -7,7 +7,7 @@ using gfoidl.Trx2Junit.Core.Models.Trx;
 
 namespace gfoidl.Trx2Junit.Core.Internal;
 
-internal class TrxTestResultXmlBuilder : TrxBase, ITestResultXmlBuilder<TrxTest>
+internal sealed class TrxTestResultXmlBuilder : TrxBase, ITestResultXmlBuilder<TrxTest>
 {
     private static readonly Guid s_testTypeId = Guid.Parse("13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b");
 

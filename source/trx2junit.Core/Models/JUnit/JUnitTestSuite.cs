@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace gfoidl.Trx2Junit.Core.Models.JUnit;
 
-internal class JUnitTestSuite
+internal sealed class JUnitTestSuite
 {
     public int?     Id                           { get; set; }
     public string?  Name                         { get; set; }

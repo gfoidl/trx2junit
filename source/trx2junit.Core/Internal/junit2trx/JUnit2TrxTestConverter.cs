@@ -10,7 +10,7 @@ using gfoidl.Trx2Junit.Core.Models.Trx;
 
 namespace gfoidl.Trx2Junit.Core.Internal;
 
-internal class JUnit2TrxTestConverter : ITestConverter<JUnitTest, TrxTest>
+internal sealed class JUnit2TrxTestConverter : ITestConverter<JUnitTest, TrxTest>
 {
     public JUnitTest SourceTest { get; }
     public TrxTest Result       { get; } = new TrxTest();
