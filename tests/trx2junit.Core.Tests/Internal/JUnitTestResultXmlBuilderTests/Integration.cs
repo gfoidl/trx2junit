@@ -51,6 +51,37 @@ public class Integration
     }
     //-------------------------------------------------------------------------
     [Test]
+    public void TrxUnitTestResult_with_error___failure_element_populated()
+    {
+        XElement trx = XElement.Load("./data/trx/nunit-ignore.trx");
+        var parser   = new TrxTestResultXmlParser(trx);
+
+        parser.Parse();
+        TrxTest testData = parser.Result;
+
+        var converter = new Trx2JunitTestConverter(testData);
+        converter.Convert();
+
+        JUnitTest junitTest = converter.Result;
+        var sut             = new JUnitTestResultXmlBuilder(junitTest);
+        sut.Build();
+
+        XElement testsuite = sut.Result.Elements("testsuite").First();
+        XElement testcase  = testsuite.Elements("testcase").Skip(1).First();
+        XElement failure   = testcase.Element("failure");
+
+        Assert.Multiple(() =>
+        {
+            Assert.AreEqual("Failing for demo purposes", failure.Attribute("message").Value);
+
+            string expectedContent = @"Failing for demo purposes
+   at NUnitSample.SimpleTests.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\SimpleTests.cs:line 21";
+
+            Assert.AreEqual(expectedContent, failure.Value);
+        });
+    }
+    //-------------------------------------------------------------------------
+    [Test]
     public void TrxUnitTestResult_with_stdout___system_out_set()
     {
         XElement trx = XElement.Load("./data/trx/nunit-with-stdout.trx");
