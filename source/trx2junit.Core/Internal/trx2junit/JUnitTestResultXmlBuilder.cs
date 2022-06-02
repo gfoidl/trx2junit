@@ -94,10 +94,10 @@ internal sealed class JUnitTestResultXmlBuilder : ITestResultXmlBuilder<JUnitTes
         }
         else if (testCase.Error != null)
         {
-            string failureContent = $"{testCase.Error.Message}\n{testCase.Error.StackTrace}";
+            string failureContent = $"{testCase.Error.Message}\n{testCase.Error.StackTrace?.TrimEnd()}";
 
             xTestCase.Add(new XElement("failure",
-                failureContent.TrimEnd(),
+                new XCData(failureContent),
                 new XAttribute("message", testCase.Error.Message!),
                 new XAttribute("type"   , testCase.Error.Type!)
             ));

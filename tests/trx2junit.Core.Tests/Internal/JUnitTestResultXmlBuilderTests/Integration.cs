@@ -74,11 +74,18 @@ public class Integration
         {
             Assert.AreEqual("Failing for demo purposes", failure.Attribute("message").Value);
 
-            string expectedContent = @"Failing for demo purposes
-   at NUnitSample.SimpleTests.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\SimpleTests.cs:line 21";
+            string expectedContent = @"<![CDATA[Failing for demo purposes
+   at NUnitSample.SimpleTests.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\NUnitSample\SimpleTests.cs:line 21]]>";
+            string actualContent   = failure.LastNode.ToString();
 
-            Assert.AreEqual(expectedContent, failure.Value);
+            expectedContent = NormalizeLineEndings(expectedContent);
+            actualContent   = NormalizeLineEndings(actualContent);
+
+            Assert.AreEqual(expectedContent, actualContent);
         });
+
+        static string NormalizeLineEndings(string input)
+            => input.Replace("\r\n", "\n");
     }
     //-------------------------------------------------------------------------
     [Test]
