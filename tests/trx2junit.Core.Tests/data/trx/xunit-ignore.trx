@@ -26,19 +26,19 @@ Actual:   False</Message>
   <TestDefinitions>
     <UnitTest name="XUnitSample.SimpleTests.Passing_test" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="42b9dabc-50e2-3260-1c97-693f92e48a53">
       <Execution id="716ff25d-92a8-414f-9f5c-a2f824d5036d" />
-      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.SimpleTests.Passing_test" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.SimpleTests" name="Passing_test" />
     </UnitTest>
     <UnitTest name="XUnitSample.SimpleTests.Failing_test" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="a4165991-a2d3-ed8e-00f3-f06b70f63c88">
       <Execution id="200426b3-eb18-4228-9770-78a4896d9f2f" />
-      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.SimpleTests.Failing_test" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.SimpleTests" name="Failing_test" />
     </UnitTest>
     <UnitTest name="XUnitSample.SimpleTests.Slow_test" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="95861539-7453-81f4-6db1-004fdd320efb">
       <Execution id="c99d70e9-7e43-48b2-95e9-758d8b91aa15" />
-      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.SimpleTests.Slow_test" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.SimpleTests" name="Slow_test" />
     </UnitTest>
     <UnitTest name="XUnitSample.SimpleTests.Ignored_test" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="225b4b67-b8e8-e001-c45d-3af5a6c71572">
       <Execution id="59022a90-b9de-4ad5-b4b7-7fd3f809a8b5" />
-      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.SimpleTests.Ignored_test" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.SimpleTests" name="Ignored_test" />
     </UnitTest>
   </TestDefinitions>
   <TestEntries>

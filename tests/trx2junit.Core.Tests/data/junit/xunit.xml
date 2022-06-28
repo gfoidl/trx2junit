@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <testsuites>
-    <testsuite name="XUnitSample" hostname="GFOIDL-PC-2018" package=".NET Core" id="0" tests="3" failures="1" errors="0" skipped="0" time="1.029" timestamp="2019-04-18T18:26:18">
+    <testsuite name="XUnitSample.SimpleTests" hostname="GFOIDL-PC-2018" package=".NET Core" id="0" tests="3" failures="1" errors="0" skipped="0" time="1.029" timestamp="2019-04-18T18:26:18">
         <properties />
-        <testcase name="XUnitSample.SimpleTests.Passing_test" classname="XUnitSample" time="0.002" />
-        <testcase name="XUnitSample.SimpleTests.Failing_test" classname="XUnitSample" time="0.011">
+        <testcase name="Passing_test" classname="XUnitSample.SimpleTests" time="0.002" />
+        <testcase name="Failing_test" classname="XUnitSample.SimpleTests" time="0.011">
             <failure message="Failing for demo purposes&#xD;&#xA;Expected: True&#xD;&#xA;Actual:   False" type="not specified">   at XUnitSample.SimpleTests.Failing_test() in D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\SimpleTests.cs:line 20</failure>
         </testcase>
-        <testcase name="XUnitSample.SimpleTests.Slow_test" classname="XUnitSample" time="1.016" />
+        <testcase name="Slow_test" classname="XUnitSample.SimpleTests" time="1.016" />
         <system-out />
         <system-err />
     </testsuite>

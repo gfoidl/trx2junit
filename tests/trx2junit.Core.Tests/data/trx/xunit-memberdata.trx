@@ -32,15 +32,15 @@ Actual:   False</Message>
   <TestDefinitions>
     <UnitTest name="XUnitSample.MemberData.Slow_test" storage="C:\code\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="a6e017b4-8b60-1f4f-14a2-c4fb102fe07d">
       <Execution id="3fb78887-e130-4364-9047-ca0f9262a0a4" />
-      <TestMethod codeBase="C:\code\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.MemberData.Slow_test" />
+      <TestMethod codeBase="C:\code\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.MemberData" name="Slow_test" />
     </UnitTest>
     <UnitTest name="XUnitSample.MemberData.Two_pass_one_fails" storage="C:\code\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="452d3fa6-0698-f56d-5449-2587f368ee57">
       <Execution id="501e96a4-0f97-4381-9a72-465ada88ee45" />
-      <TestMethod codeBase="C:\code\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.MemberData.Two_pass_one_fails" />
+      <TestMethod codeBase="C:\code\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.MemberData" name="Two_pass_one_fails" />
     </UnitTest>
     <UnitTest name="XUnitSample.MemberData.Failing_test" storage="C:\code\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="5eb02706-c05c-c61c-b55d-e0cf11c1ff83">
       <Execution id="ec8b6eba-e603-43ed-9343-285865038428" />
-      <TestMethod codeBase="C:\code\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.MemberData.Failing_test" />
+      <TestMethod codeBase="C:\code\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.MemberData" name="Failing_test" />
     </UnitTest>
   </TestDefinitions>
   <TestEntries>
