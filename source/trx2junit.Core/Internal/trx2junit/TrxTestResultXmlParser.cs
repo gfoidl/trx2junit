@@ -79,7 +79,7 @@ internal sealed class TrxTestResultXmlParser : TrxBase, ITestResultXmlParser<Trx
             testDefinition.Id          = xUnitTest.ReadGuid("id");
             testDefinition.ExecutionId = xUnitTest.Element(s_XN + "Execution")?.ReadGuid("id");
             testDefinition.TestClass   = xUnitTest.Element(s_XN + "TestMethod")?.Attribute("className")!.Value;
-            testDefinition.TestMethod  = xUnitTest.Element(s_XN + "TestMethod")?.Attribute("name")?.Value;
+            testDefinition.TestMethod  = xUnitTest.Element(s_XN + "TestMethod")?.Attribute("name")?.Value.StripTypeInfo();
 
             _test.TestDefinitions.Add(testDefinition);
         }
@@ -156,7 +156,7 @@ internal sealed class TrxTestResultXmlParser : TrxBase, ITestResultXmlParser<Trx
             Outcome      = ReadOutcome(xResult.Attribute("outcome")?.Value, isRequired: false),
             StartTime    = xResult.ReadDateTime("startTime"),
             TestId       = xResult.ReadGuid("testId"),
-            TestName     = xResult.Attribute("testName")?.Value,
+            TestName     = xResult.Attribute("testName")?.Value.StripTypeInfo(),
             ComputerName = xResult.Attribute("computerName")?.Value
         };
 

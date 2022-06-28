@@ -22,7 +22,7 @@ public class Integration
     [TestCase("./data/trx/nunit-with-stdout.trx", 1, 0)]
     [TestCase("./data/trx/nunit-memberdata.trx" , 5, 2)]
     [TestCase("./data/trx/xunit.trx"            , 3, 1)]
-    [TestCase("./data/trx/xunit-datadriven.trx" , 3, 1)]
+    [TestCase("./data/trx/xunit-datadriven.trx" , 5, 2)]
     [TestCase("./data/trx/xunit-ignore.trx"     , 4, 1)]
     [TestCase("./data/trx/xunit-memberdata.trx" , 5, 2)]
     [TestCase("./data/trx/nunit-testresultaggregation.trx", 3, 1)]

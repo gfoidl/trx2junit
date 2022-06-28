@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Xml.Linq;
 using gfoidl.Trx2Junit.Core.Internal;
 using gfoidl.Trx2Junit.Core.Models.Trx;
@@ -14,14 +15,14 @@ public class Default : Base
 {
     public Default()
     {
-        AddTestResult("Class1", "Method1", TrxOutcome.NotExecuted, new TimeSpan(0, 0,  1));
-        AddTestResult("Class1", "Method2", TrxOutcome.Failed     , new TimeSpan(0, 0,  3));
-        AddTestResult("Class1", "Method3", TrxOutcome.Failed     , new TimeSpan(0, 0,  2));
-        AddTestResult("Class2", "Method1", TrxOutcome.Passed     , new TimeSpan(0, 0,  3));
-        AddTestResult("Class3", "Method1", TrxOutcome.Failed     , new TimeSpan(0, 0,  8));
-        AddTestResult("Class3", "Method2", TrxOutcome.Passed     , new TimeSpan(0, 0, 12));
-        AddTestResult("Class4", "Method1", TrxOutcome.Completed  , new TimeSpan(0, 0,  1));
-        AddTestResult("Class4", "Method2", TrxOutcome.Warning    , new TimeSpan(0, 0,  1));
+        AddTestResult("SimpleUnitTest.Class1", "Method1", TrxOutcome.NotExecuted, new TimeSpan(0, 0,  1));
+        AddTestResult("SimpleUnitTest.Class1", "Method2", TrxOutcome.Failed     , new TimeSpan(0, 0,  3));
+        AddTestResult("SimpleUnitTest.Class1", "Method3", TrxOutcome.Failed     , new TimeSpan(0, 0,  2));
+        AddTestResult("SimpleUnitTest.Class2", "Method1", TrxOutcome.Passed     , new TimeSpan(0, 0,  3));
+        AddTestResult("SimpleUnitTest.Class3", "Method1", TrxOutcome.Failed     , new TimeSpan(0, 0,  8));
+        AddTestResult("SimpleUnitTest.Class3", "Method2", TrxOutcome.Passed     , new TimeSpan(0, 0, 12));
+        AddTestResult("SimpleUnitTest.Class4", "Method1", TrxOutcome.Completed  , new TimeSpan(0, 0,  1));
+        AddTestResult("SimpleUnitTest.Class4", "Method2", TrxOutcome.Warning    , new TimeSpan(0, 0,  1));
 
         var converter = new Trx2JunitTestConverter(_trxTest);
         converter.Convert();
@@ -72,10 +73,60 @@ public class Default : Base
 
         Assert.Multiple(() =>
         {
-            Assert.AreEqual("Class1", testsuiteList[0].Attribute("name").Value);
-            Assert.AreEqual("Class2", testsuiteList[1].Attribute("name").Value);
-            Assert.AreEqual("Class3", testsuiteList[2].Attribute("name").Value);
-            Assert.AreEqual("Class4", testsuiteList[3].Attribute("name").Value);
+            Assert.AreEqual("SimpleUnitTest.Class1", testsuiteList[0].Attribute("name").Value);
+            Assert.AreEqual("SimpleUnitTest.Class2", testsuiteList[1].Attribute("name").Value);
+            Assert.AreEqual("SimpleUnitTest.Class3", testsuiteList[2].Attribute("name").Value);
+            Assert.AreEqual("SimpleUnitTest.Class4", testsuiteList[3].Attribute("name").Value);
+        });
+    }
+    //-------------------------------------------------------------------------
+    [Test]
+    public void Correct_Test_Suite_Name_and_ClassName()
+    {
+        List<XElement> testsuiteList = this.GetTestSuites();
+
+        Assert.Multiple(() =>
+        {
+            List<XElement> testcases = testsuiteList[0].Elements("testcase").ToList();
+
+            Assert.AreEqual("SimpleUnitTest.Class1", testcases[0].Attribute("classname").Value);
+            Assert.AreEqual("SimpleUnitTest.Class1", testcases[1].Attribute("classname").Value);
+            Assert.AreEqual("SimpleUnitTest.Class1", testcases[2].Attribute("classname").Value);
+
+            Assert.AreEqual("Method1", testcases[0].Attribute("name").Value);
+            Assert.AreEqual("Method2", testcases[1].Attribute("name").Value);
+            Assert.AreEqual("Method3", testcases[2].Attribute("name").Value);
+        });
+
+        Assert.Multiple(() =>
+        {
+            List<XElement> testcases = testsuiteList[1].Elements("testcase").ToList();
+
+            Assert.AreEqual("SimpleUnitTest.Class2", testcases[0].Attribute("classname").Value);
+
+            Assert.AreEqual("Method1", testcases[0].Attribute("name").Value);
+        });
+
+        Assert.Multiple(() =>
+        {
+            List<XElement> testcases = testsuiteList[2].Elements("testcase").ToList();
+
+            Assert.AreEqual("SimpleUnitTest.Class3", testcases[0].Attribute("classname").Value);
+            Assert.AreEqual("SimpleUnitTest.Class3", testcases[1].Attribute("classname").Value);
+
+            Assert.AreEqual("Method1", testcases[0].Attribute("name").Value);
+            Assert.AreEqual("Method2", testcases[1].Attribute("name").Value);
+        });
+
+        Assert.Multiple(() =>
+        {
+            List<XElement> testcases = testsuiteList[3].Elements("testcase").ToList();
+
+            Assert.AreEqual("SimpleUnitTest.Class4", testcases[0].Attribute("classname").Value);
+            Assert.AreEqual("SimpleUnitTest.Class4", testcases[1].Attribute("classname").Value);
+
+            Assert.AreEqual("Method1", testcases[0].Attribute("name").Value);
+            Assert.AreEqual("Method2", testcases[1].Attribute("name").Value);
         });
     }
     //-------------------------------------------------------------------------

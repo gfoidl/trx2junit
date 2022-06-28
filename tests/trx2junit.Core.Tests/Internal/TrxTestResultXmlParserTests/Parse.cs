@@ -1,5 +1,6 @@
 // (c) gfoidl, all rights reserved
 
+using System.Linq;
 using System.Xml.Linq;
 using gfoidl.Trx2Junit.Core.Internal;
 using gfoidl.Trx2Junit.Core.Models.Trx;
@@ -65,5 +66,24 @@ public class Parse
             Assert.AreEqual(expectedTotalCount , actual.ResultSummary.Total , nameof(expectedTotalCount));
             Assert.AreEqual(expectedFailedCount, actual.ResultSummary.Failed, nameof(expectedFailedCount));
         });
+    }
+    //-------------------------------------------------------------------------
+    [Test]
+    [TestCase("./data/trx/nunit-datadriven.trx", "Two_pass_one_fails(2)")]
+    [TestCase("./data/trx/nunit-memberdata.trx", "Two_pass_one_fails({ index = 1 })")]
+    [TestCase("./data/trx/xunit-datadriven.trx", "Two_pass_one_fails(arg: 0)")]
+    public void File_given___corrent_TestName(string trxFile, string expectedName)
+    {
+        XElement trx = XElement.Load(trxFile);
+        var sut      = new TrxTestResultXmlParser(trx);
+
+        sut.Parse();
+        TrxTest actual = sut.Result;
+
+        string actualTestName = actual.UnitTestResults
+            .First(u => u.TestName.Contains("Two_pass_one_fails"))
+            .TestName;
+
+        Assert.AreEqual(expectedName, actualTestName);
     }
 }
