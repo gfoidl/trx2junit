@@ -78,7 +78,7 @@ internal sealed class Trx2JunitTestConverter : ITestConverter<TrxTest, JUnitTest
             junitTestSuite.TestCases.Add(junitTestCase);
 
             junitTestSuite.HostName = trxUnitTestResult.ComputerName;
-            junitTestCase.Name      = trxUnitTestResult.TestName;
+            junitTestCase.Name      = trxTestDefinition.TestMethod;
             junitTestCase.ClassName = trxTestDefinition.TestClass;
 
             if (!_counters.TimeStamp.HasValue)
