@@ -70,7 +70,7 @@ public class Parse
     //-------------------------------------------------------------------------
     [Test]
     [TestCase("./data/trx/nunit-datadriven.trx", "Two_pass_one_fails(2)")]
-    [TestCase("./data/trx/nunit-memberdata.trx", "Two_pass_one_fails({ index = 0 })")]
+    [TestCase("./data/trx/nunit-memberdata.trx", "Two_pass_one_fails({ index = 1 })")]
     [TestCase("./data/trx/xunit-datadriven.trx", "Two_pass_one_fails(arg: 0)")]
     public void File_given___corrent_TestName(string trxFile, string expectedName)
     {
@@ -80,6 +80,10 @@ public class Parse
         sut.Parse();
         TrxTest actual = sut.Result;
 
-        Assert.AreEqual(expectedName, actual.TestDefinitions.First().TestMethod);
+        string actualTestName = actual.UnitTestResults
+            .First(u => u.TestName.Contains("Two_pass_one_fails"))
+            .TestName;
+
+        Assert.AreEqual(expectedName, actualTestName);
     }
 }

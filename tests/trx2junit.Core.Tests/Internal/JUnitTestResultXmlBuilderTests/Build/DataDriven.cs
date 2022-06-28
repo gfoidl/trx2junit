@@ -35,7 +35,7 @@ public class DataDriven : Base
                 {
                     ExecutionId  = testExecGuid,
                     TestId       = testGuid,
-                    TestName     = $"SimpleUnitTest.Class1.Method1(arg: {i})",
+                    TestName     = $"Method1(arg: {i})",
                     Outcome      = i != 0 ? TrxOutcome.Passed : TrxOutcome.Failed,
                     Duration     = new TimeSpan(0, 0, 1),
                     StartTime    = DateTime.Now,
