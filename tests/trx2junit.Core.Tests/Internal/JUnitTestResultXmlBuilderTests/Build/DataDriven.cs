@@ -1,6 +1,7 @@
 // (c) gfoidl, all rights reserved
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
@@ -15,29 +16,26 @@ public class DataDriven : Base
 {
     public DataDriven()
     {
-        var testGuid      = Guid.NewGuid();
-        var testExecGuids = Enumerable
-            .Range(0, 4)
-            .Select(_ => Guid.NewGuid())
-            .ToList();
-
-        _trxTest.TestDefinitions.Add(
-            new TrxTestDefinition
-            {
-                Id          = testGuid,
-                TestClass   = "Class1",
-                TestMethod  = "Method1",
-                ExecutionId = testExecGuids[0]
-            });
-
-        for (int i = 0; i < testExecGuids.Count; ++i)
+        for (int i = 0; i < 4; ++i)
         {
+            var testGuid     = Guid.NewGuid();
+            var testExecGuid = Guid.NewGuid();
+
+            _trxTest.TestDefinitions.Add(
+                new TrxTestDefinition
+                {
+                    Id          = testGuid,
+                    TestClass   = "SimpleUnitTest.Class1",
+                    TestMethod  = $"Method1(arg: {i})",
+                    ExecutionId = testExecGuid
+                });
+
             _trxTest.UnitTestResults.Add(
                 new TrxUnitTestResult
                 {
-                    ExecutionId  = testExecGuids[i],
+                    ExecutionId  = testExecGuid,
                     TestId       = testGuid,
-                    TestName     = "Method1",
+                    TestName     = $"Method1(arg: {i})",
                     Outcome      = i != 0 ? TrxOutcome.Passed : TrxOutcome.Failed,
                     Duration     = new TimeSpan(0, 0, 1),
                     StartTime    = DateTime.Now,
@@ -49,7 +47,7 @@ public class DataDriven : Base
 
         var converter = new Trx2JunitTestConverter(_trxTest);
         converter.Convert();
-        _junitTest     = converter.Result;
+        _junitTest    = converter.Result;
     }
     //-------------------------------------------------------------------------
     [Test]
@@ -65,7 +63,30 @@ public class DataDriven : Base
     {
         XElement testsuite = this.GetTestSuite();
 
-        Assert.AreEqual("Class1", testsuite.Attribute("name").Value);
+        Assert.AreEqual("SimpleUnitTest.Class1", testsuite.Attribute("name").Value);
+    }
+    //-------------------------------------------------------------------------
+    [Test]
+    public void Correct_Test_Suite_Name_and_ClassName()
+    {
+        XElement testsuite       = this.GetTestSuite();
+        List<XElement> testcases = testsuite.Elements("testcase").ToList();
+
+        Assert.Multiple(() =>
+        {
+            Assert.AreEqual("SimpleUnitTest.Class1", testcases[0].Attribute("classname").Value);
+            Assert.AreEqual("SimpleUnitTest.Class1", testcases[1].Attribute("classname").Value);
+            Assert.AreEqual("SimpleUnitTest.Class1", testcases[2].Attribute("classname").Value);
+            Assert.AreEqual("SimpleUnitTest.Class1", testcases[3].Attribute("classname").Value);
+        });
+
+        Assert.Multiple(() =>
+        {
+            Assert.AreEqual("Method1(arg: 0)", testcases[0].Attribute("name").Value);
+            Assert.AreEqual("Method1(arg: 1)", testcases[1].Attribute("name").Value);
+            Assert.AreEqual("Method1(arg: 2)", testcases[2].Attribute("name").Value);
+            Assert.AreEqual("Method1(arg: 3)", testcases[3].Attribute("name").Value);
+        });
     }
     //-------------------------------------------------------------------------
     [Test]

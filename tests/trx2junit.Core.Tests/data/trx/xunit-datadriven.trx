@@ -32,23 +32,23 @@ Actual:   False</Message>
   <TestDefinitions>
     <UnitTest name="XUnitSample.DataDriven.Two_pass_one_fails(arg: 0)" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="64cef5f2-ef71-a37c-f9df-3f03d7849295">
       <Execution id="af46d02b-bb1f-469c-ac47-a42dee2db394" />
-      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.DataDriven" name="XUnitSample.DataDriven.Two_pass_one_fails(arg: 0)" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.DataDriven" name="Two_pass_one_fails" />
     </UnitTest>
     <UnitTest name="XUnitSample.DataDriven.Two_pass_one_fails(arg: 2)" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="e73bdfc4-d932-676a-10b0-66bc277da6a8">
       <Execution id="bb2de31e-d978-446a-b43c-e6418abae839" />
-      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.DataDriven" name="XUnitSample.DataDriven.Two_pass_one_fails(arg: 2)" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.DataDriven" name="Two_pass_one_fails" />
     </UnitTest>
     <UnitTest name="XUnitSample.DataDriven.Failing_test" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="932cdb9b-c6e1-1aa1-ab25-7b1cf6c0a872">
       <Execution id="fea82688-b00a-4962-a87a-716691cb7218" />
-      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.DataDriven.Failing_test" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.DataDriven" name="Failing_test" />
     </UnitTest>
     <UnitTest name="XUnitSample.DataDriven.Two_pass_one_fails(arg: 1)" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="5ae19c2c-bf9f-b890-d75d-5c6348c55337">
       <Execution id="17fb6c16-a755-4cd4-b597-25f95b78ed75" />
-      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.DataDriven" name="XUnitSample.DataDriven.Two_pass_one_fails(arg: 1)" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.DataDriven" name="Two_pass_one_fails" />
     </UnitTest>
     <UnitTest name="XUnitSample.DataDriven.Slow_test" storage="d:\work-git\github\mini\trx2junit\samples\xunitsample\bin\debug\netcoreapp2.1\xunitsample.dll" id="ef17caa0-0b32-c82d-88c3-ad7c5b73824f">
       <Execution id="21534ce9-b4be-4e6b-817f-563f14c8bc32" />
-      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample" name="XUnitSample.DataDriven.Slow_test" />
+      <TestMethod codeBase="D:\Work-Git\github\Mini\trx2junit\samples\XUnitSample\bin\Debug\netcoreapp2.1\XUnitSample.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="XUnitSample.DataDriven" name="Slow_test" />
     </UnitTest>
   </TestDefinitions>
   <TestEntries>
