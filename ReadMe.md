@@ -54,6 +54,9 @@ This can be configured via environment varialbes (note: if omitted, the default 
 | failure | `TRX2JUNIT_JENKINS_TESTCASE_STATUS_FAILURE` | `0`           |
 | skipped | `TRX2JUNIT_JENKINS_TESTCASE_STATUS_SKIPPED` | not set       |
 
+With environment variable `TRX2JUNIT_JUNIT_ERROR_MESSAGE_IN_CDATA` set, the error message from a failing test will be repeated in the _CDATA_-content of the `<failure>` element.
+See [this comment](https://github.com/gfoidl/trx2junit/issues/104#issuecomment-1178852241) for further info.
+
 ### junit to trx
 
 With option `--junit2trx` a conversion from _junit_ to _trx_ can be performed.

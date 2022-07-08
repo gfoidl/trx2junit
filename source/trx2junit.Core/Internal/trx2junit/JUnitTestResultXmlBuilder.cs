@@ -94,14 +94,21 @@ internal sealed class JUnitTestResultXmlBuilder : ITestResultXmlBuilder<JUnitTes
         }
         else if (testCase.Error != null)
         {
-            string failureContent = $"{testCase.Error.Message}\n{testCase.Error.StackTrace?.TrimEnd()}";
+            string? failureContent = Globals.JUnitErrorMessageRepeatCData
+                ? $"{testCase.Error.Message}\n{testCase.Error.StackTrace?.TrimEnd()}"
+                : testCase.Error.StackTrace?.TrimEnd();
 
-            xTestCase.Add(new XElement("failure",
-                new XCData(failureContent),
+            XElement xFailure = new ("failure",
                 new XAttribute("message", testCase.Error.Message!),
                 new XAttribute("type"   , testCase.Error.Type!)
-            ));
+            );
 
+            if (failureContent is not null)
+            {
+                xFailure.Add(new XCData(failureContent));
+            }
+
+            xTestCase.Add(xFailure);
             xTestCase.Add(new XAttribute("status", Globals.JUnitTestCaseStatusFailure));
         }
         else
