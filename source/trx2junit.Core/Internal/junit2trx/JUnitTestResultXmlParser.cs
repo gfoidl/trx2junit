@@ -52,7 +52,7 @@ internal sealed class JUnitTestResultXmlParser : ITestResultXmlParser<JUnitTest>
             FailureCount  = xTestSuite.ReadInt("failures"),
             SkippedCount  = xTestSuite.ReadInt("skipped"),
             TimeInSeconds = xTestSuite.ReadDouble("time"),
-            TimeStamp     = xTestSuite.ReadDateTime("timestamp")!.Value,
+            TimeStamp     = xTestSuite.ReadDateTime("timestamp")!.Value.UtcDateTime
         };
 
         int? testCount = xTestSuite.ReadInt("tests");

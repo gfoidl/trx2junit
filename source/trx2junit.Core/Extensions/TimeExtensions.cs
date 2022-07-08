@@ -23,7 +23,7 @@ internal static class TimeExtensions
         return string.Create(19, dt, static (buffer, value) => FormatDateTime(buffer, value));
     }
     //-------------------------------------------------------------------------
-    public static string ToTrxDateTime(this DateTime dt)
+    public static string ToTrxDateTime(this DateTimeOffset dt)
     {
         dt = dt.ToUniversalTime();
 
@@ -39,7 +39,7 @@ internal static class TimeExtensions
     //-------------------------------------------------------------------------
     public static string ToJUnitTime(this double value) => value.ToString("0.000", CultureInfo.InvariantCulture);
     //-------------------------------------------------------------------------
-    public static DateTime? ParseDateTime(this string value)
+    public static DateTimeOffset? ParseDateTime(this string value)
     {
         ReadOnlySpan<char> span = value.AsSpan();
 
@@ -71,7 +71,7 @@ internal static class TimeExtensions
             }
 
             int millisecond           = 0;
-            DateTimeKind dateTimeKind = DateTimeKind.Local;
+            DateTimeKind dateTimeKind = DateTimeKind.Utc;
 
             if (value.Length == 29)
             {
@@ -109,6 +109,12 @@ internal static class TimeExtensions
         {
             FormatDateTimeScalar(buffer, value);
         }
+    }
+    //-------------------------------------------------------------------------
+    private static void FormatDateTime(Span<char> buffer, DateTimeOffset value)
+    {
+        // TODO: fix
+        throw new NotImplementedException();
     }
     //-------------------------------------------------------------------------
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

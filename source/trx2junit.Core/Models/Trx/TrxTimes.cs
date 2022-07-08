@@ -6,10 +6,10 @@ namespace gfoidl.Trx2Junit.Core.Models.Trx;
 
 internal sealed class TrxTimes
 {
-    public DateTime? Creation { get; set; }
-    public DateTime? Queuing  { get; set; }
-    public DateTime? Start    { get; set; }
-    public DateTime? Finish   { get; set; }
+    public DateTimeOffset? Creation { get; set; }
+    public DateTimeOffset? Queuing  { get; set; }
+    public DateTimeOffset? Start    { get; set; }
+    public DateTimeOffset? Finish   { get; set; }
     //-------------------------------------------------------------------------
     public TimeSpan? RunTime => this.Finish - this.Creation;
 }

@@ -12,10 +12,10 @@ public class ReadDateTime
     [Test]
     public void Xml_with_valid_DateTime_given___OK()
     {
-        DateTime now = new DateTime(2019, 11, 10, 15, 33, 27);
-        var xml      = new XElement("data", new XAttribute("dt", now.ToJUnitDateTime()));
+        DateTimeOffset now = new(2019, 11, 10, 15, 33, 27, TimeSpan.FromHours(1d));
+        var xml            = new XElement("data", new XAttribute("dt", now.UtcDateTime.ToJUnitDateTime()));
 
-        DateTime? actual = xml.ReadDateTime("dt");
+        DateTimeOffset? actual = xml.ReadDateTime("dt");
 
         Assert.Multiple(() =>
         {
@@ -29,7 +29,7 @@ public class ReadDateTime
     {
         var xml = new XElement("data", new XAttribute("foo", "123"));
 
-        DateTime? actual = xml.ReadDateTime("foo");
+        DateTimeOffset? actual = xml.ReadDateTime("foo");
 
         Assert.IsFalse(actual.HasValue);
     }
@@ -39,7 +39,7 @@ public class ReadDateTime
     {
         var xml = new XElement("data");
 
-        DateTime? actual = xml.ReadDateTime("foo");
+        DateTimeOffset? actual = xml.ReadDateTime("foo");
 
         Assert.IsFalse(actual.HasValue);
     }

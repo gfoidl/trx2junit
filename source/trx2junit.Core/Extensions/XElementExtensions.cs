@@ -8,7 +8,7 @@ namespace gfoidl.Trx2Junit.Core;
 
 internal static class XElementExtensions
 {
-    public static DateTime? ReadDateTime(this XElement element, string attributeName)
+    public static DateTimeOffset? ReadDateTime(this XElement element, string attributeName)
     {
         string? value = (string?)element.Attribute(attributeName);
         return value!.ParseDateTime();
@@ -68,7 +68,7 @@ internal static class XElementExtensions
         return true;
     }
     //-------------------------------------------------------------------------
-    public static bool WriteTrxDateTime(this XElement element, string attributeName, DateTime? value)
+    public static bool WriteTrxDateTime(this XElement element, string attributeName, DateTimeOffset? value)
     {
         if (!value.HasValue) return false;
 
