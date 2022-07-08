@@ -25,15 +25,16 @@ internal static class TimeExtensions
     //-------------------------------------------------------------------------
     public static string ToTrxDateTime(this DateTimeOffset dt)
     {
-        dt = dt.ToUniversalTime();
-
         return string.Create(19 + 1 + 3 + 6, dt, static (buffer, value) =>
         {
             s_trxDateTimeTemplate.CopyTo(buffer);
-
             FormatDateTime(buffer, value);
+
             value.Millisecond.TryFormat(buffer.Slice(20), out int written, "000");
             Debug.Assert(written == 3);
+
+            value.Offset.Hours.TryFormat(buffer.Slice(24), out written, "00");
+            Debug.Assert(written == 2);
         });
     }
     //-------------------------------------------------------------------------
@@ -70,34 +71,37 @@ internal static class TimeExtensions
                     return null;
             }
 
-            int millisecond           = 0;
-            DateTimeKind dateTimeKind = DateTimeKind.Utc;
+            int millisecond = 0;
+            TimeSpan offset = TimeSpan.Zero;
 
             if (value.Length == 29)
             {
                 if (!span[20..24].TryParse3DigitIntFast(out millisecond))
                     return null;
 
-                dateTimeKind = DateTimeKind.Utc;
+                if (!span[24..25].TryParse2DigitIntFast(out int offsetHours))
+                    return null;
+
+                offset = TimeSpan.FromHours(offsetHours);
             }
 
-            return new DateTime(year, month, day, hour, minute, second, millisecond, dateTimeKind);
+            return new DateTimeOffset(year, month, day, hour, minute, second, millisecond, offset);
         }
         catch
         {
             return SlowPath(value);
         }
         //---------------------------------------------------------------------
-        static DateTime? SlowPath(string value)
+        static DateTimeOffset? SlowPath(string value)
         {
-            if (!DateTime.TryParse(value, out DateTime dt))
+            if (!DateTimeOffset.TryParse(value, out DateTimeOffset dt))
                 return null;
 
             return dt;
         }
     }
     //-------------------------------------------------------------------------
-    private static void FormatDateTime(Span<char> buffer, DateTime value)
+    private static void FormatDateTime(Span<char> buffer, DateTimeOffset value)
     {
 #if NET6_0_OR_GREATER
         if (Sse41.IsSupported && Globals.VectorsEnabled)
@@ -111,14 +115,8 @@ internal static class TimeExtensions
         }
     }
     //-------------------------------------------------------------------------
-    private static void FormatDateTime(Span<char> buffer, DateTimeOffset value)
-    {
-        // TODO: fix
-        throw new NotImplementedException();
-    }
-    //-------------------------------------------------------------------------
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void FormatDateTimeScalar(Span<char> buffer, DateTime value)
+    private static void FormatDateTimeScalar(Span<char> buffer, DateTimeOffset value)
     {
         Debug.Assert(s_junitTimeTemplate.Length <= buffer.Length);
         s_junitTimeTemplate.CopyTo(buffer);
@@ -166,7 +164,7 @@ internal static class TimeExtensions
     //-------------------------------------------------------------------------
 #if NET6_0_OR_GREATER
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static void FormatDateTimeSse41(Span<char> buffer, DateTime value)
+    private static void FormatDateTimeSse41(Span<char> buffer, DateTimeOffset value)
     {
         Debug.Assert(buffer.Length >= 19);
 
