@@ -11,10 +11,10 @@ public class ParseDateTime
     [Test]
     public void Valid_JUnitDateTime___OK()
     {
-        DateTime now = new DateTime(2019, 11, 10, 15, 33, 27);
-        string value = now.ToJUnitDateTime();
+        DateTimeOffset now = new(2019, 11, 10, 15, 33, 27, TimeSpan.FromHours(1d));
+        string value       = now.UtcDateTime.ToJUnitDateTime();
 
-        DateTime? actual = value.ParseDateTime();
+        DateTimeOffset? actual = value.ParseDateTime();
 
         Assert.Multiple(() =>
         {
@@ -36,10 +36,10 @@ public class ParseDateTime
             {
                 for (int second = 0; second < 60; ++second)
                 {
-                    DateTime dt  = new DateTime(year, month, day, hour, minute, second);
-                    string value = dt.ToJUnitDateTime();
+                    DateTimeOffset dt = new(year, month, day, hour, minute, second, TimeSpan.FromHours(1d));
+                    string value      = dt.UtcDateTime.ToJUnitDateTime();
 
-                    DateTime? actual = value.ParseDateTime();
+                    DateTimeOffset? actual = value.ParseDateTime();
 
                     Assert.Multiple(() =>
                     {
@@ -54,16 +54,15 @@ public class ParseDateTime
     [Test]
     public void Valid_TrxDateTime___OK()
     {
-        DateTime now = new(2019, 11, 10, 15, 33, 27, 123);
-        string value = now.ToTrxDateTime();
+        DateTimeOffset now = new(2019, 11, 10, 15, 33, 27, 123, TimeSpan.FromHours(1d));
+        string value       = now.ToTrxDateTime();
 
-        DateTime? actual = value.ParseDateTime();
+        DateTimeOffset? actual = value.ParseDateTime();
 
         Assert.Multiple(() =>
         {
             Assert.IsTrue(actual.HasValue);
-            Assert.AreEqual(now.ToUniversalTime(), actual.Value);
-            Assert.AreEqual(DateTimeKind.Utc, actual.Value.Kind);
+            Assert.AreEqual(now, actual.Value);
         });
     }
     //-------------------------------------------------------------------------
@@ -75,7 +74,7 @@ public class ParseDateTime
     [TestCase("201a-11-17T12:26:07")]
     public void Invalid_DateTime_string___null(string value)
     {
-        DateTime? actual = value.ParseDateTime();
+        DateTimeOffset? actual = value.ParseDateTime();
 
         Assert.IsFalse(actual.HasValue, "actual = {0}", actual);
     }

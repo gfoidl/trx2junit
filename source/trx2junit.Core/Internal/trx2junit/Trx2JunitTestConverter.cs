@@ -61,7 +61,7 @@ internal sealed class Trx2JunitTestConverter : ITestConverter<TrxTest, JUnitTest
 
         if (_counters.TimeStamp.HasValue)
         {
-            testSuite.TimeStamp = _counters.TimeStamp.Value;
+            testSuite.TimeStamp = _counters.TimeStamp.Value.UtcDateTime;
         }
     }
     //-------------------------------------------------------------------------
@@ -118,13 +118,13 @@ internal sealed class Trx2JunitTestConverter : ITestConverter<TrxTest, JUnitTest
     //-------------------------------------------------------------------------
     private struct Counters
     {
-        public int       TestCount;
-        public int       Failures;
+        public int             TestCount;
+        public int             Failures;
 #pragma warning disable CS0649
-        public int       Errors;
+        public int             Errors;
 #pragma warning restore CS0649
-        public int       Skipped;
-        public TimeSpan  Time;
-        public DateTime? TimeStamp;
+        public int             Skipped;
+        public TimeSpan        Time;
+        public DateTimeOffset? TimeStamp;
     }
 }

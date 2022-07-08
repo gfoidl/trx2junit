@@ -15,30 +15,30 @@ public class SetCreationTimestamp
     public void TrxTimes_Creation_is_null___TimeStamp_set()
     {
         var trxTimes       = new TrxTimes();
-        var junitTestSuite = new JUnitTestSuite { TimeStamp = DateTime.Now };
+        var junitTestSuite = new JUnitTestSuite { TimeStamp = DateTimeOffset.Now.UtcDateTime };
 
         JUnit2TrxTestConverter.SetCreationTimestamp(junitTestSuite, trxTimes);
 
-        Assert.AreEqual(junitTestSuite.TimeStamp, trxTimes.Creation);
+        Assert.AreEqual(junitTestSuite.TimeStamp, trxTimes.Creation.Value.UtcDateTime);
     }
     //-------------------------------------------------------------------------
     [Test]
     public void TrxTimes_Creation_has_value_TimeStamp_is_smaller___TimeStamp_set()
     {
-        var trxTimes       = new TrxTimes       { Creation  = DateTime.Now };
-        var junitTestSuite = new JUnitTestSuite { TimeStamp = DateTime.Now.AddSeconds(-1) };
+        var trxTimes       = new TrxTimes       { Creation  = DateTimeOffset.Now };
+        var junitTestSuite = new JUnitTestSuite { TimeStamp = DateTimeOffset.Now.UtcDateTime.AddSeconds(-1) };
 
         JUnit2TrxTestConverter.SetCreationTimestamp(junitTestSuite, trxTimes);
 
-        Assert.AreEqual(junitTestSuite.TimeStamp, trxTimes.Creation.Value);
+        Assert.AreEqual(junitTestSuite.TimeStamp, trxTimes.Creation.Value.UtcDateTime);
     }
     //-------------------------------------------------------------------------
     [Test]
     public void TrxTimes_Creation_has_value_TimeStamp_is_greater___nop()
     {
-        DateTime now       = DateTime.Now;
+        DateTimeOffset now = DateTimeOffset.Now;
         var trxTimes       = new TrxTimes       { Creation  = now };
-        var junitTestSuite = new JUnitTestSuite { TimeStamp = DateTime.Now.AddSeconds(1) };
+        var junitTestSuite = new JUnitTestSuite { TimeStamp = DateTimeOffset.Now.UtcDateTime.AddSeconds(1) };
 
         JUnit2TrxTestConverter.SetCreationTimestamp(junitTestSuite, trxTimes);
 

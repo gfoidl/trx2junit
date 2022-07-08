@@ -24,9 +24,9 @@ public class WriteTrxDateTime
     [Test]
     public void Non_null_given___attribute_added()
     {
-        DateTime? value = DateTime.Now;
-        var xmlExpected = new XElement("root", new XAttribute("dt", value.Value.ToTrxDateTime()));
-        var xml         = new XElement("root");
+        DateTimeOffset? value = DateTimeOffset.Now;
+        var xmlExpected       = new XElement("root", new XAttribute("dt", value.Value.ToTrxDateTime()));
+        var xml               = new XElement("root");
 
         xml.WriteTrxDateTime("dt", value);
 
