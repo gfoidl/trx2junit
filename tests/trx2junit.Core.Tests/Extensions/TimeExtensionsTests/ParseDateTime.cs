@@ -52,9 +52,9 @@ public class ParseDateTime
     }
     //-------------------------------------------------------------------------
     [Test]
-    public void Valid_TrxDateTime___OK()
+    public void Valid_TrxDateTime___OK([Values(-1, 0, 1)] int offset)
     {
-        DateTimeOffset now = new(2019, 11, 10, 15, 33, 27, 123, TimeSpan.FromHours(1d));
+        DateTimeOffset now = new(2019, 11, 10, 15, 33, 27, 123, TimeSpan.FromHours(offset));
         string value       = now.ToTrxDateTime();
 
         DateTimeOffset? actual = value.ParseDateTime();

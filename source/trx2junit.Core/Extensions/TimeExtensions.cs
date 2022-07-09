@@ -33,7 +33,13 @@ internal static class TimeExtensions
             value.Millisecond.TryFormat(buffer.Slice(20), out int written, "000");
             Debug.Assert(written == 3);
 
-            value.Offset.Hours.TryFormat(buffer.Slice(24), out written, "00");
+            int offsetHours = value.Offset.Hours;
+            if (offsetHours < 0)
+            {
+                buffer[23] = '-';
+                offsetHours = -offsetHours;
+            }
+            offsetHours.TryFormat(buffer.Slice(24), out written, "00");
             Debug.Assert(written == 2);
         });
     }
