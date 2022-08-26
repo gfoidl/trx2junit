@@ -19,13 +19,19 @@ public class StripTypeInfo
         yield return new TestCaseData(null).Returns(null);
         yield return new TestCaseData("").Returns("");
 
-        yield return new TestCaseData("Method1").Returns("Method1");
+        yield return new TestCaseData("Method1")                .Returns("Method1");
         yield return new TestCaseData("Method1(arg: { a = 3 })").Returns("Method1(arg: { a = 3 })");
+        yield return new TestCaseData("Method1(3.14)")          .Returns("Method1(3.14)");
+        yield return new TestCaseData("Method1(3.14, 2.72)")    .Returns("Method1(3.14, 2.72)");
 
-        yield return new TestCaseData("Class1.Method1").Returns("Method1");
+        yield return new TestCaseData("Class1.Method1")                .Returns("Method1");
         yield return new TestCaseData("Class1.Method1(arg: { a = 3 })").Returns("Method1(arg: { a = 3 })");
+        yield return new TestCaseData("Class1.Method1(3.14)")          .Returns("Method1(3.14)");
+        yield return new TestCaseData("Class1.Method1(3.14, 2.72)")    .Returns("Method1(3.14, 2.72)");
 
-        yield return new TestCaseData("SimpleUnitTest.Class1.Method1").Returns("Method1");
+        yield return new TestCaseData("SimpleUnitTest.Class1.Method1")                .Returns("Method1");
         yield return new TestCaseData("SimpleUnitTest.Class1.Method1(arg: { a = 3 })").Returns("Method1(arg: { a = 3 })");
+        yield return new TestCaseData("SimpleUnitTest.Class1.Method1(3.14)")          .Returns("Method1(3.14)");
+        yield return new TestCaseData("SimpleUnitTest.Class1.Method1(3.14, 2.72)")    .Returns("Method1(3.14, 2.72)");
     }
 }
