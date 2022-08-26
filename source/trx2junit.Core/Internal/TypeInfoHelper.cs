@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace gfoidl.Trx2Junit.Core;
 
-internal static class StringExtensions
+internal static class TypeInfoHelper
 {
     [return: NotNullIfNotNull("name")]
     public static string? StripTypeInfo(this string? name)
