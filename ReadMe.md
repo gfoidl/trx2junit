@@ -90,7 +90,7 @@ In order to install this tool a [.NET SDK](https://dotnet.microsoft.com/download
 
 # Core functionality as standalone package trx2junit.Core
 
-Starting with v2.0.0 it's possible to use the core functionality as standalone package `trx2junit.Core`.
+Starting with v2.0.0 it's possible to use the core functionality as standalone package `trx2junit.Core`.  
 The tool (see above) itself is a consumer of that package.
 
 After adding a reference to `trx2junit.Core` one can use it in "commandline-mode" like
