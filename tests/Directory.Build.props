@@ -3,7 +3,7 @@
     <Import Project="../Directory.Build.props" />
 
     <PropertyGroup>
-        <TestTfm>net6.0;netcoreapp3.1</TestTfm>
+        <TestTfm>net7.0;net6.0;netcoreapp3.1</TestTfm>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
