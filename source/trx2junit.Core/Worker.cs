@@ -22,7 +22,14 @@ public class Worker
     private readonly IFileSystem  _fileSystem;
     private readonly IGlobHandler _globHandler;
 
+    /// <summary>
+    /// Event that is fired when the worker triggers a notification.
+    /// </summary>
     public event EventHandler<WorkerNotificationEventArgs>? WorkerNotification;
+
+    /// <summary>
+    /// Event that is fired when the worker triggers an error.
+    /// </summary>
     public event EventHandler<WorkerNotificationEventArgs>? WorkerErrorNotification;
     //-------------------------------------------------------------------------
     /// <summary>
