@@ -6,7 +6,6 @@
 #   build               builds the solution
 #   test                runs all tests under ./tests
 #   test-coverage       test + determines code coverage with coverlet.msbuild
-#   coverage            determines code coverage with coverlet and uploads to codecov
 #   pack                creates the NuGet-package
 #   deploy              deploys to $2, which must be either nuget or custom
 #                       * when CI_SKIP_DEPLOY is set, no deploy is done
@@ -22,19 +21,16 @@
 #   TEST_DIR            directory in which to search for test-assemblies
 #   TEST_FRAMEWORK      when set only the specified test-framework (dotnet test -f) will be used
 #   TESTS_TO_SKIP       a list of test-projects to skip / ignore, separated by ;
-#   CODECOV_TOKEN       the token for codecov to uploads the opencover-xml
 #   MOVE_TRX            moves the test-results (trx) to tests/TestResults
 #
 # Functions (sorted alphabetically):
 #   build               builds the solution
-#   coverage            code coverage
 #   deploy              deploys the solution either to nuget or custom
 #   main                entry-point
 #   pack                creates the NuGet-package
 #   setBuildEnv         sets the environment variables regarding the build-environment
 #   test                runs tests for projects in ./tests
 #   test-coverage       runs tests for projects in ./tests and collects code-coverage
-#   _coverageCore       helper -- used by coverage
 #   _deployCore         helper -- used by deploy
 #   _testCore           helper -- used by test
 #
@@ -51,7 +47,6 @@ help() {
     echo "  build                  builds the solution"
     echo "  test                   runs all tests under ./tests"
     echo "  test-coverage          test + determines code coverage with coverlet.msbuild"
-    echo "  coverage               determines code coverage with coverlet and uploads to codecov"
     echo "  pack                   creates the NuGet-package"
     echo "  deploy [nuget|custom]  deploys to the destination"
 }
@@ -129,19 +124,19 @@ _testCore() {
         dotnetTestArgs+=("-f ${TEST_FRAMEWORK}")
     fi
 
-    if [[ -n "$collectCoverage" ]]; then
-        echo "running tests and collecting code coverage"
-        echo ""
-
-        # Strange but git-bash (Windows) needs double-escapes, so //p:CollectCoverage=true
-        # whereas non-Windows just needs /p:CollectCoverage=true
-        # To avoid platform detection like [[ $(uname | grep mingw -i | wc -l) -ge 0 ]]
-        # use -p instead to be on the safe side.
-        dotnetTestArgs+=("-p:CollectCoverage=true" "-p:CoverletOutputFormat=cobertura")
-    fi
-
+    # Must be before adding args for code coverage.
     dotnetTestArgs+=("${testFullName}")
-    dotnet test ${dotnetTestArgs[@]}
+
+    # It's a bit strange, but doesn't work otherwise due to : "Unable to find a datacollector with friendly name 'XPlat'."
+    if [[ -n "$collectCoverage" ]]; then
+        echo "invoke test with args: ${dotnetTestArgs[@]} --collect:\"XPlat Code Coverage\""
+        echo ""
+        dotnet test ${dotnetTestArgs[@]} --collect:"XPlat Code Coverage"
+    else
+        echo "invoke test with args: ${dotnetTestArgs[@]}"
+        echo ""
+        dotnet test ${dotnetTestArgs[@]}
+    fi
 
     local result=$?
 
@@ -193,63 +188,10 @@ test_coverage() {
 
     echo ""
 
-    reportgenerator -reports:tests/**/*.cobertura.xml -targetdir:tests/Coverage -reporttypes:"Cobertura;HtmlInline_AzurePipelines"
-}
-#------------------------------------------------------------------------------
-_coverageCore() {
-    local testFullName
-    local testDir
-    local targetFramework
-
-    testFullName="$1"
-    testDir=$(dirname "$testFullName")
-
-    cd "$testDir"
-
-    for test in ./bin/$BUILD_CONFIG/**/*.Tests*.dll; do
-        targetFramework=$(basename $(dirname $test))
-        mkdir -p "coverage/$targetFramework"
-        coverlet "$test" --target "dotnet" --targetargs "test --no-build -c $BUILD_CONFIG" --format opencover -o "./coverage/$targetFramework/coverage.opencover.xml"
-    done
-
-    cd "$workingDir"
-}
-#------------------------------------------------------------------------------
-coverage() {
-    local testDir
-    testDir="./tests"
-
-    if [[ ! -d "$testDir" ]]; then
-        echo "test-directory not existing -> no coverage need to run"
-        return
-    fi
-
-    echo "check if coverlet.console is installed..."
-    if [[ $(dotnet tool list -g | grep coverlet.console | wc -l) -eq 0 ]]; then
-        echo "not installed -> will install it"
-        export PATH="$PATH:$HOME/.dotnet/tools"
-        dotnet tool install -g coverlet.console
-    else
-        echo "already installed"
-    fi
-
-    for testProject in "$testDir"/**/*.csproj; do
-        _coverageCore "$testProject"
-    done
-
-    # when $CODECOV_TOKEN is set via env-variable, so it may be omitted as argument
-    if [[ -n "$CODECOV_TOKEN" ]]; then
-        if [[ ! -f codecov.sh ]]; then
-            echo "codecov.sh does not exists -- fetching..."
-            curl -s https://codecov.io/bash > codecov.sh
-            chmod u+x codecov.sh
-        fi
-
-        # a cool script, does quite a lot without any args :-)
-        ./codecov.sh -Z
-    else
-        echo "CODECOV_TOKEN not set -- skipping upload"
-    fi
+    reportgenerator                                         \
+        -reports:tests/**/coverage.cobertura.xml            \
+        -targetdir:tests/Coverage                           \
+        -reporttypes:"Cobertura;HtmlInline_AzurePipelines"
 }
 #------------------------------------------------------------------------------
 pack() {
