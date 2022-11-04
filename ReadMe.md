@@ -1,6 +1,6 @@
-| CI | NuGet |  
-| -- | -- |  
-| [![Build Status](https://dev.azure.com/gh-gfoidl/github-Projects/_apis/build/status/.NET/trx2junit?branchName=master)](https://dev.azure.com/gh-gfoidl/github-Projects/_build/latest?definitionId=35&branchName=master) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) |  
+| CI | NuGet |
+| -- | -- |
+| [![Build Status](https://dev.azure.com/gh-gfoidl/github-Projects/_apis/build/status/.NET/trx2junit?branchName=master)](https://dev.azure.com/gh-gfoidl/github-Projects/_build/latest?definitionId=35&branchName=master) | [![NuGet](https://img.shields.io/nuget/v/trx2junit.svg?style=flat-square)](https://www.nuget.org/packages/trx2junit/) |
 
 # trx2junit (.NET Core global tool)
 
@@ -83,13 +83,14 @@ echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
 ### Prequisites / Supported SDKs
 
 In order to install this tool a [.NET SDK](https://dotnet.microsoft.com/download/dotnet) must be present. Supported SDKs are:
+* .NET 7.0
 * .NET 6.0
 * .NET 5.0
 * .NET Core 3.1
 
 # Core functionality as standalone package trx2junit.Core
 
-Starting with v2.0.0 it's possible to use the core functionality as standalone package `trx2junit.Core`.  
+Starting with v2.0.0 it's possible to use the core functionality as standalone package `trx2junit.Core`.
 The tool (see above) itself is a consumer of that package.
 
 After adding a reference to `trx2junit.Core` one can use it in "commandline-mode" like
