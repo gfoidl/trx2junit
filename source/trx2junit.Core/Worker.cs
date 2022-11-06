@@ -88,7 +88,7 @@ public class Worker
             }
             DateTime start = DateTime.Now;
 
-            await Task.WhenAll(options.InputFiles.Select(input => this.ConvertAsync(converter, input, options.OutputDirectory)));
+            await Task.WhenAll(options.InputFiles.Select(input => this.ConvertAsync(converter, input, options.OutputDirectory))).ConfigureAwait(false);
             this.OnNotification($"done in {(DateTime.Now - start).TotalSeconds} seconds. bye.");
         }
         finally
@@ -111,7 +111,7 @@ public class Worker
 
         try
         {
-            await converter.ConvertAsync(input, output);
+            await converter.ConvertAsync(input, output).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
