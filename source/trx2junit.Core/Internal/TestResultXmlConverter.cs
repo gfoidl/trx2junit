@@ -20,7 +20,7 @@ internal abstract class TestResultXmlConverter<TIn, TOut> : ITestResultXmlConver
     //-------------------------------------------------------------------------
     public virtual async Task ConvertAsync(Stream input, TextWriter output)
     {
-        XElement testXml = await XElement.LoadAsync(input, LoadOptions.None, CancellationToken.None);
+        XElement testXml = await XElement.LoadAsync(input, LoadOptions.None, CancellationToken.None).ConfigureAwait(false);
 
         ITestResultXmlParser<TIn> parser = this.ParserFactory(testXml);
         parser.Parse();
@@ -33,7 +33,7 @@ internal abstract class TestResultXmlConverter<TIn, TOut> : ITestResultXmlConver
         ITestResultXmlBuilder<TOut> builder = this.BuilderFactory(targetTest);
         builder.Build();
 
-        await builder.Result.SaveAsync(output, SaveOptions.None, CancellationToken.None);
+        await builder.Result.SaveAsync(output, SaveOptions.None, CancellationToken.None).ConfigureAwait(false);
     }
     //-------------------------------------------------------------------------
     public string GetOutputFile(string inputFile, string? outputPath = null)
