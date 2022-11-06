@@ -65,27 +65,37 @@ public class Worker
         if (options is null) throw new ArgumentNullException(nameof(options));
 #endif
 
+        CultureInfo currentThreadCulture      = Thread.CurrentThread.CurrentCulture;
+        CultureInfo currentUICulture          = Thread.CurrentThread.CurrentUICulture;
         Thread.CurrentThread.CurrentCulture   = CultureInfo.InvariantCulture;
         Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
-        _globHandler.ExpandWildcards(options);
-
-        ITestResultXmlConverter converter;
-
-        if (options.ConvertToJunit)
+        try
         {
-            converter = new Trx2JunitTestResultXmlConverter();
-            this.OnNotification($"Converting {options.InputFiles.Count} trx file(s) to JUnit-xml...");
-        }
-        else
-        {
-            converter = new Junit2TrxTestResultXmlConverter();
-            this.OnNotification($"Converting {options.InputFiles.Count} junit file(s) to trx-xml...");
-        }
-        DateTime start = DateTime.Now;
+            _globHandler.ExpandWildcards(options);
 
-        await Task.WhenAll(options.InputFiles.Select(input => this.ConvertAsync(converter, input, options.OutputDirectory)));
-        this.OnNotification($"done in {(DateTime.Now - start).TotalSeconds} seconds. bye.");
+            ITestResultXmlConverter converter;
+
+            if (options.ConvertToJunit)
+            {
+                converter = new Trx2JunitTestResultXmlConverter();
+                this.OnNotification($"Converting {options.InputFiles.Count} trx file(s) to JUnit-xml...");
+            }
+            else
+            {
+                converter = new Junit2TrxTestResultXmlConverter();
+                this.OnNotification($"Converting {options.InputFiles.Count} junit file(s) to trx-xml...");
+            }
+            DateTime start = DateTime.Now;
+
+            await Task.WhenAll(options.InputFiles.Select(input => this.ConvertAsync(converter, input, options.OutputDirectory))).ConfigureAwait(false);
+            this.OnNotification($"done in {(DateTime.Now - start).TotalSeconds} seconds. bye.");
+        }
+        finally
+        {
+            Thread.CurrentThread.CurrentCulture   = currentThreadCulture;
+            Thread.CurrentThread.CurrentUICulture = currentUICulture;
+        }
     }
     //-------------------------------------------------------------------------
     // internal for testing
@@ -101,7 +111,7 @@ public class Worker
 
         try
         {
-            await converter.ConvertAsync(input, output);
+            await converter.ConvertAsync(input, output).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
