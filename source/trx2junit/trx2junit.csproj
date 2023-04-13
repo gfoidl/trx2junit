@@ -2,9 +2,13 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net7.0;net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
         <PackAsTool>true</PackAsTool>
         <RollForward>Major</RollForward>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+        <!--<PublishAot>true</PublishAot>-->
     </PropertyGroup>
 
     <ItemGroup>

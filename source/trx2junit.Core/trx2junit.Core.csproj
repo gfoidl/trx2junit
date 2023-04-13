@@ -1,9 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net7.0;net6.0;netstandard2.1</TargetFrameworks>
+        <TargetFrameworks>net8.0;net6.0;netstandard2.1</TargetFrameworks>
         <RootNamespace>gfoidl.Trx2Junit.Core</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+        <IsTrimmable>true</IsTrimmable>
     </PropertyGroup>
 
     <ItemGroup>
