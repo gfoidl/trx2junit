@@ -7,7 +7,7 @@ namespace gfoidl.Trx2Junit.Core;
 
 internal static class TypeInfoHelper
 {
-    [return: NotNullIfNotNull("name")]
+    [return: NotNullIfNotNull(nameof(name))]
     public static string? StripTypeInfo(this string? name)
     {
         if (name is null) return null;
