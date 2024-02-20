@@ -83,10 +83,9 @@ echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
 ### Prequisites / Supported SDKs
 
 In order to install this tool a [.NET SDK](https://dotnet.microsoft.com/download/dotnet) must be present. Supported SDKs are:
+* .NET 8.0
 * .NET 7.0
 * .NET 6.0
-* .NET 5.0
-* .NET Core 3.1
 
 # Core functionality as standalone package trx2junit.Core
 

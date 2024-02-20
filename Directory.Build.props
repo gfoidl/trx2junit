@@ -9,7 +9,7 @@
         <Authors>gfoidl</Authors>
         <Company>Foidl Günther</Company>
         <Product>trx2junit</Product>
-        <Copyright>Copyright © Foidl Günther 2017-2022</Copyright>
+        <Copyright>Copyright © Foidl Günther 2017-2024</Copyright>
         <VersionPrefix>$(VersionMajor).$(VersionMinor).$(VersionPatch)</VersionPrefix>
         <AssemblyVersion>$(VersionMajor).$(VersionMinor).$(BuildNumber).$(VersionPatch)</AssemblyVersion>
     </PropertyGroup>
